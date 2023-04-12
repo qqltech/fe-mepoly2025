@@ -58,8 +58,8 @@
    position: absolute;
    top: 0;
    right: 0;
-   width: 400px;
-   height: 400px;
+   width: 500px;
+   height: 350px;
 }
 
 .left-bottom {
@@ -69,11 +69,12 @@
    position: absolute;
    bottom: 0;
    left: 0;
-   width: 400px;
-   height: 400px;
+   width: 500px;
+   height: 350px;
 }
 .container {
  margin: 50px auto;
+ zoom: 120%;
 }
 
 .body {
