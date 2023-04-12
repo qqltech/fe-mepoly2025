@@ -1,20 +1,262 @@
-<script>
-</script>
+<script></script>
 <template>
- <section>
-  <main class="page-container" style="background-color: red;">
- <p>tesssss</p>
- </main>
- </section>
- 
+ <div class="right-top"></div>
+<div class="left-bottom"></div>
+ <div class="container">
+  <div class="body d-md-flex align-items-center justify-content-between">
+   <div class="box-1 mt-md-0 mt-5">
+    <div class="header-box-1">
+     <p class="text-header-box-1-1"><b>WELCOME</b></p>
+     <p class="text-header-box-1-2 "><b>PT. MEPOLY INDUSTRY</b></p>
+    </div>
+    <div class="img-box-1">
+     <img src="/assets/image/hello-login.png" alt="" />
+    </div>
+   </div>
+   <div class="box-2 d-flex flex-column">
+    <div class="card shadow">
+     <div class="card-body">
+      <div class="img-card mb-3">
+       <img src="/assets/image/logo-panjang.png" height="50px" width="auto" />
+      </div>
+      <form>
+       <div class="form-input">
+        <div class="mb-3">
+         <label for="inputEmail" class="form-label">Email</label>
+         <input type="text" class="form-control" id="inputEmail" placeholder="" autocomplete="off" required/>
+        </div>
+        <div class="mb-3">
+         <label for="inputPassword" class="form-label">Password</label>
+         <input type="password" class="form-control position-relative" id="inputPassword" placeholder="" autocomplete="off" required/>
+        </div>
+        <div class="mt-5  d-grid gap-2">
+         <button class="btn btn-primary">Login</button>
+        </div>
+       </div>
+      </form>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
 </template>
 
 <style scoped>
-body {
- background-color: white !important;
+@import url("https://fonts.googleapis.com/css2?family=Noto Sans:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: "Noto Sans", sans-serif;
 }
-section {
+
+.right-top {
+   background-image: url("/assets/image/kanan.png");
+   background-repeat: no-repeat;
+   background-position: top right;
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 400px;
+   height: 400px;
+}
+
+.left-bottom {
+   background-image: url("/assets/image/kiri.png");
+   background-repeat: no-repeat;
+   background-position: bottom left;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 400px;
+   height: 400px;
+}
+.container {
+ margin: 50px auto;
+}
+
+.body {
+ position: relative;
+ width: 720px;
+ height: 440px;
+ margin: 20px auto;
+ border: none;
+ background-color: white !important;
+ color: black !important;
+ border-radius: 10px;
+ overflow: hidden;
+ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.card{
+ border: none !important;
+ border-radius: 10px;
+}
+.box-1 {
  width: 100%;
  height: 100%;
+ object-fit: cover;
+ background-color: #f5f5f5;
+ justify-content: center;
+ text-align: center;
+ padding: 70px 0px;
+}
+
+.header-box-1 {
+ color: #244065;
+ text-align: center;
+ justify-content: center;
+}
+
+.text-header-box-1-1 {
+ font-size: 24px;
+ font-style: normal;
+ font-weight: 1000;
+}
+
+.text-header-box-1-2 {
+ font-size: 16px;
+ font-style: normal;
+ font-weight:350;
+}
+
+.img-box-1 img {
+ margin-top: 50px;
+ height: 150px;
+ width: 350px;
+ padding: 0px 10px 0px 10px;
+}
+
+.box-2 {
+ margin: 50px;
+ height: 350px;
+}
+
+.inside-box-2 {
+ margin: 140px;
+ align-items: center;
+ justify-content: center;
+}
+
+.card-body {
+ padding: 40px 0px;
+ border: none;
+}
+
+.img-card{
+ text-align: center;
+}
+.form-input {
+ padding: 0px 30px;
+}
+
+.form-label {
+ font-size: 11px;
+}
+
+.form-control {
+ padding: 5px 10px;
+ font-size: 12px;
+ font-family: "Noto Sans", sans-serif;
+}
+
+.box-1,
+.box-2 {
+ width: 50%;
+}
+
+.h-1 {
+ font-size: 24px;
+ font-weight: 700;
+}
+
+.text-muted {
+ font-size: 14px;
+}
+
+.container .box {
+ width: 100px;
+ height: 100px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ border: 2px solid transparent;
+ text-decoration: none;
+ color: #615f5fdd;
+}
+
+.box:active,
+.box:visited {
+ border: 2px solid #ee82ee;
+}
+
+.box:hover {
+ border: 2px solid #ee82ee;
+}
+
+.btn.btn-primary {
+ background-color: #244065;
+ color: white;
+ border: 0px;
+ padding: 0;
+ font-size: 12px;
+ height: 30px;
+}
+
+.btn:hover{
+ background-color: white;
+ color: #244065;
+ border: 1px solid #244065;
+}
+
+.btn.btn-primary .fas.fa-chevron-right {
+ font-size: 12px;
+}
+
+.footer .p-color {
+ color: #ee82ee;
+}
+
+.footer.text-muted {
+ font-size: 10px;
+}
+
+.fas.fa-times {
+ position: absolute;
+ top: 20px;
+ right: 20px;
+ height: 20px;
+ width: 20px;
+ background-color: #f3cff379;
+ font-size: 18px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.fas.fa-times:hover {
+ color: #ff0000;
+}
+
+@media (max-width: 767px) {
+ body {
+  padding: 10px;
+ }
+
+ .body {
+  width: 100%;
+  height: 100%;
+ }
+
+ .box-1 {
+  width: 100%;
+ }
+
+ .box-2 {
+  width: 100%;
+  height: 440px;
+ }
 }
 </style>
