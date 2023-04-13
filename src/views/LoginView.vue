@@ -17,7 +17,7 @@
     <div class="card shadow">
      <div class="card-body">
       <div class="img-card mb-3">
-       <img src="/assets/image/logo-panjang.png" height="50px" width="auto" />
+       <img src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" height="50px" width="auto" />
       </div>
       <form>
        <div class="form-input">
@@ -50,22 +50,30 @@
  box-sizing: border-box;
  font-family: "Noto Sans", sans-serif;
 }
+@media screen and (max-width:680px){
+
+.body{
+   width: auto;
+   float: none;
+}
+
+}
 
 .right-top {
-   background-image: url("/assets/image/kanan.png");
+   background-image: url("/assets/image/kiri.png");
    background-repeat: no-repeat;
-   background-position: top right;
    position: absolute;
    top: 0;
    right: 0;
+   left: 150;
    width: 500px;
    height: 350px;
+   transform: rotate(180deg);
 }
 
 .left-bottom {
    background-image: url("/assets/image/kiri.png");
    background-repeat: no-repeat;
-   background-position: bottom left;
    position: absolute;
    bottom: 0;
    left: 0;
@@ -74,12 +82,13 @@
 }
 .container {
  margin: 50px auto;
+width: auto;
  zoom: 120%;
 }
 
 .body {
  position: relative;
- width: 720px;
+ width: auto;
  height: 440px;
  margin: 20px auto;
  border: none;
@@ -88,6 +97,7 @@
  border-radius: 10px;
  overflow: hidden;
  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+ zoom: 120%;
 }
 
 .card{
@@ -160,6 +170,8 @@
  padding: 5px 10px;
  font-size: 12px;
  font-family: "Noto Sans", sans-serif;
+ border: 1px solid #244065;
+ border-radius: 10px;
 }
 
 .box-1,
@@ -188,14 +200,6 @@
  color: #615f5fdd;
 }
 
-.box:active,
-.box:visited {
- border: 2px solid #ee82ee;
-}
-
-.box:hover {
- border: 2px solid #ee82ee;
-}
 
 .btn.btn-primary {
  background-color: #244065;
@@ -204,6 +208,7 @@
  padding: 0;
  font-size: 12px;
  height: 30px;
+ border-radius: 10px;
 }
 
 .btn:hover{

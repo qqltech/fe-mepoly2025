@@ -6,3 +6,67 @@ section {
  width: 100%;
  height: 100%;
 }
+.row {
+ margin-left: 0.5rem !important;
+ margin-right: 0.75rem !important;
+}
+.row>*{
+ padding-left: 0 !important;
+}
+.offcanvas.offcanvas-start {
+ width: 500px !important;
+}
+.offcanvas-header {
+ position: absolute;
+right: 0;
+}
+
+.offcanvas-body{
+ margin-top: 60px;
+}
+
+.offcanvas-body-inside {
+ /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+}
+.button-closed {
+ color: #244065 !important;
+ width: auto;
+ height: 35px;
+
+}
+.form-check-input:checked{
+ background-color: #244065 !important;
+ border-color: #244065 !important;
+}
+
+.img-profile {
+ height: 60px;
+ width: 60px;
+ border-radius: 50%;
+ margin-right: 10px;
+}
+
+.garis-sidebar{
+ height: 2px;
+}
+
+
+.header-img-logo {
+ height: 50px;
+ width: auto;
+}
+
+.button {
+ background-color: #244065;
+ color: white;
+ border-radius: 10px;
+ width: 150px;
+ height: 40px;
+ padding: 
+ 6px, 10px, 6px, 10px;
+}
+.button:hover{
+ background-color: white;
+ border: 2px solid #244065;
+ color: #244065;
+}
