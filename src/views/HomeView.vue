@@ -6,8 +6,12 @@
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <div class="row">
+          <div class="col-md-3 .offset-md-3 offcanvas-header-left">
 
-          <div class="col-md-3 .offset-md-3">
+            <button class="button2 button-danger"></button>
+            </div>
+
+          <div class="col-md-3  offcanvas-header-right">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="button-closed bi bi-list"
               viewBox="0 0 16 16" data-bs-dismiss="offcanvas" aria-label="Close">
               <path fill-rule="evenodd"
@@ -26,11 +30,11 @@
                 <img class="img-profile" src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
                   alt="" />
               </div>
-              <div class="col-sm-4" style="justify-content: center; justify-items: center;">
+              <div class="col-sm-4 user-text-profile">
                 <h6>User ID</h6>
                 <h6>Position</h6>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-6 user-text-profile">
                 <h6>: Isa Iman Muhammad</h6>
                 <h6>: Director</h6>
               </div>
@@ -137,7 +141,7 @@
           <button class="button btn1 ">Export to PDF</button>
           <button class="button btn1">Export to CSV</button>
 
-          <label class="period-date"><b>Period</b></label>
+          <label class="period-date"><b>Period :</b></label>
           <input type="date" class="period-bar1" id="fromDate">
           <label class="label-date"><b>To</b></label>
           <input type="date" class="period-bar2" id="toDate">

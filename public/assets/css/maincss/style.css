@@ -18,13 +18,18 @@ section {
 .offcanvas.offcanvas-start {
  width: 500px !important;
 }
-.offcanvas-header {
+.offcanvas-header-right {
  position: absolute;
 right: 0;
+float: right;
 }
-
+.offcanvas-header-left {
+ position: absolute;
+ margin-left: 30px;
+left: 0;
+}
 .offcanvas-body{
- margin-top: 60px;
+ margin-top: 40px;
 }
 
 .offcanvas-body-inside {
@@ -40,12 +45,17 @@ right: 0;
  background-color: #244065 !important;
  border-color: #244065 !important;
 }
-
+.user-text-profile{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+}
 .img-profile {
  height: 60px;
  width: 60px;
  border-radius: 50%;
  margin-right: 10px;
+ display: block;
 }
 
 .garis-sidebar{
@@ -69,6 +79,8 @@ right: 0;
  border: none;
 }
 
+
+
 .btn1{
  margin-right: 20px;
 }
@@ -78,6 +90,31 @@ right: 0;
  color: #244065;
  font-weight: bold;
 }
+.button2 {
+ background-color: rgba(233, 0, 25, 1);
+ background-image: url('/assets/image/Logout1.png');
+ background-size: 20px 20px;
+ background-repeat: no-repeat;
+ background-position: center;
+ color: white;
+ border-radius: 10px;
+ width: 40px;
+ height: 40px;
+ padding: 
+ 6px, 10px, 6px, 10px;
+ border: none;
+}
+.button2:hover{
+ background-color: white;
+ background-image: url('/assets/image/Logout2.png');
+ background-size: 20px 20px;
+ background-repeat: no-repeat;
+ background-position: center;
+ border: 2px solid rgba(233, 0, 25, 1);
+ color: rgba(233, 0, 25, 1);
+ font-weight: bold;
+}
+
 
 .card-salesman{
  padding: 15px 15px 15px 15px !important;
@@ -90,6 +127,8 @@ border-radius: 5px;
 .card-user{
  padding: 15px 15px 15px 15px !important;
  justify-content: center;
+ display: flex;
+align-items: center;
 
 margin: 0 !important;
 border-radius: 5px;
@@ -141,7 +180,7 @@ border: none;
 .input-date{
  position: absolute;
  right: 50px;
-
+ color: #244065 !important;
 }
 
 .card{
