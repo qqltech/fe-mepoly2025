@@ -33,7 +33,7 @@ right: 0;
 .button-closed {
  color: #244065 !important;
  width: auto;
- height: 35px;
+ height: 35px !important;
 
 }
 .form-check-input:checked{
@@ -104,14 +104,16 @@ border-radius: 5px;
 .period-bar1 {
  color: #244065;
  background-color: rgba(237, 237, 237, 1);
- border-color: #244065;
+border: none;
  border-radius: 10px;
  width: 150px;
  height: 40px; 
+ 
 }
 .label-date{
  font-size: 12px;
  position: absolute;
+ padding: 15px;
 }
 
 .period-date{
