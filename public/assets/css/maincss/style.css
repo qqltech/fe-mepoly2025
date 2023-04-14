@@ -123,41 +123,97 @@ border: none;
 .input-date{
  position: absolute;
  right: 50px;
+ padding: 6px 12px 6px 12px !important;
 }
 
 .card{
 
  border: none !important;
+ border-radius: 10px !important;
 }
 .card-1{
  border-radius: 10px;
  background-color: 
  rgba(253, 231, 220, 0.6);
- width: 350px;
+
  height: 
  140px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 .card-2{
  border-radius: 10px;
  background-color: 
  rgba(204, 238, 208, 0.6);
- width: 350px;
  height: 
  140px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 .card-3{
+ border-radius: 10px;
+ background-color: 
+ rgba(211, 238, 247, 0.6);
+ height: 
+ 140px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-4{
+ border-radius: 10px;
+ background-color: 
+ white;
+
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-5{
+ border-radius: 10px;
+ background-color: 
+ rgba(211, 238, 247, 0.6);
+
+ height: 
+ 2000px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-6{
  border-radius: 10px;
  background-color: 
  rgba(211, 238, 247, 0.6);
  width: 350px;
  height: 
  140px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
+.card-7{
+ border-radius: 10px;
+ background-color: 
+ rgba(211, 238, 247, 0.6);
+ width: 350px;
+ height: 
+ 140px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-8{
+ border-radius: 10px;
+ background-color: 
+ rgba(211, 238, 247, 0.6);
+ width: 350px;
+ height: 
+ 140px;
+ box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
 
 .stat{
  background-color: white !important;
  border-radius: 10px !important;
- 
+ width: 40px;
+ height: 40px;
+}
+
+.img-stat{
+ height:30px;
+ width: 30px;
+ position: absolute;
+ top: 15%;
+ left:9%;
 }
 
 .card-title{

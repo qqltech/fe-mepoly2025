@@ -154,10 +154,10 @@
 
         </div>
         <main class="content">
-          <div class="container-fluid mt-0 p-0">
+          <div class="container-fluid mt-5 p-0">
             <h1 class="h4"><b>Overview</b></h1>
           </div>
-          <div class="row">
+          <div class="row mt-4">
             <div class="col-sm-4">
               <div class="card ">
                 <div class="card-body card-1">
@@ -166,7 +166,7 @@
                       <div class="row">
                         <div class="col-sm-2">
                           <div class="stat text-primary">
-                            <img src="/assets/image/box.png" alt="">
+                            <img class="img-stat" src="/assets/image/box.png" alt="">
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
@@ -193,7 +193,7 @@
                       <div class="row">
                         <div class="col-sm-2">
                           <div class="stat text-primary">
-                            <img src="/assets/image/money.png" alt="">
+                            <img class="img-stat" src="/assets/image/money.png" alt="">
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
@@ -220,7 +220,7 @@
                       <div class="row">
                         <div class="col-sm-2">
                           <div class="stat text-primary">
-                            <img src="/assets/image/maps.png" alt="">
+                            <img class="img-stat" src="/assets/image/maps.png" alt="">
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
@@ -242,38 +242,176 @@
 
           </div>
 
-          <div class="row">
+          <div class="row mt-4">
             <div class="col-sm-6">
-              <div class="card ">
-                <div class="card-body card-1">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <div class="row">
-                        <div class="col-sm-2">
-                          <div class="stat text-primary">
-                            <img src="/assets/image/box.png" alt="">
-                          </div>
-                        </div>
-                        <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title">Total Stock</p>
-                        </div>
+              <div class="card card-4 ">
+                <div class="card-body ">
+                  <div class="card-body">
+              <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
 
+              <!-- Doughnut Chart -->
+              <canvas id="doughnutChart" style="max-height: 400px;"></canvas>
+              <!-- <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#doughnutChart'), {
+                    type: 'doughnut',
+                    data: {
+                      labels: [
+                        'Red',
+                        'Blue',
+                        'Yellow'
+                      ],
+                      datasets: [{
+                        label: 'My First Dataset',
+                        data: [300, 50, 100],
+                        backgroundColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(54, 162, 235)',
+                          'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    }
+                  });
+                });
+              </script> -->
+              <!-- End Doughnut CHart -->
 
-                      </div>
-
-
-                    </div>
-
-                  </div>
-                  <h1 class="card-count mt-1 mb-3">2.382</h1>
-
+            </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-6">
-              <div class="card">
-                <div class="card-body">
+              <div class="card card-4 ">
+                <div class="card-body ">
+                  <div class="card-body">
+              <h5 class="card-title"><b>Product Omzet Differentiation</b></h5>
 
+              <!-- Doughnut Chart -->
+              <canvas id="doughnutChart" style="max-height: 400px;"></canvas>
+              <!-- <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#doughnutChart'), {
+                    type: 'doughnut',
+                    data: {
+                      labels: [
+                        'Red',
+                        'Blue',
+                        'Yellow'
+                      ],
+                      datasets: [{
+                        label: 'My First Dataset',
+                        data: [300, 50, 100],
+                        backgroundColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(54, 162, 235)',
+                          'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    }
+                  });
+                });
+              </script> -->
+              <!-- End Doughnut CHart -->
+
+            </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="card card-5">
+                <div class="card-body">
+              <h5 class="card-title"><b>Detail Stock</b></h5>
+
+              <!-- Bar Chart -->
+              <div id="barChart"></div>
+
+              <!-- <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new ApexCharts(document.querySelector("#barChart"), {
+                    series: [{
+                      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                    }],
+                    chart: {
+                      type: 'bar',
+                      height: 350
+                    },
+                    plotOptions: {
+                      bar: {
+                        borderRadius: 4,
+                        horizontal: true,
+                      }
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    xaxis: {
+                      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+                        'United States', 'China', 'Germany'
+                      ],
+                    }
+                  }).render();
+                });
+              </script> -->
+              <!-- End Bar Chart -->
+
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="card card-5">
+                <div class="card-body">
+              <h5 class="card-title"><b>Detail Omzet</b></h5>
+
+              <!-- Bar Chart -->
+              <div id="barChart"></div>
+
+              <!-- <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new ApexCharts(document.querySelector("#barChart"), {
+                    series: [{
+                      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                    }],
+                    chart: {
+                      type: 'bar',
+                      height: 350
+                    },
+                    plotOptions: {
+                      bar: {
+                        borderRadius: 4,
+                        horizontal: true,
+                      }
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    xaxis: {
+                      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+                        'United States', 'China', 'Germany'
+                      ],
+                    }
+                  }).render();
+                });
+              </script> -->
+              <!-- End Bar Chart -->
+
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="card card-5">
+                <div class="card-body">
+                  
                 </div>
               </div>
             </div>
