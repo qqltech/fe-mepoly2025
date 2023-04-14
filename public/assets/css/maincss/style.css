@@ -76,6 +76,7 @@ right: 0;
  background-color: white;
  border: 2px solid #244065;
  color: #244065;
+ font-weight: bold;
 }
 
 .card-salesman{
@@ -108,22 +109,39 @@ border: none;
  border-radius: 10px;
  width: 150px;
  height: 40px; 
+ position: absolute;
+ right: 220px;
+ padding: 6px 12px 6px 12px !important;
+ 
+}
+.period-bar2 {
+ color: #244065;
+ background-color: rgba(237, 237, 237, 1);
+border: none;
+ border-radius: 10px;
+ width: 150px;
+ height: 40px; 
+ position: absolute;
+ right: 30px;
+ padding: 6px 12px 6px 12px !important;
+ 
  
 }
 .label-date{
  font-size: 12px;
  position: absolute;
  padding: 15px;
+ right: 180px;
 }
 
 .period-date{
  position: absolute;
- right: 400px;
+ right: 395px;
 }
 .input-date{
  position: absolute;
  right: 50px;
- padding: 6px 12px 6px 12px !important;
+
 }
 
 .card{
@@ -210,16 +228,33 @@ border: none;
 
 .img-stat{
  height:30px;
- width: 30px;
- position: absolute;
+ width: auto;
+ position: relative;
  top: 15%;
  left:9%;
+ padding: 1px;
+}
+.img-stat2{
+ height:30px;
+ width: auto;
+ position: relative;
+ top: 12%;
+ left:21%;
+ padding: 1px;
+}
+.img-stat3{
+ height:30px;
+ width: auto;
+ position: relative;
+ top: 13%;
+ left:15%;
+ padding: 1px;
 }
 
 .card-title{
  color: rgba(64, 64, 64, 1);
  font-size: 12px;
- position: absolute;
+ /* position: absolute; */
  top: 25px;
  left: 80px;
 }

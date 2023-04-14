@@ -70,6 +70,12 @@
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                   <label class="form-check-label" for="flexRadioDefault1">
+                    All
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                  <label class="form-check-label" for="flexRadioDefault1">
                     Store B
                   </label>
                 </div>
@@ -131,25 +137,11 @@
           <button class="button btn1 ">Export to PDF</button>
           <button class="button btn1">Export to CSV</button>
 
-          <label class="period-date"><b>Period </b></label>
-          <div class="row input-date">
-            <div class="col-sm-2">
-              <label for="fromDate" class="label-date">From</label>
-
-            </div>
-            <div class="col-sm-4">
-              <input type="date" class="period-bar1" id="fromDate">
-
-            </div>
-            <div class="col-sm-2">
-              <label for="fromDate" class="label-date">From</label>
-
-            </div>
-            <div class="col-sm-4">
-              <input type="date" class="period-bar1" id="fromDate">
-
-            </div>
-          </div>
+          <label class="period-date"><b>Period</b></label>
+          <input type="date" class="period-bar1" id="fromDate">
+          <label class="label-date"><b>To</b></label>
+          <input type="date" class="period-bar2" id="toDate">
+          
 
 
         </div>
@@ -193,7 +185,7 @@
                       <div class="row">
                         <div class="col-sm-2">
                           <div class="stat text-primary">
-                            <img class="img-stat" src="/assets/image/money.png" alt="">
+                            <img class="img-stat2" src="/assets/image/money.png" alt="">
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
@@ -207,7 +199,7 @@
                     </div>
 
                   </div>
-                  <h1 class="card-count mt-1 mb-3">2.382</h1>
+                  <h1 class="card-count mt-1 mb-3">Rp. 1.000.000.000</h1>
 
                 </div>
               </div>
@@ -220,7 +212,7 @@
                       <div class="row">
                         <div class="col-sm-2">
                           <div class="stat text-primary">
-                            <img class="img-stat" src="/assets/image/maps.png" alt="">
+                            <img class="img-stat3" src="/assets/image/maps.png" alt="">
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
@@ -411,7 +403,7 @@
             <div class="col-sm-12">
               <div class="card card-5">
                 <div class="card-body">
-                  
+                  <h5 class="card-title"><b>Detail Order</b></h5>
                 </div>
               </div>
             </div>
