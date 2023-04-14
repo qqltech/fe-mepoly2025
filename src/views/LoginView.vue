@@ -171,7 +171,7 @@ width: auto;
  font-size: 12px;
  font-family: "Noto Sans", sans-serif;
  border: 1px solid #244065;
- border-radius: 10px;
+ border-radius: 5px;
 }
 
 .box-1,
@@ -208,7 +208,7 @@ width: auto;
  padding: 0;
  font-size: 12px;
  height: 30px;
- border-radius: 10px;
+ border-radius: 5px;
 }
 
 .btn:hover{
