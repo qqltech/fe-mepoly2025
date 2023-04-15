@@ -5,7 +5,10 @@ export default {
         logout() {
             localStorage.removeItem('admin')
             this.$router.push('/')
-        }
+        },
+        
+
+
     }
 }
 </script>

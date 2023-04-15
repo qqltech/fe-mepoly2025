@@ -77,9 +77,11 @@ export default {
 // };
 </script>
 <template>
-   <div class="right-top"></div>
-   <div class="left-bottom"></div>
- <div class="container">
+
+      <div class="right-top"></div>
+      <div class="left-bottom"></div>
+
+   <div class="container">
   <div class="body d-md-flex align-items-center justify-content-between">
    <div class="box-1 mt-md-0 mt-5">
     <div class="header-box-1">
@@ -144,19 +146,21 @@ export default {
 @media screen and (max-width:680px){
 
 .body{
-   width: auto;
+   width: 100%;
    float: none;
 }
 
 }
 
+.img-ujung {
+   position: relative;
+}
 .right-top {
    background-image: url("/assets/image/kiri.png");
    background-repeat: no-repeat;
    position: absolute;
    top: 0;
    right: 0;
-   left: 150;
    width: 500px;
    height: 350px;
    transform: rotate(180deg);
@@ -174,7 +178,8 @@ export default {
 .container {
  margin: 50px auto;
 width: auto;
- zoom: 120%;
+ zoom: 100%;
+
 }
 
 .body {
