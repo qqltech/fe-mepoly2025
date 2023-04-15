@@ -27,7 +27,7 @@ export default {
 
                 const response = await axios.post(`${base_url}/login`, payload)
                 const result = response.data;
-                console.log(result);
+               //  console.log(result);
                 if (result.success) {
                     localStorage.setItem('admin', JSON.stringify(result.data));
                     window.location.href = '/home'

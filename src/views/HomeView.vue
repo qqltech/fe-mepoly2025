@@ -1,4 +1,14 @@
 <script setup></script>
+<script>
+export default {
+    methods: {
+        logout() {
+            localStorage.removeItem('admin')
+            this.$router.push('/')
+        }
+    }
+}
+</script>
 
 <template>
   <main>
@@ -8,7 +18,7 @@
         <div class="row">
           <div class="col-md-3 .offset-md-3 offcanvas-header-left">
 
-            <button class="button2 button-danger"></button>
+            <router-link to="/logout" @click="logout" aria-expanded="true"><button class="button2 button-danger"></button></router-link>
             </div>
 
           <div class="col-md-3  offcanvas-header-right">
