@@ -1,7 +1,7 @@
 <script setup>
-import axios from 'axios';
 import config from '../config/config'
 import { flashMessage } from '../config/functions'
+import axios from 'axios';
 
 </script>
 
