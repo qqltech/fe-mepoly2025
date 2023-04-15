@@ -60,7 +60,7 @@ export default {
     <div class="card shadow">
      <div class="card-body">
       <div class="img-card-mt mb-2">
-       <img class="img-card" src="assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" />
+       <img class="img-card" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" />
       </div>
       <form>
        <div class="form-input">
