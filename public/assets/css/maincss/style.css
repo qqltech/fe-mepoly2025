@@ -306,3 +306,11 @@ border: none;
  left: 30px;
  top: 70px;
 }
+
+.tombol-eye{
+ cursor:pointer; 
+ color: #244065; 
+top: 55%;
+ left: 430px;
+ position: absolute;
+}

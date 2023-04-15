@@ -1,4 +1,47 @@
-<script></script>
+<script setup>
+import axios from 'axios';
+import config from '../config/config'
+import { flashMessage } from '../config/functions'
+
+</script>
+
+<script>
+const base_url = config.base_url;
+
+export default {
+    data() {
+        return {
+
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        async login() {
+            const payload = {
+                inputEmail: this.email,
+                inputPassword: this.password
+            }
+            try {
+
+                const response = await axios.post(`${base_url}/login`, payload)
+                const result = response.data;
+                console.log(result);
+                if (result.success) {
+                    localStorage.setItem('admin', JSON.stringify(result.data));
+                    window.location.href = '/home'
+                } else {
+
+                    flashMessage('error', 'Error', result.errormsg)
+                }
+            } catch (error) {
+
+                flashMessage('error', 'Error', error.response.data.errormsg)
+            }
+        }
+    }
+}
+</script>
 <template>
  <div class="right-top"></div>
 <div class="left-bottom"></div>
@@ -23,11 +66,19 @@
        <div class="form-input">
         <div class="mb-3">
          <label for="inputEmail" class="form-label">Email</label>
-         <input type="text" class="form-control" id="inputEmail" placeholder="" autocomplete="off" required/>
+         <input type="text" class="form-control" id="email" placeholder="" autocomplete="off" required/>
         </div>
         <div class="mb-3">
          <label for="inputPassword" class="form-label">Password</label>
-         <input type="password" class="form-control position-relative" id="inputPassword" placeholder="" autocomplete="off" required/>
+         <input type="password" v-model="password" class="form-control position-relative" id="password" placeholder="" autocomplete="off" required/>
+         <i id="mybutton" onclick="change()" class="tombol-eye">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path fill-rule="evenodd"
+                                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </i>
         </div>
         <div class="mt-5  d-grid gap-2">
          <button class="btn btn-primary">Login</button>
