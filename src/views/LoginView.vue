@@ -46,6 +46,35 @@ export default {
         }
     }
 }
+
+// export default {
+//   data() {
+//     return {
+//       email: '',
+//       password: '',
+//     };
+//   },
+//   methods: {
+//     login() {
+//       axios.post('https://backend.qqltech.com:7021/login', {
+//         email: this.email,
+//         password: this.password
+//       })
+//       .then(response => {
+//         // Simpan data respons ke localStorage
+//         localStorage.setItem('token', response.data.token);
+//         localStorage.setItem('admin', JSON.stringify(response.data.admin));
+        
+//         // Alihkan ke halaman lain
+//         this.$router.push('/home');
+//       })
+//       .catch(error => {
+//         console.log(error);
+//         flashMessage('error', 'Error', error.response.data.message)
+//       });
+//     }
+//   }
+// };
 </script>
 <template>
    <div class="right-top"></div>
@@ -71,11 +100,11 @@ export default {
        <div class="form-input">
         <div class="mb-3">
          <label for="inputEmail" class="form-label">Email</label>
-         <input type="text" class="form-control" id="email" placeholder="" autocomplete="off" required/>
+         <input type="text" name="email" class="form-control" v-model="email" id="email" placeholder="" autocomplete="off" required/>
         </div>
         <div class="mb-3">
          <label for="inputPassword" class="form-label">Password</label>
-         <input type="password" v-model="password" class="form-control position-relative" id="password" placeholder="" autocomplete="off" required/>
+         <input type="password" name="password" v-model="password" class="form-control position-relative" id="password" placeholder="" autocomplete="off" required/>
          <i id="mybutton" onclick="change()" class="tombol-eye">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill"
                                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
