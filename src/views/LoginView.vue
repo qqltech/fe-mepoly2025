@@ -14,6 +14,7 @@ export default {
             isLoading: false,
             email: '',
             password: '',
+            data: null,
         }
     },
     methods: {
@@ -26,6 +27,7 @@ export default {
                this.isLoading = true
 
                 const response = await axios.post(`${base_url}/login`, payload)
+                console.log(response);
                 const result = response.data;
                //  console.log(result);
                 if (result.success) {
@@ -46,8 +48,8 @@ export default {
 }
 </script>
 <template>
- <div class="right-top"></div>
-<div class="left-bottom"></div>
+   <div class="right-top"></div>
+   <div class="left-bottom"></div>
  <div class="container">
   <div class="body d-md-flex align-items-center justify-content-between">
    <div class="box-1 mt-md-0 mt-5">
@@ -84,7 +86,6 @@ export default {
                                     </i>
         </div>
         <div class="mt-5  d-grid gap-2">
-         <!-- <button class="btn btn-primary">Login</button> -->
          <button class="btn btn-primary" type="submit" :disabled="isLoading" id="btn_login"
                                     >
                                     Login
