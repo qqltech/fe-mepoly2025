@@ -14,7 +14,7 @@ export default {
             isLoading: false,
             email: '',
             password: '',
-            data: null,
+
         }
     },
     methods: {
