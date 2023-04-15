@@ -310,7 +310,18 @@ border: none;
 .tombol-eye{
  cursor:pointer; 
  color: #244065; 
-top: 55%;
- left: 430px;
+top: 57%;
+ right: 45px;
  position: absolute;
+}
+
+.img-card-mt {
+ justify-self: center;
+ text-align: center;
+}
+.img-card {
+ height: 50px;
+ width: auto;
+ justify-content: center;
+ text-align: center;
 }
