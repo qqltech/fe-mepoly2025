@@ -11,7 +11,7 @@ const base_url = config.base_url;
 export default {
     data() {
         return {
-
+         isLoading: false,
             email: '',
             password: '',
         }
@@ -23,6 +23,7 @@ export default {
                 inputPassword: this.password
             }
             try {
+               this.isLoading = true
 
                 const response = await axios.post(`${base_url}/login`, payload)
                 const result = response.data;
@@ -33,10 +34,12 @@ export default {
                 } else {
 
                     flashMessage('error', 'Error', result.errormsg)
+                    this.isLoading = false
                 }
             } catch (error) {
 
                 flashMessage('error', 'Error', error.response.data.errormsg)
+                this.isLoading = false
             }
         }
     }
@@ -62,7 +65,7 @@ export default {
       <div class="img-card-mt mb-2">
        <img class="img-card" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" />
       </div>
-      <form>
+      <form method="post" @submit.prevent="login">
        <div class="form-input">
         <div class="mb-3">
          <label for="inputEmail" class="form-label">Email</label>
@@ -81,7 +84,14 @@ export default {
                                     </i>
         </div>
         <div class="mt-5  d-grid gap-2">
-         <button class="btn btn-primary">Login</button>
+         <!-- <button class="btn btn-primary">Login</button> -->
+         <button class="btn btn-primary" type="submit" :disabled="isLoading" id="btn_login"
+                                    >
+                                    Login
+                                    <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </button>
         </div>
        </div>
       </form>
