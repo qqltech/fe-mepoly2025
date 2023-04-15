@@ -11,7 +11,7 @@ const base_url = config.base_url;
 export default {
     data() {
         return {
-         isLoading: false,
+            isLoading: false,
             email: '',
             password: '',
         }
@@ -19,8 +19,8 @@ export default {
     methods: {
         async login() {
             const payload = {
-                inputEmail: this.email,
-                inputPassword: this.password
+                email: this.email,
+                password: this.password
             }
             try {
                this.isLoading = true
