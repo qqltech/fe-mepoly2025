@@ -78,8 +78,8 @@ export default {
 </script>
 <template>
 
-      <div class="right-top"></div>
-      <div class="left-bottom"></div>
+      <div class="right-top .d-sm-none .d-md-block"></div>
+      <div class="left-bottom .d-sm-none .d-md-block"></div>
 
    <div class="container">
   <div class="body d-md-flex align-items-center justify-content-between">
