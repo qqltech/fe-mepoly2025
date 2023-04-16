@@ -159,6 +159,9 @@ export default {
     .left-bottom {
         display: none;
     }
+    .box-1{
+        display: none;
+    }
 
 }
 
