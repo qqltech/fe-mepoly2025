@@ -152,7 +152,7 @@ export default {
 
 } */
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 980px) {
+@media only screen and (min-device-width : 120px) and (max-device-width : 980px) {
     .right-top {
         display: none;
     }
@@ -161,6 +161,9 @@ export default {
     }
     .box-1{
         display: none;
+    }
+    .card{
+        position: absolute;
     }
 
 }
@@ -210,6 +213,7 @@ max-height:480px;
 
 .card{
  border: none !important;
+ position: absolute;
  border-radius: 10px;
 }
 .box-1 {
