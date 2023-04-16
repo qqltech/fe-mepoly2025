@@ -237,7 +237,7 @@ span a:hover {
 @media only screen and (max-width: 768px) {
 
 
-  .left, .img-card, .left-bottom , .right-top {
+  .left, .img-card, .left-bottom , .right-top, .tombol-eye{
     display: none;
   }
 
@@ -257,6 +257,8 @@ span a:hover {
     border: none;
     box-shadow: none;
   }
+
+
 
   
 }
