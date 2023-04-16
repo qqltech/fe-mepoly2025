@@ -245,6 +245,9 @@ span a:hover {
     height: 100%;
     max-width: 420px;
     width: 100%;
+    background-color: white;
+    border: none;
+    box-shadow: none;
   }
 
   
