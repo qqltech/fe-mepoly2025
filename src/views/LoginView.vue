@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="col-md-6 right">
+        <div class="col-md-6 right p-0">
             <div class="card shadow">
                 <div class="card-body">
                 <img
@@ -241,7 +241,7 @@ span a:hover {
   }
 
   .row {
-    max-height: 440px;
+    max-height: 500px;
     height: 100%;
     max-width: 420px;
     width: 100%;
