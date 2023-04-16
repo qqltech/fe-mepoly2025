@@ -27,9 +27,10 @@
                   src="/assets/image/logo-panjang.png"
                   alt="Logo Mepoly-Industry"
                 />
-              <div class="input-box">
-                <!-- <header> -->
-                <!-- </header> -->
+
+                <form>
+                    <div class="input-box">
+                
 
                 <div class="input-field">
                   <label for="email">Email</label>
@@ -55,6 +56,8 @@
                   <input type="submit" class="submit" value="Login" />
                 </div>
               </div>
+                </form>
+              
             </div>
           </div>
         </div>
@@ -176,6 +179,7 @@ img {
   flex-direction: column;
   position: relative;
   padding: 0 10px 0 10px;
+
 }
 .form-control {
   margin-top: 10px;
@@ -185,16 +189,7 @@ img {
   border: 1px solid #244065;
   border-radius: 5px;
   padding: 10px 20px;
-}
-.input {
-  height: 45px;
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  outline: none;
-  margin-bottom: 20px;
-  color: #40414a;
+  text-align: center;
 }
 
 .submit {
@@ -246,9 +241,13 @@ span a:hover {
   }
 
   .row {
+    max-height: 440px;
+    height: 100%;
     max-width: 420px;
     width: 100%;
   }
+
+  
 }
 
 .img-card {
