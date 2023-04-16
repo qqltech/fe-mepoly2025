@@ -61,7 +61,9 @@
                                     </i>
                 </div>
                 <div class="input-field mt-5 mb-5">
-                  <input type="submit" class="submit" value="Login" />
+                  <button type="submit" class="submit" :disabled="isLoading" id="btn_login" value="Login">Login  <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div></button>
                 </div>
               </div>
                 </form>
@@ -156,6 +158,7 @@ img {
   font-size: 24px;
   font-style: normal;
   font-weight: bolder;
+  margin: 0;
 }
 
 .text-header-box-1-2 {
