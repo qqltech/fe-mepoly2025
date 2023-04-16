@@ -233,11 +233,8 @@ span a:hover {
 
 @media only screen and (max-width: 768px) {
 
-  .left {
-    display: none;
-  }
 
-  .left-bottom , .right-top {
+  .left, .img-card, .left-bottom , .right-top {
     display: none;
   }
 
@@ -251,10 +248,6 @@ span a:hover {
   .row {
     max-width: 420px;
     width: 100%;
-  }
-
-  .img-card {
-    
   }
 }
 
