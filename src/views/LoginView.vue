@@ -135,7 +135,7 @@ export default {
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto Sans:wght@300;400;500;600;700;800;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Noto Sans:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
  margin: 0;
@@ -150,11 +150,9 @@ export default {
    float: none;
 }
 
-}
+} */
 
-.img-ujung {
-   position: relative;
-}
+
 .right-top {
    background-image: url("/assets/image/kiri.png");
    background-repeat: no-repeat;
@@ -176,11 +174,13 @@ export default {
    height: 350px;
 }
 .container {
- margin: 50px auto;
-width: auto;
+ margin-top: 8%;
+max-width: 950px;
+max-height:480px;
  zoom: 100%;
 
 }
+
 
 .body {
  position: relative;
