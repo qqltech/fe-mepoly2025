@@ -152,6 +152,15 @@ export default {
 
 } */
 
+@media only screen and (min-device-width : 320px) and (max-device-width : 980px) {
+    .right-top {
+        display: none;
+    }
+    .left-bottom {
+        display: none;
+    }
+
+}
 
 .right-top {
    background-image: url("/assets/image/kiri.png");
