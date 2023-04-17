@@ -2,48 +2,49 @@
 import { flashMessage } from '../config/functions';
 import axios from 'axios';
 
+
 </script>
 <script>
 
 export default {
-    data() {
-        return {
-            isLoading: false,
-            email: '',
-            password: '',
-        }
-    },
-    methods: {
-        async login() {
-            const payload = {
-                email: this.email,
-                password: this.password
-            }
-            try {
-                this.isLoading = true
-                const response = await axios.post('https://backend.qqltech.com:7021/login', payload)
-                const result = response.data;
-                if (result.success) {
-                    localStorage.setItem('admin', JSON.stringify(result.data));
-                    window.location.href = '/home'
-                } else {
-
-                    flashMessage('error', 'Error', result.errormsg)
-                    this.isLoading = false
-                }
-            } catch (error) {
-
-                flashMessage('error', 'Error', error.response.data.errormsg)
-                this.isLoading = false
-            }
-        }
+  data() {
+    return {
+      isLoading: false,
+      email: '',
+      password: '',
     }
+  },
+  methods: {
+    async login() {
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+      try {
+        this.isLoading = true
+        const response = await axios.post(`https://backend.qqltech.com:7021/login`, payload)
+        const result = response.data;
+        console.log(result.data);
+
+        localStorage.setItem('admin', JSON.stringify(result.data));
+        this.$router.push('home');
+
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.errormsg) {
+          flashMessage('error', 'Error', error.response.data.errormsg);
+        } else {
+          flashMessage('error', 'Error', 'Email atau Password Salah');
+        }
+        this.isLoading = false;
+      }
+    }
+  }
 }
 </script>
 <template>
-    <div class="wrapper">
-      <div class="right-top"></div>
-      <div class="left-bottom"></div>
+  <div class="wrapper">
+    <div class="right-top"></div>
+    <div class="left-bottom"></div>
     <div class="container main">
       <div class="row">
         <div class="col-md-6 left">
@@ -60,54 +61,40 @@ export default {
         </div>
 
         <div class="col-md-6 right p-0">
-            <div class="card shadow">
-                <div class="card-body">
-                <img
-                  class="img-card"
-                  src="/assets/image/logo-panjang.png"
-                  alt="Logo Mepoly-Industry"
-                />
+          <div class="card shadow">
+            <div class="card-body">
+              <img class="img-card" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" />
 
-                <form method="POST" @submit.prevent="login">
-                    <div class="input-box">
-                
+              <form method="POST" @submit.prevent="login">
+                <div class="input-box">
 
-                <div class="input-field">
-                  <label for="email">Email</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email" name="email" v-model="email"
-                    required
-                    autocomplete="off"
-                  />
+
+                  <div class="input-field">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" name="email" v-model="email" required autocomplete="off" />
+                  </div>
+                  <div class="input-field mt-3">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" v-model="password" class="form-control"
+                      autocomplete="off" required />
+                    <i id="mybutton" onclick="change()" class="tombol-eye">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                        <path fill-rule="evenodd"
+                          d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                      </svg>
+                    </i>
+                  </div>
+                  <div class="input-field mt-5 mb-3">
+                    <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login">Login <div
+                        v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div></button>
+                  </div>
                 </div>
-                <div class="input-field mt-3">
-                  <label for="password">Password</label>
-                  <input
-                    type="password" name="password" v-model="password"
-                    class="form-control"
-                    id="password"
-                    autocomplete="off"
-                    required
-                  />
-                  <i id="mybutton" onclick="change()" class="tombol-eye">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill"
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                            <path fill-rule="evenodd"
-                                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                        </svg>
-                                    </i>
-                </div>
-                <div class="input-field mt-5 mb-3">
-                  <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login">Login  <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div></button>
-                </div>
-              </div>
-                </form>
-              
+              </form>
+
             </div>
           </div>
         </div>
@@ -237,6 +224,7 @@ img {
   padding: 0 10px 0 10px;
 
 }
+
 .form-control {
   margin-top: 10px;
   width: 100%;
@@ -285,13 +273,18 @@ span a:hover {
 @media only screen and (max-width: 768px) {
 
 
-  .left, .img-card, .left-bottom , .right-top, .tombol-eye{
+  .left,
+  .img-card,
+  .left-bottom,
+  .right-top,
+  .tombol-eye {
     display: none;
   }
 
-  .form-control{
+  .form-control {
     width: 60vw;
   }
+
   .Btn {
     width: 50vw;
   }
@@ -308,20 +301,21 @@ span a:hover {
 
 
 
-  
+
 }
 
 .img-card {
   height: 50px;
   width: auto;
   position: relative;
-  margin:5px 50px;
+  margin: 5px 50px;
   align-items: center;
   text-align: center;
   justify-self: center;
   justify-items: center;
 }
+
 .card {
-    margin: 0;
+  margin: 0;
 }
 </style>
