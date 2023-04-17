@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       chartData: {
-        labels: [ 'January', 'February', 'March'],
+        labels: ['January', 'February', 'March'],
         datasets: [
           {
             label: 'Data One',
@@ -27,23 +27,23 @@ export default {
       }
     }
   },
-    methods: {
-        logout() {
-            localStorage.removeItem('admin')
-            this.$router.push('/')
-        },
-        
-
-
+  methods: {
+    logout() {
+      localStorage.removeItem('admin')
+      this.$router.push('/')
     },
-    computed: {
-        isAuthenticated() {
-            return localStorage.getItem('admin') !== null;
-        },
 
 
 
-    }
+  },
+  computed: {
+    isAuthenticated() {
+      return localStorage.getItem('admin') !== null;
+    },
+
+
+
+  }
 }
 </script>
 
@@ -55,8 +55,9 @@ export default {
         <div class="row">
           <div class="col-md-3 .offset-md-3 offcanvas-header-left">
 
-            <router-link to="/logout" @click="logout" aria-expanded="true"><button class="button2 button-danger"></button></router-link>
-            </div>
+            <router-link to="/logout" @click="logout" aria-expanded="true"><button
+                class="button2 button-danger"></button></router-link>
+          </div>
 
           <div class="col-md-3  offcanvas-header-right">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="button-closed bi bi-list"
@@ -198,7 +199,7 @@ export default {
           <input type="date" class="period-bar1" id="fromDate">
           <label class="label-date"><b>To</b></label>
           <input type="date" class="period-bar2" id="toDate">
-          
+
 
 
         </div>
@@ -289,27 +290,39 @@ export default {
               </div>
             </div>
 
-          </div>
+        </div>
 
-          <div class="row mt-4">
-            <div class="col-sm-6">
-              <div class="card card-4 ">
-                <div class="card-body ">
-                  <div class="card-body">
-              <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
+        <div class="row mt-4">
+          <div class="col-sm-6">
+            <div class="card card-4 ">
+              <div class="card-body ">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
 
-            </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6">
-              <div class="card card-4 ">
-                <div class="card-body ">
-                  <div class="card-body">
-              <h5 class="card-title"><b>Detail Order</b></h5>
+          </div>
+          <div class="col-sm-6">
+            <div class="card card-4 ">
+              <div class="card-body ">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Detail Order</b></h5>
 
-             
+
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="card card-5">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Detail Stock</b></h5>
+
+                  <Bar :data="chartData" />
                 </div>
               </div>
             </div>
@@ -319,53 +332,10 @@ export default {
             <div class="col-sm-12">
               <div class="card card-5">
                 <div class="card-body">
-              <h5 class="card-title"><b>Detail Stock</b></h5>
+                  <h5 class="card-title"><b>Detail Omzet</b></h5>
 
-              <Bar :data="chartData" />
-            </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="row mt-4">
-            <div class="col-sm-12">
-              <div class="card card-5">
-                <div class="card-body">
-              <h5 class="card-title"><b>Detail Omzet</b></h5>
-
-              <!-- Bar Chart -->
-              <div id="barChart"></div>
-
-              <!-- <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new ApexCharts(document.querySelector("#barChart"), {
-                    series: [{
-                      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-                    }],
-                    chart: {
-                      type: 'bar',
-                      height: 350
-                    },
-                    plotOptions: {
-                      bar: {
-                        borderRadius: 4,
-                        horizontal: true,
-                      }
-                    },
-                    dataLabels: {
-                      enabled: false
-                    },
-                    xaxis: {
-                      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-                        'United States', 'China', 'Germany'
-                      ],
-                    }
-                  }).render();
-                });
-              </script> -->
-              <!-- End Bar Chart -->
-
-            </div>
+                </div>
               </div>
             </div>
           </div>
@@ -383,93 +353,94 @@ export default {
       </div>
     </div>
     <!-- END Main Page -->
+    <!-- Modal 1 -->
     <div class="modal fade" id="exampleModalCenterPdf">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Export Data</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Export Data</h5>
+          </div>
+          <div class="modal-body">
+            <div class="row">
 
-                            <div class="col-sm-6">
-                                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
-                                <div class="col-sm-6">
-                                </div>
-                            </div>
-                            <div class="row tanggal-modal">
-
-                                <div class="col-sm-6 label-modal">
-                                    <label class="color-black label-modal" style="align-items: center;">From</label>
-                                </div>
-                                <div class="col-sm-6 input-modal">
-                                    <input type="date" class="form-control export-date" v-model="rptFrom">
-                                </div>
-                            </div>
-                            <div class="row tanggal-modal">
-                                <div class="col-sm-6 label-modal">
-                                    <label class="color-black label-modal" style="align-items: center;">To</label>
-                                </div>
-                                <div class="col-sm-6 input-modal">
-                                    <input type="date" class="form-control export-date" v-model="rptTo">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="mt-4 d-grid gap-2" style="align-items: center;">
-                            <button class="btn button3">Export PDF</button>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
+              <div class="col-sm-6">
+                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
+                <div class="col-sm-6">
                 </div>
-            </div>
-        </div>
+              </div>
+              <div class="row tanggal-modal">
 
-
-        <!-- Modal 2 -->
-        <div class="modal fade" id="exampleModalCenterCsv">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Export Data</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-
-                            <div class="col-sm-6">
-                                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
-                                <div class="col-sm-6">
-                                </div>
-                            </div>
-                            <div class="row tanggal-modal">
-
-                                <div class="col-sm-6 label-modal">
-                                    <label class="color-black label-modal" style="align-items: center;">From</label>
-                                </div>
-                                <div class="col-sm-6 input-modal">
-                                    <input type="date" class="form-control export-date" v-model="rptFrom">
-                                </div>
-                            </div>
-                            <div class="row tanggal-modal">
-                                <div class="col-sm-6 label-modal">
-                                    <label class="color-black label-modal" style="align-items: center;">To</label>
-                                </div>
-                                <div class="col-sm-6 input-modal">
-                                    <input type="date" class="form-control export-date" v-model="rptTo">
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="mt-4 d-grid gap-2" style="align-items: center;">
-                            <button class="btn button3">Export CSV</button>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
+                <div class="col-sm-6 label-modal">
+                  <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
+                <div class="col-sm-6 input-modal">
+                  <input type="date" class="form-control export-date" v-model="rptFrom">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6 label-modal">
+                  <label class="color-black label-modal" style="align-items: center;">To</label>
+                </div>
+                <div class="col-sm-6 input-modal">
+                  <input type="date" class="form-control export-date" v-model="rptTo">
+                </div>
+              </div>
+
             </div>
+
+            <div class="mt-4 d-grid gap-2" style="align-items: center;">
+              <button class="btn button3">Export PDF</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
         </div>
+      </div>
+    </div>
+
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="exampleModalCenterCsv">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Export Data</h5>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+
+              <div class="col-sm-6">
+                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
+                <div class="col-sm-6">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+
+                <div class="col-sm-6 label-modal">
+                  <label class="color-black label-modal" style="align-items: center;">From</label>
+                </div>
+                <div class="col-sm-6 input-modal">
+                  <input type="date" class="form-control export-date" v-model="rptFrom">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6 label-modal">
+                  <label class="color-black label-modal" style="align-items: center;">To</label>
+                </div>
+                <div class="col-sm-6 input-modal">
+                  <input type="date" class="form-control export-date" v-model="rptTo">
+                </div>
+              </div>
+
+            </div>
+            <div class="mt-4 d-grid gap-2" style="align-items: center;">
+              <button class="btn button3">Export CSV</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
