@@ -252,7 +252,7 @@ span a:hover {
     width: 60vw;
   }
   .Btn {
-    width: 55vw;
+    width: 50vw;
   }
 
   .row {
