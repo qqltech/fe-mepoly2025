@@ -1,13 +1,49 @@
 <script setup>
+import { flashMessage } from '../config/functions';
+import axios from 'axios';
 
 </script>
 <script>
 
+export default {
+    data() {
+        return {
+            isLoading: false,
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        async login() {
+            const payload = {
+                email: this.email,
+                password: this.password
+            }
+            try {
+                this.isLoading = true
+                const response = await axios.post('https://backend.qqltech.com:7021/login', payload)
+                const result = response.data;
+                if (result.success) {
+                    localStorage.setItem('admin', JSON.stringify(result.data));
+                    window.location.href = '/home'
+                } else {
+
+                    flashMessage('error', 'Error', result.errormsg)
+                    this.isLoading = false
+                }
+            } catch (error) {
+
+                flashMessage('error', 'Error', error.response.data.errormsg)
+                this.isLoading = false
+            }
+        }
+    }
+}
 </script>
 <template>
     <div class="wrapper">
-      <div class="right-top .d-sm-none .d-md-block"></div>
-      <div class="left-bottom .d-sm-none .d-md-block"></div>
+      <div class="right-top"></div>
+      <div class="left-bottom"></div>
     <div class="container main">
       <div class="row">
         <div class="col-md-6 left">
@@ -32,7 +68,7 @@
                   alt="Logo Mepoly-Industry"
                 />
 
-                <form>
+                <form method="POST" @submit.prevent="login">
                     <div class="input-box">
                 
 
@@ -41,7 +77,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    id="email" v-model="email"
+                    id="email" name="email" v-model="email"
                     required
                     autocomplete="off"
                   />
@@ -49,7 +85,7 @@
                 <div class="input-field mt-3">
                   <label for="password">Password</label>
                   <input
-                    type="password" v-model="password"
+                    type="password" name="password" v-model="password"
                     class="form-control"
                     id="password"
                     autocomplete="off"
@@ -64,8 +100,8 @@
                                         </svg>
                                     </i>
                 </div>
-                <div class="input-field mt-5 mb-5">
-                  <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login" value="Login">Login  <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                <div class="input-field mt-5 mb-3">
+                  <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login">Login  <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
                                         <span class="visually-hidden">Loading...</span>
                                     </div></button>
                 </div>
@@ -90,6 +126,7 @@
   width: 500px;
   height: 350px;
   transform: rotate(180deg);
+
 }
 
 .left-bottom {
@@ -100,6 +137,7 @@
   left: 0;
   width: 500px;
   height: 350px;
+
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap");
@@ -117,6 +155,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: transparent;
 }
 
 .row {
@@ -125,6 +164,8 @@
   border-radius: 10px;
   background: #fff;
   box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
 }
 
 .left {
@@ -274,7 +315,7 @@ span a:hover {
   height: 50px;
   width: auto;
   position: relative;
-  margin:30px 50px;
+  margin:5px 50px;
   align-items: center;
   text-align: center;
   justify-self: center;
