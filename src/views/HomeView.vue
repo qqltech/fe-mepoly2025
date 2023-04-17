@@ -1,12 +1,46 @@
-<script setup></script>
+<script setup>
+import axios from 'axios';
+import { flashMessage, format_date, getDataIsLogin } from '../config/functions'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
+</script>
+
 <script>
 export default {
+
+  name: 'BarChart',
+  components: { Bar },
+  data() {
+    return {
+      chartData: {
+        labels: [ 'January', 'February', 'March'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: [40, 20, 12]
+          }
+        ]
+      }
+    }
+  },
     methods: {
         logout() {
             localStorage.removeItem('admin')
             this.$router.push('/')
         },
         
+
+
+    },
+    computed: {
+        isAuthenticated() {
+            return localStorage.getItem('admin') !== null;
+        },
+
 
 
     }
@@ -66,13 +100,13 @@ export default {
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                   <label class="form-check-label" for="flexCheckDefault">
-                    Barang A
+                    Tali
                   </label>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                   <label class="form-check-label" for="flexCheckDefault">
-                    Barang B
+                    Selang
                   </label>
                 </div>
               </div>
@@ -93,7 +127,7 @@ export default {
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                   <label class="form-check-label" for="flexRadioDefault1">
-                    Store B
+                    Store A
                   </label>
                 </div>
                 <div class="form-check">
@@ -105,7 +139,13 @@ export default {
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                   <label class="form-check-label" for="flexRadioDefault1">
-                    Store B
+                    Store C
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Store D
                   </label>
                 </div>
               </div>
@@ -124,7 +164,7 @@ export default {
                   <h6>Last Visited</h6>
                 </div>
                 <div class="col-sm-6">
-                  <h6>: Isa Iman Muhammad</h6>
+                  <h6>: Nazwa Dafa</h6>
                   <h6>: 03/04/2023</h6>
                 </div>
               </div>
@@ -189,7 +229,7 @@ export default {
                     </div>
 
                   </div>
-                  <h1 class="card-count mt-1 mb-3">2.382</h1>
+                  <h1 class="card-count mt-1 mb-3">123.456</h1>
 
                 </div>
               </div>
@@ -258,34 +298,6 @@ export default {
                   <div class="card-body">
               <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
 
-              <!-- Doughnut Chart -->
-              <canvas id="doughnutChart" style="max-height: 400px;"></canvas>
-              <!-- <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new Chart(document.querySelector('#doughnutChart'), {
-                    type: 'doughnut',
-                    data: {
-                      labels: [
-                        'Red',
-                        'Blue',
-                        'Yellow'
-                      ],
-                      datasets: [{
-                        label: 'My First Dataset',
-                        data: [300, 50, 100],
-                        backgroundColor: [
-                          'rgb(255, 99, 132)',
-                          'rgb(54, 162, 235)',
-                          'rgb(255, 205, 86)'
-                        ],
-                        hoverOffset: 4
-                      }]
-                    }
-                  });
-                });
-              </script> -->
-              <!-- End Doughnut CHart -->
-
             </div>
                 </div>
               </div>
@@ -294,36 +306,9 @@ export default {
               <div class="card card-4 ">
                 <div class="card-body ">
                   <div class="card-body">
-              <h5 class="card-title"><b>Product Omzet Differentiation</b></h5>
+              <h5 class="card-title"><b>Detail Order</b></h5>
 
-              <!-- Doughnut Chart -->
-              <canvas id="doughnutChart" style="max-height: 400px;"></canvas>
-              <!-- <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new Chart(document.querySelector('#doughnutChart'), {
-                    type: 'doughnut',
-                    data: {
-                      labels: [
-                        'Red',
-                        'Blue',
-                        'Yellow'
-                      ],
-                      datasets: [{
-                        label: 'My First Dataset',
-                        data: [300, 50, 100],
-                        backgroundColor: [
-                          'rgb(255, 99, 132)',
-                          'rgb(54, 162, 235)',
-                          'rgb(255, 205, 86)'
-                        ],
-                        hoverOffset: 4
-                      }]
-                    }
-                  });
-                });
-              </script> -->
-              <!-- End Doughnut CHart -->
-
+             
             </div>
                 </div>
               </div>
@@ -336,38 +321,7 @@ export default {
                 <div class="card-body">
               <h5 class="card-title"><b>Detail Stock</b></h5>
 
-              <!-- Bar Chart -->
-              <div id="barChart"></div>
-
-              <!-- <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new ApexCharts(document.querySelector("#barChart"), {
-                    series: [{
-                      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-                    }],
-                    chart: {
-                      type: 'bar',
-                      height: 350
-                    },
-                    plotOptions: {
-                      bar: {
-                        borderRadius: 4,
-                        horizontal: true,
-                      }
-                    },
-                    dataLabels: {
-                      enabled: false
-                    },
-                    xaxis: {
-                      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-                        'United States', 'China', 'Germany'
-                      ],
-                    }
-                  }).render();
-                });
-              </script> -->
-              <!-- End Bar Chart -->
-
+              <Bar :data="chartData" />
             </div>
               </div>
             </div>
@@ -420,7 +374,7 @@ export default {
             <div class="col-sm-12">
               <div class="card card-5">
                 <div class="card-body">
-                  <h5 class="card-title"><b>Detail Order</b></h5>
+                  <h5 class="card-title"><b>Product Omzet Differentiation</b></h5>
                 </div>
               </div>
             </div>
