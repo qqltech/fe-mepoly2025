@@ -1,5 +1,9 @@
-<script setup></script>
-<script></script>
+<script setup>
+
+</script>
+<script>
+
+</script>
 <template>
     <div class="wrapper">
       <div class="right-top .d-sm-none .d-md-block"></div>
@@ -61,7 +65,7 @@
                                     </i>
                 </div>
                 <div class="input-field mt-5 mb-5">
-                  <button type="submit" class="submit" :disabled="isLoading" id="btn_login" value="Login">Login  <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                  <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login" value="Login">Login  <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
                                         <span class="visually-hidden">Loading...</span>
                                     </div></button>
                 </div>
@@ -203,7 +207,7 @@ img {
   text-align: center;
 }
 
-.submit {
+.submitBtn {
   border: none;
   outline: none;
   height: 45px;
@@ -213,7 +217,7 @@ img {
   transition: 0.4s;
 }
 
-.submit:hover {
+.submitBtn:hover {
   background: white;
   color: #244065;
   border: 2px solid #244065;
@@ -245,10 +249,10 @@ span a:hover {
   }
 
   .form-control{
-    width: 50vw;
+    width: 60vw;
   }
-  .submit {
-    width: 50vw;
+  .Btn {
+    width: 60vw;
   }
 
   .row {
