@@ -120,7 +120,17 @@ left: 0;
  font-weight: bold;
 }
 
+.button3 {
+ background-color: #244065 !important;
+ color: white !important;
+ border-radius: 10px !important;
+}
 
+.button3:hover{
+ background-color: white  !important;
+ color: #244065 !important;
+ border: 2px solid #244065 !important;
+}
 .card-salesman{
  padding: 15px 15px 15px 15px !important;
  justify-content: center;
@@ -171,6 +181,18 @@ border: none;
  
  
 }
+
+.export-date{
+ color: #244065 !important;
+ background-color: rgba(237, 237, 237, 1) !important;
+border: none !important;
+ border-radius: 10px !important;
+ padding: 6px 12px 6px 12px !important;
+
+
+}
+
+
 .label-date{
  font-size: 12px;
  position: absolute;
@@ -329,4 +351,35 @@ top: 57%;
  width: auto;
  justify-content: center;
  text-align: center;
+}
+
+
+.child-media {
+ padding-left: 100px;
+}
+
+.modal-dialog.modal-xl {
+ max-width: 100%;
+}
+
+.modal-body {
+
+}
+
+.tanggal-modal {
+  margin: 0px !important;
+  padding: 15px 0px !important;
+}
+
+.input-modal {
+  width: 225px;
+  padding: 0 !important;
+}
+ 
+.label-modal {
+  display: flex;
+  text-align: center;
+  align-items: center;
+
+  margin: 0px;
 }

@@ -191,8 +191,8 @@ export default {
           <img class="header-img-logo" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" height="50px"
             width="auto" />
 
-          <button class="button btn1 ">Export to PDF</button>
-          <button class="button btn1">Export to CSV</button>
+          <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterPdf">Export to PDF</button>
+          <button class="button btn1" data-toggle="modal" data-target="#exampleModalCenterCsv">Export to CSV</button>
 
           <label class="period-date"><b>Period :</b></label>
           <input type="date" class="period-bar1" id="fromDate">
@@ -383,6 +383,93 @@ export default {
       </div>
     </div>
     <!-- END Main Page -->
+    <div class="modal fade" id="exampleModalCenterPdf">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Export Data</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
 
+                            <div class="col-sm-6">
+                                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
+                                <div class="col-sm-6">
+                                </div>
+                            </div>
+                            <div class="row tanggal-modal">
+
+                                <div class="col-sm-6 label-modal">
+                                    <label class="color-black label-modal" style="align-items: center;">From</label>
+                                </div>
+                                <div class="col-sm-6 input-modal">
+                                    <input type="date" class="form-control export-date" v-model="rptFrom">
+                                </div>
+                            </div>
+                            <div class="row tanggal-modal">
+                                <div class="col-sm-6 label-modal">
+                                    <label class="color-black label-modal" style="align-items: center;">To</label>
+                                </div>
+                                <div class="col-sm-6 input-modal">
+                                    <input type="date" class="form-control export-date" v-model="rptTo">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4 d-grid gap-2" style="align-items: center;">
+                            <button class="btn button3">Export PDF</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal 2 -->
+        <div class="modal fade" id="exampleModalCenterCsv">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Export Data</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
+                                <div class="col-sm-6">
+                                </div>
+                            </div>
+                            <div class="row tanggal-modal">
+
+                                <div class="col-sm-6 label-modal">
+                                    <label class="color-black label-modal" style="align-items: center;">From</label>
+                                </div>
+                                <div class="col-sm-6 input-modal">
+                                    <input type="date" class="form-control export-date" v-model="rptFrom">
+                                </div>
+                            </div>
+                            <div class="row tanggal-modal">
+                                <div class="col-sm-6 label-modal">
+                                    <label class="color-black label-modal" style="align-items: center;">To</label>
+                                </div>
+                                <div class="col-sm-6 input-modal">
+                                    <input type="date" class="form-control export-date" v-model="rptTo">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-4 d-grid gap-2" style="align-items: center;">
+                            <button class="btn button3">Export CSV</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
   </main>
 </template>
