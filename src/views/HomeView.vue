@@ -35,23 +35,27 @@ export default {
       role: '',
       user: null,
       chartData1: {
-        labels: ['January', 'February', 'March'],
+        labels: ['Tali', 'Selang'],
         datasets: [
           {
-            label: 'Data One',
-            backgroundColor: '#244065',
-            data: [40, 20, 12]
+            label: 'Jumlah Stock',
+            backgroundColor: ['#244065','#22AAD9'],
+            data: [400, 200,  ],
+            barThickness: 0.1,
+            // barPercentage: 0.5
+
           }
-        ]
+        ],
+        
       },
       chartData2: {
-        labels: ['January', 'February', 'March'],
+        labels: ['Tali', 'Selang'],
         datasets: [
           {
-            label: 'Data One',
-            backgroundColor: '#244065',
-            data: [40, 20, 12]
-          }
+            label: 'Jumlah Order',
+            backgroundColor: ['#244065','#22AAD9'],
+            data: [100, 250, ],
+            }
         ]
       },
       chartData3: {
@@ -59,7 +63,7 @@ export default {
         datasets: [
           {
             indexAxis: 'y',
-            label: 'Data One',
+            label: 'Detail Stock',
             backgroundColor: '#244065',
             data: [40, 20, 12]
           }
@@ -70,7 +74,7 @@ export default {
         datasets: [
           {
             indexAxis: 'y',
-            label: 'Data One',
+            label: 'Detail Omzet',
             backgroundColor: '#244065',
             data: [40, 20, 12]
           }
@@ -80,12 +84,17 @@ export default {
         labels: ['January', 'February', 'March'],
         datasets: [
           {
-            label: 'Data One',
+            label: 'Product Omzet Differentiation',
             backgroundColor: '#244065',
             data: [40, 20, 12]
           }
         ]
       },
+      options: {
+        // maintainAspectRatio:false,
+        // height:'10px',
+        
+      }
     }
   },
   methods: {
@@ -415,7 +424,7 @@ export default {
               <div class="card card-5">
                 <div class="card-body">
                   <h5 class="card-title"><b>Product Omzet Differentiation</b></h5>
-                  <Line :data="chartData1" />
+                  <Line :data="chartData5" :options="options"/>
 
                 </div>
               </div>
