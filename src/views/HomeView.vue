@@ -104,12 +104,7 @@ export default {
 
 
 
-  },
-  mounted(){
-    const data = dataUser.user
-        this.name = data.name
-        this.role = data.role
-  },
+  },  
 
   created() {
     const user = JSON.parse(localStorage.getItem('admin'))
