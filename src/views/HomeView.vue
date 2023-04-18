@@ -91,8 +91,11 @@ export default {
         ]
       },
       options: {
-        // maintainAspectRatio:false,
-        // height:'10px',
+        scales: {
+    yAxes: [{
+      barPercentage: 0.5
+    }]
+  },
         
       }
     }
@@ -374,7 +377,7 @@ export default {
                 <div class="card-body ">
                   <div class="card-body">
                     <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
-                    <Doughnut :data="chartData1" />
+                    <Doughnut :data="chartData1" :options="options"/>
 
                   </div>
                 </div>
@@ -385,7 +388,7 @@ export default {
                 <div class="card-body ">
                   <div class="card-body">
                     <h5 class="card-title"><b>Detail Order</b></h5>
-                    <Doughnut :data="chartData2" />
+                    <Doughnut :data="chartData2" :options="options"/>
 
 
                   </div>
@@ -400,7 +403,7 @@ export default {
                 <div class="card-body">
                   <h5 class="card-title"><b>Detail Stock</b></h5>
 
-                  <Bar :data="chartData3" />
+                  <Bar :data="chartData3" :options="options"/>
                 </div>
               </div>
             </div>
@@ -412,7 +415,7 @@ export default {
                 <div class="card-body">
                   <h5 class="card-title"><b>Detail Omzet</b></h5>
 
-                  <Bar :data="chartData4" />
+                  <Bar :data="chartData4" :options="options"/>
 
                 </div>
               </div>
