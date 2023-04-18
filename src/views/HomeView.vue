@@ -1,30 +1,86 @@
 <script setup>
 import axios from 'axios';
 import { flashMessage, format_date, getDataIsLogin } from '../config/functions'
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 </script>
 
 <script>
+import { Bar, Line, Doughnut } from 'vue-chartjs'
+import {
+  Chart as ChartJS, ArcElement, Tooltip, Legend,
+  Title,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from 'chart.js'
+
+ChartJS.register(ArcElement, Tooltip, Legend,
+  Title,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,)
 export default {
 
   name: 'BarChart',
-  components: { Bar },
+  components: { Bar, Line, Doughnut },
   data() {
     return {
-      chartData: {
+      chartData1: {
         labels: ['January', 'February', 'March'],
         datasets: [
           {
             label: 'Data One',
-            backgroundColor: '#f87979',
+            backgroundColor: '#244065',
             data: [40, 20, 12]
           }
         ]
-      }
+      },
+      chartData2: {
+        labels: ['January', 'February', 'March'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#244065',
+            data: [40, 20, 12]
+          }
+        ]
+      },
+      chartData3: {
+        labels: ['January', 'February', 'March'],
+        indexAxis: 'y',
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#244065',
+            data: [40, 20, 12]
+          }
+        ]
+      },
+      chartData4: {
+        labels: ['January', 'February', 'March'],
+        indexAxis: 'y',
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#244065',
+            data: [40, 20, 12]
+          }
+        ]
+      },
+      chartData5: {
+        labels: ['January', 'February', 'March'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#244065',
+            data: [40, 20, 12]
+          }
+        ]
+      },
     }
   },
   methods: {
@@ -290,31 +346,33 @@ export default {
               </div>
             </div>
 
-        </div>
+          </div>
 
-        <div class="row mt-4">
-          <div class="col-sm-6">
-            <div class="card card-4 ">
-              <div class="card-body ">
-                <div class="card-body">
-                  <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
+          <div class="row mt-4">
+            <div class="col-sm-6">
+              <div class="card card-4 ">
+                <div class="card-body ">
+                  <div class="card-body">
+                    <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
+                    <Doughnut :data="chartData1" />
 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card card-4 ">
+                <div class="card-body ">
+                  <div class="card-body">
+                    <h5 class="card-title"><b>Detail Order</b></h5>
+                    <Doughnut :data="chartData2" />
+
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-sm-6">
-            <div class="card card-4 ">
-              <div class="card-body ">
-                <div class="card-body">
-                  <h5 class="card-title"><b>Detail Order</b></h5>
-
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
           <div class="row mt-4">
             <div class="col-sm-12">
@@ -322,7 +380,7 @@ export default {
                 <div class="card-body">
                   <h5 class="card-title"><b>Detail Stock</b></h5>
 
-                  <Bar :data="chartData" />
+                  <Bar :data="chartData3" />
                 </div>
               </div>
             </div>
@@ -334,6 +392,7 @@ export default {
                 <div class="card-body">
                   <h5 class="card-title"><b>Detail Omzet</b></h5>
 
+                  <Bar :data="chartData4" />
 
                 </div>
               </div>
@@ -345,6 +404,8 @@ export default {
               <div class="card card-5">
                 <div class="card-body">
                   <h5 class="card-title"><b>Product Omzet Differentiation</b></h5>
+                  <Line :data="chartData1" />
+
                 </div>
               </div>
             </div>
