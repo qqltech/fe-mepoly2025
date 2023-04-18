@@ -24,7 +24,7 @@ export default {
         this.isLoading = true
         const response = await axios.post(`https://backend.qqltech.com:7021/login`, payload)
         const result = response.data;
-
+console.log(result);
         localStorage.setItem('admin', JSON.stringify(result.data));
         this.$router.push('home');
 
@@ -69,7 +69,7 @@ export default {
 
 
                   <div class="input-field">
-                    <label for="email">Email</label>
+                    <label for="email">Username</label>
                     <input type="text" class="form-control" name="email" v-model="email" required autocomplete="off" />
                   </div>
                   <div class="input-field mt-3">

@@ -23,12 +23,17 @@ ChartJS.register(ArcElement, Tooltip, Legend,
   LinearScale,
   PointElement,
   LineElement,)
+
+const dataUser = getDataIsLogin();
 export default {
 
   name: 'BarChart',
   components: { Bar, Line, Doughnut },
   data() {
-    return {
+    return {  
+      name: '',
+      role: '',
+      user: null,
       chartData1: {
         labels: ['January', 'February', 'March'],
         datasets: [
@@ -51,9 +56,9 @@ export default {
       },
       chartData3: {
         labels: ['January', 'February', 'March'],
-        indexAxis: 'y',
         datasets: [
           {
+            indexAxis: 'y',
             label: 'Data One',
             backgroundColor: '#244065',
             data: [40, 20, 12]
@@ -62,9 +67,9 @@ export default {
       },
       chartData4: {
         labels: ['January', 'February', 'March'],
-        indexAxis: 'y',
         datasets: [
           {
+            indexAxis: 'y',
             label: 'Data One',
             backgroundColor: '#244065',
             data: [40, 20, 12]
@@ -99,7 +104,18 @@ export default {
 
 
 
-  }
+  },
+  mounted(){
+    const data = dataUser.user
+        this.name = data.name
+        this.role = data.role
+  },
+
+  created() {
+    const user = JSON.parse(localStorage.getItem('admin'))
+    this.nama = user.name
+    this.role = user.role
+  },
 }
 </script>
 
@@ -136,11 +152,11 @@ export default {
               </div>
               <div class="col-sm-4 user-text-profile">
                 <h6>User ID</h6>
-                <h6>Position</h6>
+                <h6>Role</h6>
               </div>
               <div class="col-sm-6 user-text-profile">
-                <h6>: Isa Iman Muhammad</h6>
-                <h6>: Director</h6>
+                <h6>: {{ nama }}</h6>
+                <h6>: {{ role }}</h6>
               </div>
             </div>
           </div>
