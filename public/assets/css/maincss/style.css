@@ -1,5 +1,6 @@
 body {
  background-color: white;
+ font-family: "Noto Sans", sans-serif;
 }
 
 section {
@@ -136,7 +137,7 @@ left: 0;
  justify-content: center;
 background-color: rgba(211, 238, 247, 1);
 margin: 0 !important;
-border-radius: 5px;
+border-radius: 10px;
 }
 
 .card-user{
@@ -323,6 +324,7 @@ border: none !important;
  /* position: absolute; */
  top: 25px;
  left: 80px;
+ font-family: "Noto Sans", sans-serif;
 }
 
 .card-count {
@@ -388,6 +390,10 @@ input[type="date"]{
 }
 
 canvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 200px !important;
+  height: 200px !important;
+}
+
+p {
+  font-size: 16px !important;
 }

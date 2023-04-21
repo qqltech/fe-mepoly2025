@@ -30,7 +30,7 @@ export default {
   name: 'BarChart',
   components: { Bar, Line, Doughnut },
   data() {
-    return {  
+    return {
       name: '',
       role: '',
       user: null,
@@ -39,23 +39,23 @@ export default {
         datasets: [
           {
             label: 'Jumlah Stock',
-            backgroundColor: ['#244065','#22AAD9'],
-            data: [400, 200,  ],
+            backgroundColor: ['#244065', '#22AAD9'],
+            data: [400, 200,],
             barThickness: 0.1,
             // barPercentage: 0.5
 
           }
         ],
-        
+
       },
       chartData2: {
         labels: ['Tali', 'Selang'],
         datasets: [
           {
             label: 'Jumlah Order',
-            backgroundColor: ['#244065','#22AAD9'],
-            data: [100, 250, ],
-            }
+            backgroundColor: ['#244065', '#22AAD9'],
+            data: [100, 250,],
+          }
         ]
       },
       chartData3: {
@@ -92,11 +92,11 @@ export default {
       },
       options: {
         scales: {
-    yAxes: [{
-      barPercentage: 0.5
-    }]
-  },
-        
+          yAxes: [{
+            barPercentage: 0.5
+          }]
+        },
+
       }
     }
   },
@@ -116,7 +116,7 @@ export default {
 
 
 
-  },  
+  },
 
   created() {
     const user = JSON.parse(localStorage.getItem('admin'))
@@ -158,12 +158,12 @@ export default {
                   alt="" />
               </div>
               <div class="col-sm-4 user-text-profile">
-                <h6>User ID</h6>
-                <h6>Role</h6>
+                <p>User ID</p>
+                <p>Role</p>
               </div>
               <div class="col-sm-6 user-text-profile">
-                <h6>: {{ nama }}</h6>
-                <h6>: {{ role }}</h6>
+                <p>: {{ nama }}</p>
+                <p>: {{ role }}</p>
               </div>
             </div>
           </div>
@@ -174,7 +174,7 @@ export default {
             </div>
             <div class="row mt-2 mb-2">
               <div class="col-sm-6">
-                <h6>Product</h6>
+                <p>Product</p>
               </div>
               <div class="col-sm-6">
                 <div class="form-check">
@@ -195,7 +195,7 @@ export default {
             <hr class="garis-sidebar" style=" margin-top: 20px" />
             <div class="row mt-2 mb-3">
               <div class="col-sm-6">
-                <h6>Store Name</h6>
+                <p>Store Name</p>
               </div>
               <div class="col-sm-6">
                 <div class="form-check">
@@ -232,7 +232,7 @@ export default {
             </div>
             <hr class="garis-sidebar" style=" margin-top: 20px" />
             <div class="row mt-2 mb-2">
-              <h6 class="mb-2">Salesman Info</h6>
+              <p class="mb-2">Salesman Info</p>
               <div class="row card-salesman">
 
                 <div class="col-sm-2 mt-2">
@@ -240,12 +240,12 @@ export default {
                     alt="" />
                 </div>
                 <div class="col-sm-4" style="justify-content: center; justify-items: center;">
-                  <h6>Name</h6>
-                  <h6>Last Visited</h6>
+                  <p>Name</p>
+                  <p>Last Visited</p>
                 </div>
                 <div class="col-sm-6">
-                  <h6>: Nazwa Dafa</h6>
-                  <h6>: 03/04/2023</h6>
+                  <p>: Nazwa Dafa</p>
+                  <p>: 03/04/2023</p>
                 </div>
               </div>
             </div>
@@ -299,7 +299,7 @@ export default {
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title">Total Stock</p>
+                          <p class="card-title"><b>Total Stock</b></p>
                         </div>
 
 
@@ -326,7 +326,7 @@ export default {
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title">Total Omzet</p>
+                          <p class="card-title"><b>Total Omzet</b></p>
                         </div>
 
 
@@ -353,7 +353,7 @@ export default {
                           </div>
                         </div>
                         <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title">Total Visit</p>
+                          <p class="card-title"><b>Total Visit</b></p>
                         </div>
 
 
@@ -376,8 +376,8 @@ export default {
               <div class="card card-4 ">
                 <div class="card-body ">
                   <div class="card-body">
-                    <h5 class="card-title"><b>Product Stock Differentiation</b></h5>
-                    <Doughnut :data="chartData1" :options="options"/>
+                    <p class="card-title"><b>Product Stock Differentiation</b></p>
+                    <Doughnut :data="chartData1" :options="options" />
 
                   </div>
                 </div>
@@ -387,8 +387,8 @@ export default {
               <div class="card card-4 ">
                 <div class="card-body ">
                   <div class="card-body">
-                    <h5 class="card-title"><b>Detail Order</b></h5>
-                    <Doughnut :data="chartData2" :options="options"/>
+                    <p class="card-title"><b>Detail Order</b></p>
+                    <Doughnut :data="chartData2" :options="options" />
 
 
                   </div>
@@ -401,10 +401,13 @@ export default {
             <div class="col-sm-12">
               <div class="card card-5">
                 <div class="card-body">
-                  <h5 class="card-title"><b>Detail Stock</b></h5>
+                  <div class="card-body">
+                    <p class="card-title"><b>Detail Stock</b></p>
 
-                  <Bar :data="chartData3" :options="options"/>
+                    <Bar :data="chartData3" :options="options" />
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -413,11 +416,14 @@ export default {
             <div class="col-sm-12">
               <div class="card card-5">
                 <div class="card-body">
-                  <h5 class="card-title"><b>Detail Omzet</b></h5>
+                  <div class="card-body">
+                    <p class="card-title"><b>Detail Omzet</b></p>
 
-                  <Bar :data="chartData4" :options="options"/>
+                    <Bar :data="chartData4" :options="options" />
 
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -426,10 +432,13 @@ export default {
             <div class="col-sm-12">
               <div class="card card-5">
                 <div class="card-body">
-                  <h5 class="card-title"><b>Product Omzet Differentiation</b></h5>
-                  <Line :data="chartData5" :options="options"/>
+                  <div class="card-body">
+                    <p class="card-title"><b>Product Omzet Differentiation</b></p>
+                    <Line :data="chartData5" :options="options" />
 
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -526,5 +535,4 @@ export default {
         </div>
       </div>
     </div>
-  </main>
-</template>
+  </main></template>
