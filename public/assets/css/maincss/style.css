@@ -392,6 +392,8 @@ input[type="date"]{
 canvas {
   width: 200px !important;
   height: 200px !important;
+  text-align: center !important;
+  align-items: center !important;
 }
 
 p {
