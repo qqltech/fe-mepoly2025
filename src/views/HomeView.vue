@@ -96,6 +96,9 @@ export default {
             barPercentage: 0.5
           }]
         },
+        legend: {
+            display: false
+        }
 
       }
     }
@@ -376,11 +379,12 @@ export default {
                 <div class="card-body ">
                   <div class="card-body">
                     <p class="card-title"><b>Product Stock Differentiation</b></p>
-                    <div class="canvas">
-                      <Doughnut :data="chartData1" :options="options" />
+                    <div class="col-sm-12 canvas1">
+                        <Doughnut :data="chartData1" :options="options" />
+  
 
                     </div>
-
+                  
                   </div>
                 </div>
               </div>
@@ -390,7 +394,7 @@ export default {
                 <div class="card-body ">
                   <div class="card-body">
                     <p class="card-title"><b>Product Omzet Differentiation</b></p>
-                    <div class="canvas">
+                    <div class="col-sm-12 canvas1">
                       <Doughnut :data="chartData2" :options="options" />
 
                     </div>
@@ -408,7 +412,7 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Stock</b></p>
-                    <div class="canvas">
+                    <div class="col-sm-12 canvas2">
                       <Bar :data="chartData3" :options="options" />
 
                     </div>
@@ -425,7 +429,7 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Omzet</b></p>
-                    <div class="canvas">
+                    <div class="col-sm-12 canvas2">
 
                       <Bar :data="chartData4" :options="options" />
                     </div>
@@ -443,7 +447,7 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Order</b></p>
-                    <div class="canvas">
+                    <div class="col-sm-12 canvas2">
 
 
                       <Line :data="chartData5" :options="options" />
