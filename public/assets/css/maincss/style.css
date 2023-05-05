@@ -391,11 +391,18 @@ input[type="date"]{
 
 canvas {
   width: auto !important;
-  height: 300px !important;
+  height: 250px !important;
   text-align: center !important;
   align-items: center !important;
 }
 
+.canvas{
+  position: relative;
+  left: 5%;
+  text-align: center;
+  align-items: center;
+  overflow: hidden;
+}
 p {
   font-size: 16px !important;
 }

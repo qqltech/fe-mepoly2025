@@ -376,7 +376,10 @@ export default {
                 <div class="card-body ">
                   <div class="card-body">
                     <p class="card-title"><b>Product Stock Differentiation</b></p>
-                    <Doughnut :data="chartData1" :options="options" />
+                    <div class="canvas">
+                      <Doughnut :data="chartData1" :options="options" />
+
+                    </div>
 
                   </div>
                 </div>
@@ -387,7 +390,10 @@ export default {
                 <div class="card-body ">
                   <div class="card-body">
                     <p class="card-title"><b>Product Omzet Differentiation</b></p>
-                    <Doughnut :data="chartData2" :options="options" />
+                    <div class="canvas">
+                      <Doughnut :data="chartData2" :options="options" />
+
+                    </div>
 
 
                   </div>
@@ -402,8 +408,10 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Stock</b></p>
+                    <div class="canvas">
+                      <Bar :data="chartData3" :options="options" />
 
-                    <Bar :data="chartData3" :options="options" />
+                    </div>
                   </div>
                 </div>
 
@@ -417,8 +425,10 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Omzet</b></p>
+                    <div class="canvas">
 
-                    <Bar :data="chartData4" :options="options" />
+                      <Bar :data="chartData4" :options="options" />
+                    </div>
 
                   </div>
                 </div>
@@ -433,7 +443,11 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Order</b></p>
-                    <Line :data="chartData5" :options="options" />
+                    <div class="canvas">
+
+
+                      <Line :data="chartData5" :options="options" />
+                    </div>
 
                   </div>
                 </div>
