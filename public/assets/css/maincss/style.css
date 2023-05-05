@@ -399,3 +399,29 @@ canvas {
 p {
   font-size: 16px !important;
 }
+
+.dropdown-search {
+  background-color: white;
+
+}
+
+.dropdown-toggle {
+  width: 200px;
+  background-color: #244065 !important;
+  color: white !important;
+}
+
+.dropdown {
+}
+
+.dropdown-menu {
+  max-height: 20rem;
+  border-radius: 10px !important;
+  width: 200px !important;
+  color: black;
+}
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}

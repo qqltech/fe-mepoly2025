@@ -35,10 +35,10 @@ export default {
       role: '',
       user: null,
       chartData1: {
-        labels: ['Tali', 'Selang'],
+        labels: ['Brand A', 'Brand B'],
         datasets: [
           {
-            label: 'Jumlah Stock',
+            label: 'Stock Amount',
             backgroundColor: ['#244065', '#22AAD9'],
             data: [400, 200,],
             barThickness: 0.1,
@@ -49,44 +49,44 @@ export default {
 
       },
       chartData2: {
-        labels: ['Tali', 'Selang'],
+        labels: ['Brand A', 'Brand B'],
         datasets: [
           {
-            label: 'Jumlah Order',
+            label: 'Omzet Amount',
             backgroundColor: ['#244065', '#22AAD9'],
             data: [100, 250,],
           }
         ]
       },
       chartData3: {
-        labels: ['January', 'February', 'March'],
+        labels: ['Mepoly', 'Trilliun', 'Sumber Jaya', 'Pusso', 'Turbo Hose'],
         datasets: [
           {
             indexAxis: 'y',
-            label: 'Detail Stock',
+            label: 'Detail Stock (pcs)',
             backgroundColor: '#244065',
-            data: [40, 20, 12]
+            data: [650, 500, 250, 200, 500]
           }
         ]
       },
       chartData4: {
-        labels: ['January', 'February', 'March'],
+        labels: ['Mepoly', 'Trilliun', 'Sumber Jaya', 'Pusso', 'Turbo Hose'],
         datasets: [
           {
             indexAxis: 'y',
             label: 'Detail Omzet',
             backgroundColor: '#244065',
-            data: [40, 20, 12]
+            data: [680, 300, 250, 200, 150]
           }
         ]
       },
       chartData5: {
-        labels: ['January', 'February', 'March'],
+        labels: ['S. FLex', 'Stabilo', 'Seagull', 'Qrope', 'Hank', 'Bintang', 'PP. Band'],
         datasets: [
           {
-            label: 'Product Omzet Differentiation',
+            label: 'Detail Order',
             backgroundColor: '#244065',
-            data: [40, 20, 12]
+            data: [47, 28, 58, 52, 56, 30, 52]
           }
         ]
       },
@@ -180,13 +180,13 @@ export default {
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                   <label class="form-check-label" for="flexCheckDefault">
-                    Tali
+                    Brand A
                   </label>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                   <label class="form-check-label" for="flexCheckDefault">
-                    Selang
+                    Brand B
                   </label>
                 </div>
               </div>
@@ -198,35 +198,34 @@ export default {
                 <p>Store Name</p>
               </div>
               <div class="col-sm-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                  <label class="form-check-label" for="flexRadioDefault1">
+
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     All
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Store A
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Store B
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Store C
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Store D
-                  </label>
+                  </button>
+                  <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+                    <form class="px-4 py-2">
+                      <input type="search" class="form-control" id="searchStore" placeholder="Search Store..."
+                        autofocus="autofocus">
+                    </form>
+                    <a class="dropdown-item" href="#">All</a>
+
+                    <a class="dropdown-item" href="#">Store A</a>
+                    <a class="dropdown-item" href="#">Store B</a>
+                    <a class="dropdown-item" href="#">Store C</a>
+
+                    <a class="dropdown-item" href="#">Store D</a>
+
+                    <a class="dropdown-item" href="#">Store E</a>
+                    <a class="dropdown-item" href="#">Store F</a>
+                    <a class="dropdown-item" href="#">Store G</a>
+                    <a class="dropdown-item" href="#">Store H</a>
+                    <a class="dropdown-item" href="#">Store I</a>
+                    <a class="dropdown-item" href="#">Store J</a>
+                    <a class="dropdown-item" href="#">Store K</a>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -387,7 +386,7 @@ export default {
               <div class="card card-4 ">
                 <div class="card-body ">
                   <div class="card-body">
-                    <p class="card-title"><b>Detail Order</b></p>
+                    <p class="card-title"><b>Product Omzet Differentiation</b></p>
                     <Doughnut :data="chartData2" :options="options" />
 
 
@@ -433,7 +432,7 @@ export default {
               <div class="card card-5">
                 <div class="card-body">
                   <div class="card-body">
-                    <p class="card-title"><b>Product Omzet Differentiation</b></p>
+                    <p class="card-title"><b>Detail Order</b></p>
                     <Line :data="chartData5" :options="options" />
 
                   </div>
@@ -535,4 +534,5 @@ export default {
         </div>
       </div>
     </div>
-  </main></template>
+  </main>
+</template>
