@@ -97,7 +97,9 @@ export default {
           }]
         },
         legend: {
-            display: false
+            display: false,
+            responsive: true,
+            maintainAspectRatio: false,
         }
 
       }
@@ -203,7 +205,7 @@ export default {
               <div class="col-sm-6">
 
                 <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                  <button class=" dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     All
                   </button>
