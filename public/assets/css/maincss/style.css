@@ -1,371 +1,336 @@
 body {
- background-color: white;
- font-family: "Noto Sans", sans-serif;
+  background-color: white;
+  font-family: "Noto Sans", sans-serif;
 }
 
 section {
- width: 100%;
- height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 a {
- text-decoration: none;
+  text-decoration: none;
 }
-
 
 .row {
- margin-left: 0.5rem !important;
- margin-right: 0.75rem !important;
-
+  margin-left: 0.5rem !important;
+  margin-right: 0.75rem !important;
 }
-.row>*{
- padding-left: 0 !important;
+.row > * {
+  padding-left: 0 !important;
 }
 .offcanvas.offcanvas-start {
- width: 500px !important;
+  width: 500px !important;
 }
 .offcanvas-header-right {
- position: absolute;
-left: 440px;
-
+  position: absolute;
+  left: 440px;
 }
 .offcanvas-header-left {
- position: absolute;
- margin-left: 30px;
-left: 0;
+  position: absolute;
+  margin-left: 30px;
+  left: 0;
 }
-.offcanvas-body{
- margin-top: 40px;
+.offcanvas-body {
+  margin-top: 40px;
 }
 
 .offcanvas-body-inside {
- /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 }
 .button-closed {
- color: #244065 !important;
- width: auto;
- height: 35px !important;
-
+  color: #244065 !important;
+  width: auto;
+  height: 35px !important;
 }
-.form-check-input:checked{
- background-color: #244065 !important;
- border-color: #244065 !important;
+.form-check-input:checked {
+  background-color: #244065 !important;
+  border-color: #244065 !important;
 }
-.user-text-profile{
- display: flex;
- flex-direction: column;
- justify-content: center;
+.user-text-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .img-profile {
- height: 60px;
- width: 60px;
- border-radius: 50%;
- margin-right: 10px;
- display: block;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: block;
 }
 
-.garis-sidebar{
- height: 2px;
+.garis-sidebar {
+  height: 2px;
 }
-
 
 .header-img-logo {
- height: 50px;
- width: auto;
+  height: 50px;
+  width: auto;
 }
 
 .button {
- background-color: #244065;
- color: white;
- border-radius: 10px;
- width: 150px;
- height: 40px;
- padding: 
- 6px, 10px, 6px, 10px;
- border: none;
+  background-color: #244065;
+  color: white;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  padding: 6px, 10px, 6px, 10px;
+  border: none;
 }
 
-
-
-.btn1{
- margin-right: 20px;
+.btn1 {
+  margin-right: 20px;
 }
-.button:hover{
- background-color: white;
- border: 2px solid #244065;
- color: #244065;
- font-weight: bold;
+.button:hover {
+  background-color: white;
+  border: 2px solid #244065;
+  color: #244065;
+  font-weight: bold;
 }
 .button2 {
- background-color: rgba(233, 0, 25, 1);
- background-image: url('/assets/image/Logout1.png');
- background-size: 20px 20px;
- background-repeat: no-repeat;
- background-position: center;
- color: white;
- border-radius: 10px;
- width: 40px;
- height: 40px;
- padding: 
- 6px, 10px, 6px, 10px;
- border: none;
+  background-color: rgba(233, 0, 25, 1);
+  background-image: url("/assets/image/Logout1.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  padding: 6px, 10px, 6px, 10px;
+  border: none;
 }
-.button2:hover{
- background-color: white;
- background-image: url('/assets/image/Logout2.png');
- background-size: 20px 20px;
- background-repeat: no-repeat;
- background-position: center;
- border: 2px solid rgba(233, 0, 25, 1);
- color: rgba(233, 0, 25, 1);
- font-weight: bold;
+.button2:hover {
+  background-color: white;
+  background-image: url("/assets/image/Logout2.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid rgba(233, 0, 25, 1);
+  color: rgba(233, 0, 25, 1);
+  font-weight: bold;
 }
 
 .button3 {
- background-color: #244065 !important;
- color: white !important;
- border-radius: 10px !important;
+  background-color: #244065 !important;
+  color: white !important;
+  border-radius: 10px !important;
 }
 
-.button3:hover{
- background-color: white  !important;
- color: #244065 !important;
- border: 2px solid #244065 !important;
+.button3:hover {
+  background-color: white !important;
+  color: #244065 !important;
+  border: 2px solid #244065 !important;
 }
-.card-salesman{
- padding: 15px 15px 15px 15px !important;
- justify-content: center;
-background-color: rgba(211, 238, 247, 1);
-margin: 0 !important;
-border-radius: 10px;
+.card-salesman {
+  padding: 15px 15px 15px 15px !important;
+  justify-content: center;
+  background-color: rgba(211, 238, 247, 1);
+  margin: 0 !important;
+  border-radius: 10px;
 }
 
-.card-user{
- padding: 15px 15px 15px 15px !important;
- justify-content: center;
- display: flex;
-align-items: center;
+.card-user {
+  padding: 15px 15px 15px 15px !important;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 
-margin: 0 !important;
-border-radius: 5px;
+  margin: 0 !important;
+  border-radius: 5px;
 }
 .main {
- background-color: white !important;
- 
+  background-color: white !important;
 }
 .navbar {
- box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .period-bar1 {
- color: #244065;
- background-color: rgba(237, 237, 237, 1);
-border: none;
- border-radius: 10px;
- width: 150px;
- height: 40px; 
- position: absolute;
- right: 220px;
- padding: 6px 12px 6px 12px !important;
- 
+  color: #244065;
+  background-color: rgba(237, 237, 237, 1);
+  border: none;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  position: absolute;
+  right: 220px;
+  padding: 6px 12px 6px 12px !important;
 }
 .period-bar2 {
- color: #244065;
- background-color: rgba(237, 237, 237, 1);
-border: none;
- border-radius: 10px;
- width: 150px;
- height: 40px; 
- position: absolute;
- right: 30px;
- padding: 6px 12px 6px 12px !important;
- 
- 
+  color: #244065;
+  background-color: rgba(237, 237, 237, 1);
+  border: none;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  position: absolute;
+  right: 30px;
+  padding: 6px 12px 6px 12px !important;
 }
 
-.export-date{
- color: #244065 !important;
- background-color: rgba(237, 237, 237, 1) !important;
-border: none !important;
- border-radius: 10px !important;
- padding: 6px 12px 6px 12px !important;
-
-
+.export-date {
+  color: #244065 !important;
+  background-color: rgba(237, 237, 237, 1) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 6px 12px 6px 12px !important;
 }
 
-
-.label-date{
- font-size: 12px;
- position: absolute;
- padding: 15px;
- right: 180px;
+.label-date {
+  font-size: 12px;
+  position: absolute;
+  padding: 15px;
+  right: 180px;
 }
 
-.period-date{
- position: absolute;
- right: 395px;
+.period-date {
+  position: absolute;
+  right: 395px;
 }
-.input-date{
- position: absolute;
- right: 50px;
- color: #244065 !important;
-}
-
-.card{
-
- border: none !important;
- border-radius: 10px !important;
-}
-.card-1{
- border-radius: 10px;
- background-color: 
- rgba(253, 231, 220, 0.6);
-
- height: 
- 140px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-2{
- border-radius: 10px;
- background-color: 
- rgba(204, 238, 208, 0.6);
- height: 
- 140px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-3{
- border-radius: 10px;
- background-color: 
- rgba(211, 238, 247, 0.6);
- height: 
- 140px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-4{
- border-radius: 10px;
- background-color: 
- white;
-
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-5{
- border-radius: 10px;
- background-color: 
- rgba(211, 238, 247, 0.6);
-
- height: 
- 2000px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-6{
- border-radius: 10px;
- background-color: 
- rgba(211, 238, 247, 0.6);
- width: 350px;
- height: 
- 140px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-7{
- border-radius: 10px;
- background-color: 
- rgba(211, 238, 247, 0.6);
- width: 350px;
- height: 
- 140px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-.card-8{
- border-radius: 10px;
- background-color: 
- rgba(211, 238, 247, 0.6);
- width: 350px;
- height: 
- 140px;
- box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+.input-date {
+  position: absolute;
+  right: 50px;
+  color: #244065 !important;
 }
 
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+}
+.card-1 {
+  border-radius: 10px;
+  background-color: rgba(253, 231, 220, 0.6);
 
-.stat{
- background-color: white !important;
- border-radius: 10px !important;
- width: 40px;
- height: 40px;
+  height: 120px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-2 {
+  border-radius: 10px;
+  background-color: rgba(204, 238, 208, 0.6);
+  height: 120px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-3 {
+  border-radius: 10px;
+  background-color: rgba(211, 238, 247, 0.6);
+  height: 120px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-4 {
+  border-radius: 10px;
+  background-color: white;
+
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-5 {
+  border-radius: 10px;
+  background-color: rgba(211, 238, 247, 0.6);
+
+  height: 2000px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-6 {
+  border-radius: 10px;
+  background-color: rgba(211, 238, 247, 0.6);
+  width: 350px;
+  height: 140px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-7 {
+  border-radius: 10px;
+  background-color: rgba(211, 238, 247, 0.6);
+  width: 350px;
+  height: 140px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+.card-8 {
+  border-radius: 10px;
+  background-color: rgba(211, 238, 247, 0.6);
+  width: 350px;
+  height: 140px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
-.img-stat{
- height:30px;
- width: auto;
- position: relative;
- top: 15%;
- left:9%;
- padding: 1px;
-}
-.img-stat2{
- height:30px;
- width: auto;
- position: relative;
- top: 12%;
- left:21%;
- padding: 1px;
-}
-.img-stat3{
- height:30px;
- width: auto;
- position: relative;
- top: 13%;
- left:15%;
- padding: 1px;
+.stat {
+  background-color: white !important;
+  border-radius: 10px !important;
+  width: 40px;
+  height: 40px;
 }
 
-.card-title{
- color: rgba(64, 64, 64, 1);
- font-size: 12px;
- /* position: absolute; */
- top: 25px;
- left: 80px;
- font-family: "Noto Sans", sans-serif;
+.img-stat {
+  height: 30px;
+  width: auto;
+  position: relative;
+  top: 15%;
+  left: 9%;
+  padding: 1px;
+}
+.img-stat2 {
+  height: 30px;
+  width: auto;
+  position: relative;
+  top: 12%;
+  left: 21%;
+  padding: 1px;
+}
+.img-stat3 {
+  height: 30px;
+  width: auto;
+  position: relative;
+  top: 13%;
+  left: 15%;
+  padding: 1px;
+}
+
+.card-title {
+  color: rgba(64, 64, 64, 1);
+  font-size: 12px;
+  /* position: absolute; */
+  top: 25px;
+  left: 80px;
+  font-family: "Noto Sans", sans-serif;
 }
 
 .card-count {
- font-size: 28px;
- font-weight: 700;
- color: rgba(64, 64, 64, 1);
- position: absolute;
- left: 30px;
- top: 70px;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(64, 64, 64, 1);
+  position: absolute;
+  left: 30px;
+  top: 70px;
 }
 
-.tombol-eye{
- cursor:pointer; 
- color: #244065; 
-top: 57%;
- right: 45px;
- position: absolute;
+.tombol-eye {
+  cursor: pointer;
+  color: #244065;
+  top: 57%;
+  right: 45px;
+  position: absolute;
 }
 
 .img-card-mt {
- justify-self: center;
- text-align: center;
+  justify-self: center;
+  text-align: center;
 }
 .img-card {
- height: 50px;
- width: auto;
- justify-content: center;
- text-align: center;
+  height: 50px;
+  width: auto;
+  justify-content: center;
+  text-align: center;
 }
 
-
 .child-media {
- padding-left: 100px;
+  padding-left: 100px;
 }
 
 .modal-dialog.modal-xl {
- max-width: 100%;
+  max-width: 100%;
 }
 
 .modal-body {
-
 }
 
 .tanggal-modal {
@@ -377,7 +342,7 @@ top: 57%;
   width: 225px;
   padding: 0 !important;
 }
- 
+
 .label-modal {
   display: flex;
   text-align: center;
@@ -385,8 +350,7 @@ top: 57%;
 
   margin: 0px;
 }
-input[type="date"]{
-
+input[type="date"] {
 }
 
 canvas {
@@ -397,7 +361,7 @@ canvas {
   margin: 0 !important;
 }
 
-.canvas1{
+.canvas1 {
   width: 250px !important;
   position: relative;
   left: 25%;
@@ -406,7 +370,7 @@ canvas {
   align-items: center;
   overflow: hidden;
 }
-.canvas2{
+.canvas2 {
   width: 500px !important;
   position: relative;
   left: 25%;
@@ -421,7 +385,6 @@ p {
 
 .dropdown-search {
   background-color: white;
-
 }
 
 .dropdown-toggle {

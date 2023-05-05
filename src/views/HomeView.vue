@@ -313,7 +313,7 @@ export default {
                     </div>
 
                   </div>
-                  <h1 class="card-count mt-1 mb-3">123.456</h1>
+                  <p class="card-count mt-1 mb-1">123.456</p>
 
                 </div>
               </div>
@@ -340,7 +340,7 @@ export default {
                     </div>
 
                   </div>
-                  <h1 class="card-count mt-1 mb-3">Rp. 1.000.000.000</h1>
+                  <p class="card-count mt-1 mb-1">Rp. 1.000.000.000</p>
 
                 </div>
               </div>
@@ -367,7 +367,7 @@ export default {
                     </div>
 
                   </div>
-                  <h1 class="card-count mt-1 mb-3">2.382</h1>
+                  <p class="card-count mt-1 mb-1">2.382</p>
 
                 </div>
               </div>
@@ -445,7 +445,7 @@ export default {
 
           <div class="row mt-4">
             <div class="col-sm-12">
-              <div class="card card-5">
+              <div class="card mb-4 card-5">
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Order</b></p>
