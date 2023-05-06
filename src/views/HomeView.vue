@@ -211,12 +211,12 @@ export default {
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
-                      <input type="search" class="form-control" id="searchStore" placeholder="Search Store..."
+                      <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
                         autofocus="autofocus">
                     </form>
                     <hr>
                     <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                       <label class="form-check-label" for="flexCheckDefault">
                         All
                       </label>

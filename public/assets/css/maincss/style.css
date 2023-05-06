@@ -51,6 +51,11 @@ a {
 .checkStore{
   margin-left: 20px;
 }
+.searchCheck{
+  border: 1px solid #244065 !important;
+  font-size: 12px !important;
+
+}
 .form-check label{
   font-size: 14px;
   margin-left: 10px;
@@ -400,7 +405,7 @@ p {
   background-color: #244065 !important;
   color: white !important;
   border-radius: 10px;
-  border: none;
+  border: 1px solid #244065;
   height: 30px;
 }
 .dropdown-toggle:hover {
