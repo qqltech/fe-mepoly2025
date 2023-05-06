@@ -97,9 +97,9 @@ export default {
           }]
         },
         legend: {
-            display: false,
-            responsive: true,
-            maintainAspectRatio: false,
+          display: false,
+          responsive: true,
+          maintainAspectRatio: false,
         }
 
       }
@@ -183,14 +183,14 @@ export default {
               </div>
               <div class="col-sm-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand1" />
+                  <label class="form-check-label" for="checkBoxBrand1">
                     Brand A
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand2" />
+                  <label class="form-check-label" for="checkBoxBrand2">
                     Brand B
                   </label>
                 </div>
@@ -205,8 +205,8 @@ export default {
               <div class="col-sm-6">
 
                 <div class="dropdown">
-                  <button class=" dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     All
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
@@ -214,21 +214,45 @@ export default {
                       <input type="search" class="form-control" id="searchStore" placeholder="Search Store..."
                         autofocus="autofocus">
                     </form>
-                    <a class="dropdown-item" href="#">All</a>
-
-                    <a class="dropdown-item" href="#">Store A</a>
-                    <a class="dropdown-item" href="#">Store B</a>
-                    <a class="dropdown-item" href="#">Store C</a>
-
-                    <a class="dropdown-item" href="#">Store D</a>
-
-                    <a class="dropdown-item" href="#">Store E</a>
-                    <a class="dropdown-item" href="#">Store F</a>
-                    <a class="dropdown-item" href="#">Store G</a>
-                    <a class="dropdown-item" href="#">Store H</a>
-                    <a class="dropdown-item" href="#">Store I</a>
-                    <a class="dropdown-item" href="#">Store J</a>
-                    <a class="dropdown-item" href="#">Store K</a>
+                    <hr>
+                    <div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        All
+                      </label>
+                    </div>                    
+                    <div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Store A
+                      </label>
+                    </div>
+                    <div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Store B
+                      </label>
+                    </div><div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Store C
+                      </label>
+                    </div><div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Store D
+                      </label>
+                    </div><div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Store E
+                      </label>
+                    </div><div class="form-check checkStore">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Store F
+                      </label>
+                    </div>
 
                   </div>
                 </div>
@@ -382,11 +406,11 @@ export default {
                   <div class="card-body">
                     <p class="card-title"><b>Product Stock Differentiation</b></p>
                     <div class="col-sm-12 canvas1">
-                        <Doughnut :data="chartData1" :options="options" />
-  
+                      <Doughnut :data="chartData1" :options="options" />
+
 
                     </div>
-                  
+
                   </div>
                 </div>
               </div>

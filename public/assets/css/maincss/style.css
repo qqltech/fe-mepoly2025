@@ -47,6 +47,14 @@ a {
   background-color: #244065 !important;
   border-color: #244065 !important;
 }
+
+.checkStore{
+  margin-left: 20px;
+}
+.form-check label{
+  font-size: 14px;
+  margin-left: 10px;
+}
 .user-text-profile {
   display: flex;
   flex-direction: column;
