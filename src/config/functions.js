@@ -5,6 +5,12 @@ function flashMessage(icon, title, text){
      text,
      iconColor: '#244065',
      confirmButtonColor: '#244065',
+     showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
  })
 }
 

@@ -1,7 +1,10 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, format_date, getDataIsLogin } from '../config/functions'
-
+import { flashMessage, format_date, getDataIsLogin, isLogin } from '../config/functions'
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 </script>
 
 <script>
@@ -24,7 +27,7 @@ ChartJS.register(ArcElement, Tooltip, Legend,
   PointElement,
   LineElement,)
 
-const dataUser = getDataIsLogin();
+// const dataUser = getDataIsLogin();
 export default {
 
   name: 'BarChart',
@@ -33,7 +36,11 @@ export default {
     return {
       name: '',
       role: '',
+      isLoading: false,
+      store: [],
+      data:null,
       user: null,
+      token: '',
       chartData1: {
         labels: ['Brand A', 'Brand B'],
         datasets: [
@@ -42,8 +49,6 @@ export default {
             backgroundColor: ['#244065', '#22AAD9'],
             data: [400, 200,],
             barThickness: 0.1,
-            // barPercentage: 0.5
-
           }
         ],
 
@@ -91,25 +96,51 @@ export default {
         ]
       },
       options: {
-        scales: {
-          yAxes: [{
-            barPercentage: 0.5
-          }]
-        },
+        
         legend: {
           display: false,
           responsive: true,
           maintainAspectRatio: false,
         }
 
-      }
+      },
+      isLoading:false,
+
+
     }
   },
+  mounted(){
+    this.fetchDataStore();
+  },
+
   methods: {
     logout() {
       localStorage.removeItem('admin')
       this.$router.push('/')
     },
+
+    async fetchDataStore(){
+      try {
+                if (getDataIsLogin()) {
+                    this.token = getDataIsLogin().token
+                    console.log(this.token);
+                    const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
+                        headers: {
+                            "Authorization": `Bearer ${this.token}`,
+                        }
+                    }
+                    
+                    )
+                    const store = response.data;
+                    console.log(store);
+                }
+            } catch (error) {
+                flashMessage('error', 'Gagal Mendapatkan Data', error)
+            } finally {
+                this.isLoading = false;
+
+            }
+    }
 
 
 
@@ -139,8 +170,8 @@ export default {
         <div class="row">
           <div class="col-md-3 .offset-md-3 offcanvas-header-left">
 
-            <router-link to="/logout" @click="logout" aria-expanded="true"><button
-                class="button2 button-danger"></button></router-link>
+            <router-link to="" @click="logout" aria-expanded="true"><button
+                class="button2 button-danger" data-bs-toggle="tooltip" data-bs-placement="right"></button></router-link>
           </div>
 
           <div class="col-md-3  offcanvas-header-right">
@@ -257,24 +288,24 @@ export default {
               </div>
             </div>
             <hr class="garis-sidebar" style=" margin-top: 20px" />
-            <div class="row mt-2 mb-2">
-              <p class="mb-2">Salesman Info</p>
-              <div class="row card-salesman">
+              <!-- <div class="row mt-2 mb-2">
+                <p class="mb-2">Salesman Info</p>
+                <div class="row card-salesman">
 
-                <div class="col-sm-2 mt-2">
-                  <img class="img-profile" src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
-                    alt="" />
+                  <div class="col-sm-2 mt-2">
+                    <img class="img-profile" src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
+                      alt="" />
+                  </div>
+                  <div class="col-sm-4" style="justify-content: center; justify-items: center;">
+                    <p>Name</p>
+                    <p>Last Visited</p>
+                  </div>
+                  <div class="col-sm-6">
+                    <p>: Nazwa Dafa</p>
+                    <p>: 03/04/2023</p>
+                  </div>
                 </div>
-                <div class="col-sm-4" style="justify-content: center; justify-items: center;">
-                  <p>Name</p>
-                  <p>Last Visited</p>
-                </div>
-                <div class="col-sm-6">
-                  <p>: Nazwa Dafa</p>
-                  <p>: 03/04/2023</p>
-                </div>
-              </div>
-            </div>
+              </div> -->
           </div>
         </div>
 
@@ -508,7 +539,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom">
+                  <input type="date" class="form-control export-date" >
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -516,7 +547,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo">
+                  <input type="date" class="form-control export-date">
                 </div>
               </div>
 
@@ -554,7 +585,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom">
+                  <input type="date" class="form-control export-date" >
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -562,7 +593,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo">
+                  <input type="date" class="form-control export-date" >
                 </div>
               </div>
 
