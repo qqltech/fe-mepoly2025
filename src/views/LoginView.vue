@@ -12,7 +12,7 @@ export default {
       isLoading: false,
       email: '',
       password: '',
-    } 
+    }
   },
   methods: {
     async login() {
@@ -24,8 +24,8 @@ export default {
         this.isLoading = true
         const response = await axios.post(`https://backend.qqltech.com:7021/login`, payload)
         const result = response.data;
-        console.log(result);
-        localStorage.setItem('admin', JSON.stringify(result.data));
+  console.log(result);
+        localStorage.setItem('admin', JSON.stringify(result));
         this.$router.push('home');
 
       } catch (error) {

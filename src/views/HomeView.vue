@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, format_date, getDataIsLogin, isLogin } from '../config/functions'
+import { flashMessage, getDataIsLogin, } from '../config/functions'
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -123,10 +123,15 @@ export default {
       try {
                 if (getDataIsLogin()) {
                     this.token = getDataIsLogin().token
-                    console.log(this.token);
                     const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
                         headers: {
-                            "Authorization": `Bearer ${this.token}`,
+                            "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+                        },
+                        params: {
+                          periode_end: '2023-05-08', 
+                          periode_start: '2023-04-08',
+                           products: 'Tali',
+                           store_id : 2,
                         }
                     }
                     
@@ -140,7 +145,9 @@ export default {
                 this.isLoading = false;
 
             }
-    }
+    },
+
+
 
 
 
@@ -156,14 +163,14 @@ export default {
 
   created() {
     const user = JSON.parse(localStorage.getItem('admin'))
-    this.nama = user.name
-    this.role = user.role
+    this.nama = user.data.name
+    this.role = user.data.role
   },
 }
 </script>
 
 <template>
-  <main>
+  <main v-if="isAuthenticated">
     <!-- Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
@@ -202,10 +209,11 @@ export default {
             </div>
           </div>
           <div class="row">
-            <div class="row mt-4">
+            <div class="row  mt-2">
               <h4><b>Show</b></h4>
-              <hr class="garis-sidebar" />
+              
             </div>
+            <hr class="garis-sidebar" style=" margin-top: 20px" />
             <div class="row mt-2 mb-2">
               <div class="col-sm-6">
                 <p>Product</p>
