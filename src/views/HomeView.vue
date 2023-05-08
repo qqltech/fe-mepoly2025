@@ -38,7 +38,7 @@ export default {
       role: '',
       isLoading: false,
       store: [],
-      data:null,
+      data: null,
       user: null,
       token: '',
       chartData1: {
@@ -96,7 +96,7 @@ export default {
         ]
       },
       options: {
-        
+
         legend: {
           display: false,
           responsive: true,
@@ -104,12 +104,12 @@ export default {
         }
 
       },
-      isLoading:false,
+      isLoading: false,
 
 
     }
   },
-  mounted(){
+  mounted() {
     this.fetchDataStore();
   },
 
@@ -119,32 +119,32 @@ export default {
       this.$router.push('/')
     },
 
-    async fetchDataStore(){
+    async fetchDataStore() {
       try {
-                if (getDataIsLogin()) {
-                    this.token = getDataIsLogin().token
-                    const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
-                        headers: {
-                            "authorization": `${getDataIsLogin().token_type} ${this.token}`,
-                        },
-                        params: {
-                          periode_end: '2023-05-08', 
-                          periode_start: '2023-04-08',
-                           products: 'Tali',
-                           store_id : 2,
-                        }
-                    }
-                    
-                    )
-                    const store = response.data;
-                    console.log(store);
-                }
-            } catch (error) {
-                flashMessage('error', 'Gagal Mendapatkan Data', error)
-            } finally {
-                this.isLoading = false;
-
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
+            headers: {
+              "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+            },
+            params: {
+              periode_end: '2023-05-08',
+              periode_start: '2023-04-08',
+              products: 'Tali',
+              store_id: 2,
             }
+          }
+
+          )
+          const store = response.data;
+          console.log(store);
+        }
+      } catch (error) {
+        flashMessage('error', 'Gagal Mendapatkan Data', error)
+      } finally {
+        this.isLoading = false;
+
+      }
     },
 
 
@@ -175,16 +175,13 @@ export default {
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <div class="row">
-          <div class="col-md-3 .offset-md-3 offcanvas-header-left">
-
-            <router-link to="" @click="logout" aria-expanded="true"><button
-                class="button2 button-danger" data-bs-toggle="tooltip" data-bs-placement="right"></button></router-link>
-          </div>
 
           <div class="col-md-3  offcanvas-header-right">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="button-closed bi bi-x"
-              viewBox="0 0 16 16" data-bs-dismiss="offcanvas" aria-label="Close">
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="button-closed bi bi-x" viewBox="0 0 16 16"
+              data-bs-dismiss="offcanvas" aria-label="Close">
+              <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
           </div>
         </div>
       </div>
@@ -211,7 +208,7 @@ export default {
           <div class="row">
             <div class="row  mt-2">
               <h4><b>Show</b></h4>
-              
+
             </div>
             <hr class="garis-sidebar" style=" margin-top: 20px" />
             <div class="row mt-2 mb-2">
@@ -257,7 +254,7 @@ export default {
                       <label class="form-check-label" for="flexCheckDefault">
                         All
                       </label>
-                    </div>                    
+                    </div>
                     <div class="form-check checkStore">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                       <label class="form-check-label" for="flexCheckDefault">
@@ -269,22 +266,26 @@ export default {
                       <label class="form-check-label" for="flexCheckDefault">
                         Store B
                       </label>
-                    </div><div class="form-check checkStore">
+                    </div>
+                    <div class="form-check checkStore">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                       <label class="form-check-label" for="flexCheckDefault">
                         Store C
                       </label>
-                    </div><div class="form-check checkStore">
+                    </div>
+                    <div class="form-check checkStore">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                       <label class="form-check-label" for="flexCheckDefault">
                         Store D
                       </label>
-                    </div><div class="form-check checkStore">
+                    </div>
+                    <div class="form-check checkStore">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                       <label class="form-check-label" for="flexCheckDefault">
                         Store E
                       </label>
-                    </div><div class="form-check checkStore">
+                    </div>
+                    <div class="form-check checkStore">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                       <label class="form-check-label" for="flexCheckDefault">
                         Store F
@@ -296,7 +297,7 @@ export default {
               </div>
             </div>
             <hr class="garis-sidebar" style=" margin-top: 20px" />
-              <!-- <div class="row mt-2 mb-2">
+            <!-- <div class="row mt-2 mb-2">
                 <p class="mb-2">Salesman Info</p>
                 <div class="row card-salesman">
 
@@ -314,6 +315,16 @@ export default {
                   </div>
                 </div>
               </div> -->
+
+            <div class="d-grid gap-2 mt-2">
+              <router-link to="" @click="logout" aria-expanded="true" tag="button"
+                class="button4 btn-danger rtlink-btn4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+                  <path d="M7.5 1v7h1V1h-1z" />
+                  <path
+                    d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z" />
+                </svg> Logout</router-link>
+            </div>
           </div>
         </div>
 
@@ -547,7 +558,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" >
+                  <input type="date" class="form-control export-date">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -593,7 +604,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" >
+                  <input type="date" class="form-control export-date">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -601,7 +612,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" >
+                  <input type="date" class="form-control export-date">
                 </div>
               </div>
 
@@ -615,5 +626,4 @@ export default {
         </div>
       </div>
     </div>
-  </main>
-</template>
+</main></template>

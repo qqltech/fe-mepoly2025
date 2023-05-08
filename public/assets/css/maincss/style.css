@@ -136,6 +136,35 @@ a {
   color: #244065 !important;
   border: 2px solid #244065 !important;
 }
+
+.button4 {
+  background-color: rgba(233, 0, 25, 1);
+  color: white;
+  border-radius: 10px;
+  width: auto;
+  height: 35px;
+  padding: 6px, 10px, 6px, 10px;
+  border: none;
+}
+.button4:hover {
+  background-color: white;
+  border: 2px solid rgba(233, 0, 25, 1);
+  color: rgba(233, 0, 25, 1);
+  font-weight: bold; 
+}
+
+.rtlink-btn4 {
+  overflow: hidden;
+  text-decoration: none;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.rtlink-btn4:hover{
+  padding: 2px 0;
+}
 .card-salesman {
   padding: 15px 15px 15px 15px !important;
   justify-content: center;
