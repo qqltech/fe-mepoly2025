@@ -135,7 +135,10 @@ export default {
       ],
       searchStore: "",
       selectedStore: "",
-      filtersSelected: "",
+      filtersSelected: [],
+      totalVisit: '',
+      totalOmzet: '',
+      totalStock: '',
 
     }
   },
@@ -171,6 +174,9 @@ export default {
           const store = response.data;
           this.salesName = store.sales_name;
           this.salesLastVisited = store.sales_last_visited;
+          this.totalStock = store.total_stock;
+          this.totalOmzet = store.total_omzet;
+          this.totalVisit = store.total_checkin;
           console.log(store);
         }
       } catch (error) {
@@ -307,48 +313,7 @@ export default {
                         v-model="searchStore" autofocus="autofocus">
                     </form>
                     <hr>
-                    <!-- <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                      <label class="form-check-label" for="flexCheckDefault">
-                        All
-                      </label>
-                    </div>
-                    <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Store A
-                      </label>
-                    </div>
-                    <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Store B
-                      </label>
-                    </div>
-                    <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Store C
-                      </label>
-                    </div>
-                    <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Store D
-                      </label>
-                    </div>
-                    <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Store E
-                      </label>
-                    </div>
-                    <div class="form-check checkStore">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Store F
-                      </label>
-                    </div> -->
+                    
 
                     <div class="form-check checkStore" v-for="store in filteredStores" :key="store.name">
                       <input class="form-check-input" type="checkbox" :value="store.name"
@@ -381,8 +346,8 @@ export default {
               </div>  -->
 
             <div class="d-grid gap-2 mt-2">
-              <router-link v-if="filtersSelected" to="" @click="applyFilters" aria-expanded="true" tag="button"
-                class="button5 btn-success rtlink-btn4">Apply Filter</router-link>
+              <!-- <router-link v-if="filtersSelected" to="" @click="applyFilters" aria-expanded="true" tag="button"
+                class="button5 btn-success rtlink-btn4">Apply Filter</router-link> -->
 
 
               <router-link to="" @click="logout" aria-expanded="true" tag="button"
@@ -440,7 +405,7 @@ export default {
                       </div>
                     </div>
                   </div>
-                  <p class="card-count mt-1 mb-1">123.456</p>
+                  <p class="card-count mt-1 mb-1">{{ totalStock }}</p>
                 </div>
               </div>
             </div>
@@ -461,7 +426,7 @@ export default {
                       </div>
                     </div>
                   </div>
-                  <p class="card-count mt-1 mb-1">Rp. 1.000.000.000</p>
+                  <p class="card-count mt-1 mb-1">Rp. {{ totalOmzet }} -</p>
                 </div>
               </div>
             </div>
@@ -482,7 +447,7 @@ export default {
                       </div>
                     </div>
                   </div>
-                  <p class="card-count mt-1 mb-1">2.382</p>
+                  <p class="card-count mt-1 mb-1">{{ totalVisit }}</p>
                 </div>
               </div>
             </div>
