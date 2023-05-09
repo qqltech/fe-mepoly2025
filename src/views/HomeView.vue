@@ -124,8 +124,18 @@ export default {
       isLoading: false,
       salesName: '',
       salesLastVisited: '',
-      products: '',
-
+      stores: [
+        { name: "All" },
+        { name: "Store A" },
+        { name: "Store B" },
+        { name: "Store C" },
+        { name: "Store D" },
+        { name: "Store E" },
+        { name: "Store F" },
+      ],
+      searchStore: "",
+      selectedStore: "",
+      filtersSelected: "",
 
     }
   },
@@ -153,15 +163,14 @@ export default {
             headers: {
               "authorization": `${getDataIsLogin().token_type} ${this.token}`,
             },
-            params: 
-              this.fetchDataParams,          
+            params:
+              this.fetchDataParams,
           }
 
           )
           const store = response.data;
           this.salesName = store.sales_name;
           this.salesLastVisited = store.sales_last_visited;
-          this.products = store.filter.products;
           console.log(store);
         }
       } catch (error) {
@@ -185,14 +194,20 @@ export default {
     isAuthenticated() {
       return localStorage.getItem('admin') !== null;
     },
-    fetchDataParams(){
+    fetchDataParams() {
       return {
         periode_start: this.formatDate(this.periodeStart),
         periode_end: this.formatDate(this.periodeEnd),
         products: 'Tali',
         store_id: 2,
       }
-    }
+    },
+    filteredStores() {
+      return this.stores.filter((store) => {
+        return store.name.toLowerCase().includes(this.searchStore.toLowerCase());
+      });
+    },
+
   },
 
   created() {
@@ -263,7 +278,7 @@ export default {
                   <label class="form-check-label" for="checkBoxBrand1">
                     Selang
                   </label>
-                  
+
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand2" />
@@ -284,15 +299,15 @@ export default {
                 <div class="dropdown">
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    All
+                    {{ selectedStore ? selectedStore : "All" }}
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
                       <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
-                        autofocus="autofocus">
+                        v-model="searchStore" autofocus="autofocus">
                     </form>
                     <hr>
-                    <div class="form-check checkStore">
+                    <!-- <div class="form-check checkStore">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                       <label class="form-check-label" for="flexCheckDefault">
                         All
@@ -333,6 +348,12 @@ export default {
                       <label class="form-check-label" for="flexCheckDefault">
                         Store F
                       </label>
+                    </div> -->
+
+                    <div class="form-check checkStore" v-for="store in filteredStores" :key="store.name">
+                      <input class="form-check-input" type="checkbox" :value="store.name"
+                        v-model="selectedStore" />
+                      <label class="form-check-label">{{ store.name }}</label>
                     </div>
 
                   </div>
