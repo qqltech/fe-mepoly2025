@@ -95,6 +95,16 @@ export default {
           }
         ]
       },
+      chartData6: {
+        labels: ['S. FLex', 'Stabilo', 'Seagull', 'Qrope', 'Hank', 'Bintang', 'PP. Band'],
+        datasets: [
+          {
+            label: 'Detail Order',
+            backgroundColor: '#244065',
+            data: [47, 28, 58, 52, 56, 30, 52]
+          }
+        ]
+      },
       options: {
 
         legend: {
@@ -115,8 +125,12 @@ export default {
 
   methods: {
     logout() {
-      localStorage.removeItem('admin')
-      this.$router.push('/')
+      // localStorage.removeItem('admin')
+      // this.$router.push('/')
+      if (confirm("Apakah Anda yakin ingin keluar?")) {
+        localStorage.removeItem('admin')
+        this.$router.push('/')
+      }
     },
 
     async fetchDataStore() {
@@ -314,7 +328,7 @@ export default {
                     <p>: 03/04/2023</p>
                   </div>
                 </div>
-              </div> -->
+              </div>  -->
 
             <div class="d-grid gap-2 mt-2">
               <router-link to="" @click="logout" aria-expanded="true" tag="button"
@@ -523,6 +537,12 @@ export default {
                     <p class="card-title"><b>Detail Order</b></p>
                     <div class="col-sm-12 canvas2">
 
+                      <p class="card-title2"><b>Product : Tali</b></p>
+                      <Line :data="chartData5" :options="options" />
+                    </div>
+                    <div class="col-sm-12 canvas2">
+
+                      <p class="card-title2 mt-5"><b>Product : Selang</b></p>
 
                       <Line :data="chartData5" :options="options" />
                     </div>
@@ -626,4 +646,5 @@ export default {
         </div>
       </div>
     </div>
-</main></template>
+  </main>
+</template>
