@@ -187,8 +187,6 @@ export default {
         store_id: 2,
       }
     }
-
-
   },
 
   created() {
@@ -370,8 +368,6 @@ export default {
     </div>
     <!-- END Sidebar -->
     <!-- Main Page  -->
-
-
     <div class="wrapper">
       <div class="main">
         <div class="navbar navbar-expand">
@@ -381,20 +377,14 @@ export default {
             <path fill-rule="evenodd"
               d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
           </svg>
-
           <img class="header-img-logo" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" height="50px"
             width="auto" />
-
           <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterPdf">Export to PDF</button>
           <button class="button btn1" data-toggle="modal" data-target="#exampleModalCenterCsv">Export to CSV</button>
-
           <label class="period-date"><b>Period :</b></label>
           <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate">
           <label class="label-date"><b>To</b></label>
           <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate">
-
-
-
         </div>
         <main class="content">
           <div class="container-fluid mt-3 p-0">
@@ -415,16 +405,10 @@ export default {
                         <div class="col-sm-10" style="justify-content: center;">
                           <p class="card-title"><b>Total Stock</b></p>
                         </div>
-
-
                       </div>
-
-
                     </div>
-
                   </div>
                   <p class="card-count mt-1 mb-1">123.456</p>
-
                 </div>
               </div>
             </div>
@@ -442,16 +426,10 @@ export default {
                         <div class="col-sm-10" style="justify-content: center;">
                           <p class="card-title"><b>Total Omzet</b></p>
                         </div>
-
-
                       </div>
-
-
                     </div>
-
                   </div>
                   <p class="card-count mt-1 mb-1">Rp. 1.000.000.000</p>
-
                 </div>
               </div>
             </div>
@@ -469,22 +447,14 @@ export default {
                         <div class="col-sm-10" style="justify-content: center;">
                           <p class="card-title"><b>Total Visit</b></p>
                         </div>
-
-
                       </div>
-
-
                     </div>
-
                   </div>
                   <p class="card-count mt-1 mb-1">2.382</p>
-
                 </div>
               </div>
             </div>
-
           </div>
-
           <div class="row mt-4">
             <div class="col-sm-6">
               <div class="card card-4 ">
@@ -493,10 +463,7 @@ export default {
                     <p class="card-title"><b>Product Stock Differentiation</b></p>
                     <div class="col-sm-12 canvas1">
                       <Doughnut :data="chartData1" :options="options" />
-
-
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -508,16 +475,12 @@ export default {
                     <p class="card-title"><b>Product Omzet Differentiation</b></p>
                     <div class="col-sm-12 canvas1">
                       <Doughnut :data="chartData2" :options="options" />
-
                     </div>
-
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="row mt-4">
             <div class="col-sm-12">
               <div class="card card-5">
@@ -526,15 +489,12 @@ export default {
                     <p class="card-title"><b>Detail Stock</b></p>
                     <div class="col-sm-12 canvas2">
                       <Bar :data="chartData3" :options="options" />
-
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-
           <div class="row mt-4">
             <div class="col-sm-12">
               <div class="card card-5">
@@ -542,17 +502,13 @@ export default {
                   <div class="card-body">
                     <p class="card-title"><b>Detail Omzet</b></p>
                     <div class="col-sm-12 canvas2">
-
                       <Bar :data="chartData4" :options="options" />
                     </div>
-
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-
           <div class="row mt-4">
             <div class="col-sm-12">
               <div class="card mb-4 card-5">
@@ -560,20 +516,15 @@ export default {
                   <div class="card-body">
                     <p class="card-title"><b>Detail Order</b></p>
                     <div class="col-sm-12 canvas2">
-
                       <p class="card-title2"><b>Product : Tali</b></p>
                       <Line :data="chartData5" :options="options" />
                     </div>
                     <div class="col-sm-12 canvas2">
-
                       <p class="card-title2 mt-5"><b>Product : Selang</b></p>
-
                       <Line :data="chartData6" :options="options" />
                     </div>
-
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -590,14 +541,12 @@ export default {
           </div>
           <div class="modal-body">
             <div class="row">
-
               <div class="col-sm-6">
                 <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
                 <div class="col-sm-6">
                 </div>
               </div>
               <div class="row tanggal-modal">
-
                 <div class="col-sm-6 label-modal">
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
@@ -613,9 +562,7 @@ export default {
                   <input type="date" class="form-control export-date">
                 </div>
               </div>
-
             </div>
-
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
               <button class="btn button3">Export PDF</button>
             </div>
@@ -625,8 +572,6 @@ export default {
         </div>
       </div>
     </div>
-
-
     <!-- Modal 2 -->
     <div class="modal fade" id="exampleModalCenterCsv">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -636,14 +581,12 @@ export default {
           </div>
           <div class="modal-body">
             <div class="row">
-
               <div class="col-sm-6">
                 <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
                 <div class="col-sm-6">
                 </div>
               </div>
               <div class="row tanggal-modal">
-
                 <div class="col-sm-6 label-modal">
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
@@ -659,7 +602,6 @@ export default {
                   <input type="date" class="form-control export-date">
                 </div>
               </div>
-
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
               <button class="btn button3">Export CSV</button>
