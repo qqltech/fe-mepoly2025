@@ -1,6 +1,8 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, getDataIsLogin, } from '../config/functions'
+import { flashMessage, getDataIsLogin, } from '../config/functions';
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -34,8 +36,13 @@ export default {
   components: { Bar, Line, Doughnut },
   data() {
     return {
+      today: new Date(),
       name: '',
       role: '',
+      periodeEnd: '',
+      periodeStart: '',
+      products: '',
+      storeId: '',
       isLoading: false,
       store: [],
       data: null,
@@ -125,12 +132,14 @@ export default {
 
   methods: {
     logout() {
-      // localStorage.removeItem('admin')
-      // this.$router.push('/')
       if (confirm("Apakah Anda yakin ingin keluar?")) {
         localStorage.removeItem('admin')
         this.$router.push('/')
       }
+    },
+    formatDate(dateString) {
+      const [dd, mm, yyyy] = dateString.split('-');
+      return `${dd}-${mm}-${yyyy}`;
     },
 
     async fetchDataStore() {
@@ -141,12 +150,8 @@ export default {
             headers: {
               "authorization": `${getDataIsLogin().token_type} ${this.token}`,
             },
-            params: {
-              periode_end: '2023-05-08',
-              periode_start: '2023-04-08',
-              products: 'Tali',
-              store_id: 2,
-            }
+            params: 
+              this.fetchDataParams,          
           }
 
           )
@@ -157,20 +162,31 @@ export default {
         flashMessage('error', 'Gagal Mendapatkan Data', error)
       } finally {
         this.isLoading = false;
-
       }
     },
-
-
-
-
-
   },
+
+  watch: {
+    fetchDataParams: {
+      handler() {
+        this.fetchDataStore();
+      },
+      deep: true,
+    },
+  },
+
   computed: {
     isAuthenticated() {
       return localStorage.getItem('admin') !== null;
     },
-
+    fetchDataParams(){
+      return {
+        periode_start: this.formatDate(this.periodeStart),
+        periode_end: this.formatDate(this.periodeEnd),
+        products: 'Tali',
+        store_id: 2,
+      }
+    }
 
 
   },
@@ -179,6 +195,14 @@ export default {
     const user = JSON.parse(localStorage.getItem('admin'))
     this.nama = user.data.name
     this.role = user.data.role
+
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const formattedDate = `${dd}-${mm}-${yyyy}`;
+    this.periodeEnd = formattedDate;
+    this.periodeStart = formattedDate;
   },
 }
 </script>
@@ -365,9 +389,9 @@ export default {
           <button class="button btn1" data-toggle="modal" data-target="#exampleModalCenterCsv">Export to CSV</button>
 
           <label class="period-date"><b>Period :</b></label>
-          <input type="date" class="period-bar1" id="fromDate">
+          <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate">
           <label class="label-date"><b>To</b></label>
-          <input type="date" class="period-bar2" id="toDate">
+          <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate">
 
 
 
@@ -544,7 +568,7 @@ export default {
 
                       <p class="card-title2 mt-5"><b>Product : Selang</b></p>
 
-                      <Line :data="chartData5" :options="options" />
+                      <Line :data="chartData6" :options="options" />
                     </div>
 
                   </div>
