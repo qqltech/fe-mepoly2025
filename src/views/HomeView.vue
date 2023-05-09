@@ -122,6 +122,9 @@ export default {
 
       },
       isLoading: false,
+      salesName: '',
+      salesLastVisited: '',
+      products: '',
 
 
     }
@@ -156,6 +159,9 @@ export default {
 
           )
           const store = response.data;
+          this.salesName = store.sales_name;
+          this.salesLastVisited = store.sales_last_visited;
+          this.products = store.filter.products;
           console.log(store);
         }
       } catch (error) {
@@ -246,7 +252,7 @@ export default {
               <h4><b>Show</b></h4>
 
             </div>
-            <hr class="garis-sidebar" style=" margin-top: 20px" />
+            <hr class="garis-sidebar" style=" margin-top: 5px" />
             <div class="row mt-2 mb-2">
               <div class="col-sm-6">
                 <p>Product</p>
@@ -255,13 +261,14 @@ export default {
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand1" />
                   <label class="form-check-label" for="checkBoxBrand1">
-                    Brand A
+                    Selang
                   </label>
+                  
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand2" />
                   <label class="form-check-label" for="checkBoxBrand2">
-                    Brand B
+                    Tali
                   </label>
                 </div>
               </div>
@@ -346,13 +353,17 @@ export default {
                     <p>Last Visited</p>
                   </div>
                   <div class="col-sm-6">
-                    <p>: Nazwa Dafa</p>
-                    <p>: 03/04/2023</p>
+                    <p>: {{ salesName }}</p>
+                    <p>: {{ salesLastVisited }}</p>
                   </div>
                 </div>
               </div>  -->
 
             <div class="d-grid gap-2 mt-2">
+              <router-link v-if="filtersSelected" to="" @click="applyFilters" aria-expanded="true" tag="button"
+                class="button5 btn-success rtlink-btn4">Apply Filter</router-link>
+
+
               <router-link to="" @click="logout" aria-expanded="true" tag="button"
                 class="button4 btn-danger rtlink-btn4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                   fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">

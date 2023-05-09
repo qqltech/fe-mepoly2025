@@ -154,6 +154,22 @@ a {
   font-weight: bold; 
 }
 
+.button5 {
+  background-color: #00AA13;
+  color: white;
+  border-radius: 10px;
+  width: auto;
+  height: 35px;
+  padding: 6px, 10px, 6px, 10px;
+  border: none;
+}
+.button5:hover {
+  background-color: white;
+  border: 2px solid #00AA13;
+  color: #00AA13;
+  font-weight: bold; 
+}
+
 .rtlink-btn4 {
   overflow: hidden;
   text-decoration: none;
@@ -376,10 +392,21 @@ a {
   padding-left: 100px;
 }
 
+
 .modal-dialog.modal-xl {
   max-width: 100%;
 }
 
+.modal-title{
+  font-weight: bold;
+
+}
+
+.modal-header{
+    align-items: center;
+  text-align: center;
+  justify-content: center !important;
+}
 .modal-body {
 }
 
