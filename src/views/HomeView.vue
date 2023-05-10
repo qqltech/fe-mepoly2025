@@ -347,25 +347,6 @@ export default {
               </div>
             </div>
             <hr class="garis-sidebar" style=" margin-top: 20px" />
-            <!-- <div class="row mt-2 mb-2">
-                <p class="mb-2">Salesman Info</p>
-                <div class="row card-salesman">
-
-                  <div class="col-sm-2 mt-2">
-                    <img class="img-profile" src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
-                      alt="" />
-                  </div>
-                  <div class="col-sm-4" style="justify-content: center; justify-items: center;">
-                    <p>Name</p>
-                    <p>Last Visited</p>
-                  </div>
-                  <div class="col-sm-6">
-                    <p>: {{ salesName }}</p>
-                    <p>: {{ salesLastVisited }}</p>
-                  </div>
-                </div>
-              </div>  -->
-
             <div class="d-grid gap-2 mt-2">
               <router-link to="" @click="logout" aria-expanded="true" tag="button"
                 class="button4 btn-danger rtlink-btn4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
