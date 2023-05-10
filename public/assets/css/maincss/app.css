@@ -286,9 +286,12 @@ h6 {
 }
 
 .accordion-flush .accordion-button {
- padding: 15px 0;
  background: none;
  border: 0;
+}
+
+.accordion-flush .accordion-item .accordion-button, .accordion-flush .accordion-item .accordion-button.collapsed {
+  border-radius: 1rem !important;
 }
 
 .accordion-flush .accordion-button:not(.collapsed) {
@@ -297,9 +300,10 @@ h6 {
 }
 
 .accordion-flush .accordion-body {
- padding: 0 0 15px 0;
+ padding: 10px 0 10px 0;
  color: #3e4f6f;
  font-size: 15px;
+ border-radius: 1rem !important;
 }
 
 /* Breadcrumbs */

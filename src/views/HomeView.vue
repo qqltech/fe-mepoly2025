@@ -198,7 +198,7 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           // this.filteredStores = this.storesName
-          console.log(stores);
+          // console.log(stores);
         }
       } catch (error) {
         flashMessage('error', 'Gagal Mendapatkan Data', error)

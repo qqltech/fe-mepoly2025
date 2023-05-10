@@ -96,14 +96,19 @@ h6{
   text-align: center;
 }
 
-.salesman-history-txt {
+.salesman-history-txt p{
   margin-bottom: 5px !important;
+  font-size: 8px;
 }
 .header-img-logo {
   height: 50px;
   width: auto;
 }
 
+.accordion-body{
+  background-color: #f3f3f3;
+  font-size: 10px;
+}
 .button {
   background-color: #244065;
   color: white;
