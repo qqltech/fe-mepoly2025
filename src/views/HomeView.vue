@@ -44,7 +44,7 @@ export default {
       products: '',
       storeId: '',
       isLoading: false,
-      store: [],
+      visit: [],
       data: null,
       user: null,
       token: '',
@@ -139,7 +139,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchDataStore();
+    this.fetchDataVisit();
     this.fetchDataStores();
   },
 
@@ -155,7 +155,7 @@ export default {
       return `${dd}-${mm}-${yyyy}`;
     },
 
-    async fetchDataStore() {
+    async fetchDataVisit() {
       try {
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token
@@ -168,13 +168,13 @@ export default {
           }
 
           )
-          const store = response.data;
-          this.salesName = store.sales_name;
-          this.salesLastVisited = store.sales_last_visited;
-          this.totalStock = store.total_stock;
-          this.totalOmzet = store.total_omzet;
-          this.totalVisit = store.total_checkin;
-          console.log(store);
+          const visit = response.data;
+          this.salesName = visit.sales_name;
+          this.salesLastVisited = visit.sales_last_visited;
+          this.totalStock = visit.total_stock;
+          this.totalOmzet = visit.total_omzet;
+          this.totalVisit = visit.total_checkin;
+          console.log(visit);
         }
       } catch (error) {
         flashMessage('error', 'Gagal Mendapatkan Data', error)
@@ -205,13 +205,16 @@ export default {
       } finally {
         this.isLoading = false;
       }
-    }
+    },
+    
+    
+    
   },
 
   watch: {
     fetchDataParams: {
       handler() {
-        this.fetchDataStore();
+        this.fetchDataVisit();
       },
       deep: true,
     },
@@ -230,8 +233,8 @@ export default {
       }
     },
     filteredStores() {
-      return this.stores.filter((store) => {
-        return store.name.toLowerCase().includes(this.searchStore.toLowerCase());
+      return this.stores.filter((stores) => {
+        return stores.company.toLowerCase().includes(this.searchStore.toLowerCase());
       });
     },
 
@@ -331,15 +334,15 @@ export default {
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
                       <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
-                        v-model="searchStore" autofocus="autofocus">
+                        v-model="seachStores" autofocus="autofocus">
                     </form>
                     <hr>
 
 
-                    <div class="form-check checkStore" v-for="stores in storesName" :key="stores">
-                      <input class="form-check-input" type="checkbox" name="store" :id="stores" :value="stores"
+                    <div class="form-check checkStore" v-for="stores in storesName" >
+                      <input class="form-check-input" type="checkbox" name="stores" :id="stores.id" :value="stores.id"
                         v-model="selectedStore" />
-                      <label class="form-check-label" :for="stores">{{ stores.company }}</label>
+                      <label class="form-check-label" :for="stores.id">{{ stores.company }}</label>
                     </div>
 
                   </div>
