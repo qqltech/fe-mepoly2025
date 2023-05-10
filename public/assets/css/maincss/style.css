@@ -92,7 +92,13 @@ h6{
 .garis-sidebar {
   height: 2px;
 }
+.salesman-history{
+  text-align: center;
+}
 
+.salesman-history-txt {
+  margin-bottom: 5px !important;
+}
 .header-img-logo {
   height: 50px;
   width: auto;

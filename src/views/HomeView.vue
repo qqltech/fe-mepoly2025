@@ -187,7 +187,7 @@ export default {
       try {
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token
-          const response = await axios.get(`https://backend.qqltech.com:7021/operation/default_users`, {
+          const response = await axios.get(`https://backend.qqltech.com:7021/operation/m_customer`, {
             headers: {
               "authorization": `${getDataIsLogin().token_type} ${this.token}`,
             },
@@ -568,12 +568,112 @@ export default {
                             </h2>
                             <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion1">
                               <div class="accordion-body">
-                                <div class="row">
+                                <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <p></p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+
                                   </div>
                                   <div class="col-sm-6">
-                                    <p>{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="accordion accordion-flush" id="accordion2">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapse2">
+                                <div class="col-sm-1 img-salesman">
+                                  <img class="img-profile"
+                                    src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
+                                    alt="" />
+
+                                </div>
+                                <div class="col-sm-8">
+                                  <h6 id="txt-salesman">{{ salesName }}</h6>
+                                </div>
+                              </button>
+                            </h2>
+                            <div id="flush-collapse2" class="accordion-collapse collapse" data-bs-parent="#accordion2">
+                              <div class="accordion-body">
+                                <div class="row salesman-history">
+                                  <div class="col-sm-6">
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="accordion accordion-flush" id="accordion3">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapse3" aria-expanded="false" aria-controls="flush-collapse3">
+                                <div class="col-sm-1 img-salesman">
+                                  <img class="img-profile"
+                                    src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
+                                    alt="" />
+
+                                </div>
+                                <div class="col-sm-8">
+                                  <h6 id="txt-salesman">{{ salesName }}</h6>
+                                </div>
+                              </button>
+                            </h2>
+                            <div id="flush-collapse3" class="accordion-collapse collapse" data-bs-parent="#accordion3">
+                              <div class="accordion-body">
+                                <div class="row salesman-history">
+                                  <div class="col-sm-6">
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <p class="salesman-history-txt">Quantum Leap</p>
+
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+
                                   </div>
                                 </div>
 
