@@ -570,19 +570,19 @@ export default {
                               <div class="accordion-body">
                                 <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
 
                                   </div>
                                   <div class="col-sm-6">
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
 
                                   </div>
                                 </div>
@@ -615,19 +615,19 @@ export default {
                               <div class="accordion-body">
                                 <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
 
                                   </div>
                                   <div class="col-sm-6">
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
 
                                   </div>
                                 </div>
@@ -660,19 +660,19 @@ export default {
                               <div class="accordion-body">
                                 <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
-                                    <p class="salesman-history-txt">Quantum Leap</p>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">Quantum Leap</small><br>
 
                                   </div>
                                   <div class="col-sm-6">
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
-                                    <p class="salesman-history-txt">{{ salesLastVisited }}</p>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
 
                                   </div>
                                 </div>
