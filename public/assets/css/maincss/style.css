@@ -67,11 +67,26 @@ a {
   justify-content: center;
 }
 .img-profile {
-  height: 60px;
-  width: 60px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   margin-right: 10px;
   display: block;
+
+}
+
+.img-profile img{
+  margin: 0 !important;
+}
+
+.img-salesman {
+  justify-content: center;
+  text-align: center !important;
+  align-items: center;
+}
+
+h6{
+  margin-bottom: 0 !important;
 }
 
 .garis-sidebar {

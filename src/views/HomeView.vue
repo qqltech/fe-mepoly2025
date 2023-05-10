@@ -125,25 +125,22 @@ export default {
       salesName: '',
       salesLastVisited: '',
       stores: [
-        { name: "All" },
-        { name: "Store A" },
-        { name: "Store B" },
-        { name: "Store C" },
-        { name: "Store D" },
-        { name: "Store E" },
-        { name: "Store F" },
       ],
+      storesName: '',
       searchStore: "",
       selectedStore: "",
       filtersSelected: [],
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
+      selectedProducts: '',
+      filteredStores: [],
 
     }
   },
   mounted() {
     this.fetchDataStore();
+    this.fetchDataStores();
   },
 
   methods: {
@@ -185,6 +182,30 @@ export default {
         this.isLoading = false;
       }
     },
+
+    async fetchDataStores() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const response = await axios.get(`https://backend.qqltech.com:7021/operation/default_users`, {
+            headers: {
+              "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+            },
+
+          }
+
+          )
+          const stores = response.data;
+          this.storesName = stores.data;
+          // this.filteredStores = this.storesName
+          console.log(stores);
+        }
+      } catch (error) {
+        flashMessage('error', 'Gagal Mendapatkan Data', error)
+      } finally {
+        this.isLoading = false;
+      }
+    }
   },
 
   watch: {
@@ -280,14 +301,14 @@ export default {
               </div>
               <div class="col-sm-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand1" />
+                  <input class="form-check-input" type="checkbox" v-model="products" value="Selang" id="checkBoxBrand1" />
                   <label class="form-check-label" for="checkBoxBrand1">
                     Selang
                   </label>
 
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkBoxBrand2" />
+                  <input class="form-check-input" type="checkbox" v-model="products" value="Tali" id="checkBoxBrand2" />
                   <label class="form-check-label" for="checkBoxBrand2">
                     Tali
                   </label>
@@ -313,12 +334,12 @@ export default {
                         v-model="searchStore" autofocus="autofocus">
                     </form>
                     <hr>
-                    
 
-                    <div class="form-check checkStore" v-for="store in filteredStores" :key="store.name">
-                      <input class="form-check-input" type="checkbox" :value="store.name"
+
+                    <div class="form-check checkStore" v-for="stores in storesName" :key="stores">
+                      <input class="form-check-input" type="checkbox" name="store" :id="stores" :value="stores"
                         v-model="selectedStore" />
-                      <label class="form-check-label">{{ store.name }}</label>
+                      <label class="form-check-label" :for="stores">{{ stores.company }}</label>
                     </div>
 
                   </div>
@@ -346,10 +367,6 @@ export default {
               </div>  -->
 
             <div class="d-grid gap-2 mt-2">
-              <!-- <router-link v-if="filtersSelected" to="" @click="applyFilters" aria-expanded="true" tag="button"
-                class="button5 btn-success rtlink-btn4">Apply Filter</router-link> -->
-
-
               <router-link to="" @click="logout" aria-expanded="true" tag="button"
                 class="button4 btn-danger rtlink-btn4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                   fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
@@ -525,6 +542,54 @@ export default {
               </div>
             </div>
           </div>
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="card mb-4 card-5">
+                <div class="card-body">
+                  <div class="card-body">
+                    <p class="card-title"><b>Salesman Info</b></p>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="accordion accordion-flush" id="accordion1">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
+                                <div class="col-sm-1 img-salesman">
+                                  <img class="img-profile"
+                                    src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
+                                    alt="" />
+
+                                </div>
+                                <div class="col-sm-8">
+                                  <h6 id="txt-salesman">{{ salesName }}</h6>
+                                </div>
+                              </button>
+                            </h2>
+                            <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion1">
+                              <div class="accordion-body">
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <p></p>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <p>{{ salesLastVisited }}</p>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
         </main>
       </div>
     </div>
