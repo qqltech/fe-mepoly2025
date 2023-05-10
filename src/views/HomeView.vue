@@ -126,15 +126,12 @@ export default {
       salesLastVisited: '',
       stores: [
       ],
-      storesName: '',
-      searchStore: "",
-      selectedStore: "",
-      filtersSelected: [],
+      storesName: [],
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
-      selectedProducts: '',
-      filteredStores: [],
+      searchStores: '',
+      selectedStore:'',
 
     }
   },
@@ -154,7 +151,7 @@ export default {
       const [dd, mm, yyyy] = dateString.split('-');
       return `${dd}-${mm}-${yyyy}`;
     },
-
+   
     async fetchDataVisit() {
       try {
         if (getDataIsLogin()) {
@@ -233,10 +230,13 @@ export default {
       }
     },
     filteredStores() {
-      return this.stores.filter((stores) => {
-        return stores.company.toLowerCase().includes(this.searchStore.toLowerCase());
+      return this.storesName.filter(store => {
+        const regex = new RegExp(this.searchStores, 'i');
+        return store.company.match(regex);
       });
     },
+    
+    
 
   },
 
@@ -334,7 +334,7 @@ export default {
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
                       <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
-                        v-model="seachStores" autofocus="autofocus">
+                        v-model="searchStores" autofocus="autofocus">
                     </form>
                     <hr>
 
