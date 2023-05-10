@@ -198,7 +198,7 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           // this.filteredStores = this.storesName
-          // console.log(stores);
+          console.log(stores);
         }
       } catch (error) {
         flashMessage('error', 'Gagal Mendapatkan Data', error)
@@ -226,7 +226,7 @@ export default {
         periode_start: this.formatDate(this.periodeStart),
         periode_end: this.formatDate(this.periodeEnd),
         products: 'Tali',
-        store_id: 2,
+        store_id: 3,
       }
     },
     filteredStores() {
@@ -555,8 +555,8 @@ export default {
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
-                                <div class="col-sm-1 img-salesman">
-                                  <img class="img-profile"
+                                <div class="col-sm-1 area-img-salesman">
+                                  <img class="img-salesman"
                                     src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
                                     alt="" />
 
@@ -600,8 +600,8 @@ export default {
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapse2">
-                                <div class="col-sm-1 img-salesman">
-                                  <img class="img-profile"
+                                <div class="col-sm-1 area-img-salesman">
+                                  <img class="img-salesman"
                                     src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
                                     alt="" />
 
@@ -645,8 +645,8 @@ export default {
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse3" aria-expanded="false" aria-controls="flush-collapse3">
-                                <div class="col-sm-1 img-salesman">
-                                  <img class="img-profile"
+                                <div class="col-sm-1 area-img-salesman">
+                                  <img class="img-salesman"
                                     src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
                                     alt="" />
 

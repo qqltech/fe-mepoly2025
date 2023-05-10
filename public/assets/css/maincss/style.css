@@ -67,8 +67,8 @@ a {
   justify-content: center;
 }
 .img-profile {
-  height: 20px;
-  width: 20px;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
   margin-right: 10px;
   display: block;
@@ -79,10 +79,14 @@ a {
   margin: 0 !important;
 }
 
-.img-salesman {
+.area-img-salesman {
   justify-content: center;
   text-align: center !important;
   align-items: center;
+}
+.img-salesman {
+  height: 20px;
+  width: auto;
 }
 
 h6{
