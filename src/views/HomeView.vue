@@ -57,7 +57,6 @@ export default {
             label: 'Stock Amount',
             backgroundColor: ['#244065', '#22AAD9'],
             data: [400, 200,],
-            barThickness: 0.1,
           }
         ],
 
@@ -220,7 +219,7 @@ export default {
 
         }
       } catch (error) {
-        flashMessage('error', 'Gagal Mendapatkan Data', error)
+        flashMessage('error','Waktu Habis!', 'Silahkan Login kembali')
       } finally {
         this.isLoading = false;
       }
@@ -241,10 +240,7 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          // this.storesNameToko = 
           console.log(stores);
-          // this.storesArea = stores.data;
-          // this.storesCust = stores.data;
 
         }
       } catch (error) {
