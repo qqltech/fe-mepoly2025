@@ -393,7 +393,7 @@ export default {
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
                       <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
-                        v-model="searchStores" autofocus="autofocus">
+                      autofocus="autofocus">
                     </form>
                     <hr>
 
