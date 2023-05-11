@@ -49,7 +49,7 @@ export default {
       user: null,
       token: '',
       stockData: '',
-
+      loaded: false,
       chartData1: {
         labels: ['Brand A', 'Brand B'],
         datasets: [
@@ -72,50 +72,10 @@ export default {
           }
         ]
       },
-      chartData3: {
-        labels: ['Mepoly', 'Trilliun', 'Sumber Jaya', 'Pusso', 'Turbo Hose'],
-        datasets: [
-          {
-            indexAxis: 'y',
-            label: 'Detail Stock (pcs)',
-            backgroundColor: '#244065',
-            data: [650, 500, 250, 200, 500]
-          }
-        ]
-      },
-      labelChartTiga: '',
-      dataChartTiga: '',
-      chartData4: {
-        labels: ['Mepoly', 'Trilliun', 'Sumber Jaya', 'Pusso', 'Turbo Hose'],
-        datasets: [
-          {
-            indexAxis: 'y',
-            label: 'Detail Omzet',
-            backgroundColor: '#244065',
-            data: [680, 300, 250, 200, 150]
-          }
-        ]
-      },
-      chartData5: {
-        labels: ['S. FLex', 'Stabilo', 'Seagull', 'Qrope', 'Hank', 'Bintang', 'PP. Band'],
-        datasets: [
-          {
-            label: 'Detail Order',
-            backgroundColor: '#244065',
-            data: [47, 28, 58, 52, 56, 30, 52]
-          }
-        ]
-      },
-      chartData6: {
-        labels: ['S. FLex', 'Stabilo', 'Seagull', 'Qrope', 'Hank', 'Bintang', 'PP. Band'],
-        datasets: [
-          {
-            label: 'Detail Order',
-            backgroundColor: '#244065',
-            data: [47, 28, 58, 52, 56, 30, 52]
-          }
-        ]
-      },
+      chartData3: null,
+      chartData4: null,
+      chartData5: null,
+      chartData6: null,
       options: {
 
         legend: {
@@ -130,20 +90,21 @@ export default {
       salesLastVisited: '',
       stores: [],
       storesName: [],
-      storesCust: [],
-      storesArea: [],
+      storesShow: '',
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
       selectedProducts: ['Tali', 'Selang'],
       selectedStore: '18',
+      isTali: true,
+      isSelang: true,
+
 
     }
   },
   mounted() {
     this.fetchDataVisit();
     this.fetchDataStores();
-    // this.filterDataStores();
   },
 
   methods: {
@@ -163,7 +124,21 @@ export default {
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token
           const selectProduc = this.selectedProducts
+          if (selectProduc.length == 2) {
+            this.isSelang = true;
+            this.isTali = true;
+          } else if (selectProduc[0] == 'Tali') {
+            this.isTali = true;
+            this.isSelang = false;
+          } else if (selectProduc[0] == 'Selang') {
+            this.isSelang = true;
+            this.isTali = false;
 
+          } else {
+            this.isSelang = false;
+            this.isTali = false;
+          }
+          this.getfilterCompany(this.selectedStore)
           // console.log(`${(selectProduc[0]) ? selectProduc[0] : ''}${(selectProduc[1] ? "-"+selectProduc[1] : '')}`);
           const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
             headers: {
@@ -173,22 +148,76 @@ export default {
             {
               periode_start: this.formatDate(this.periodeStart),
               periode_end: this.formatDate(this.periodeEnd),
-              products: `${(selectProduc[0]) ? selectProduc[0] : ''}${(selectProduc[1] ? "-"+selectProduc[1] : '')}`,
+              products: `${(selectProduc[0]) ? selectProduc[0] : ''}${(selectProduc[1] ? "-" + selectProduc[1] : '')}`,
               store_id: this.selectedStore,
             }
           }
 
           )
           const visit = response.data;
+          console.log(visit);
           this.salesName = visit.sales_name;
           this.salesLastVisited = visit.sales_last_visited;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
-          const stockData = visit.chart_detail_stock;
-          // this.labelChartTiga = stockData.[].code;
-          // this.dataChartTiga = stockData.total;
-          console.log(visit);
+          const dataStock = this.eachDataChart(visit.chart_detail_stock)
+          const resultchartData3 = {
+            labels: dataStock.label,
+            datasets: [
+              {
+                indexAxis: 'y',
+                label: 'Detail Stock',
+                backgroundColor: '#244065',
+                data: dataStock.data
+              }
+            ]
+          };
+          this.chartData3 = resultchartData3;
+
+          const dataOmset = this.eachDataChart(visit.chart_detail_omzet)
+          const resultchartData4 = {
+            labels: dataOmset.label,
+            datasets: [
+              {
+                indexAxis: 'y',
+                label: 'Detail Omzet',
+                backgroundColor: '#244065',
+                data: dataOmset.data
+              }
+            ]
+          };
+          this.chartData4 = resultchartData4;
+
+          const dataOrder = this.eachDataChart(visit.chart_detail_order)
+          const resultchartData5 = {
+            labels: dataOrder.label,
+            datasets: [
+              {
+                label: 'Detail Order',
+                backgroundColor: '#244065',
+                data: dataOrder.data
+              }
+            ]
+          };
+          this.chartData5 = resultchartData5;
+
+          const resultchartData6 = {
+            labels: dataOrder.label,
+            datasets: [
+              {
+                label: 'Detail Order',
+                backgroundColor: '#244065',
+                data: dataOrder.data
+              }
+            ]
+          };
+          this.chartData6 = resultchartData6;
+
+          
+
+          this.loaded = true;
+
         }
       } catch (error) {
         flashMessage('error', 'Gagal Mendapatkan Data', error)
@@ -211,9 +240,12 @@ export default {
           )
           const stores = response.data;
           this.storesName = stores.data;
-          this.storesArea = stores.data;
-          this.storesCust = stores.data;
+          this.getfilterCompany(this.selectedStore)
+          // this.storesNameToko = 
           console.log(stores);
+          // this.storesArea = stores.data;
+          // this.storesCust = stores.data;
+
         }
       } catch (error) {
         flashMessage('error', 'Gagal Mendapatkan Data', error)
@@ -221,6 +253,26 @@ export default {
         this.isLoading = false;
       }
     },
+
+    getfilterCompany(id) {
+      this.storesShow = this.storesName.find(data => data.id == id)
+    },
+
+    eachDataChart(array) {
+      const label = []
+      const data = []
+      array.forEach(element => {
+        label.push(element.code)
+        data.push(element.total)
+      });
+
+      return {
+        label,
+        data
+      }
+    }
+
+
 
 
   },
@@ -307,7 +359,7 @@ export default {
               <div class="col-sm-6">
                 <div class="form-check">
                   <input class="form-check-input" checked type="checkbox" value="Selang" v-model="selectedProducts"
-                    id="checkBoxBrand1"  @change="fetchDataVisit()" />
+                    id="checkBoxBrand1" @change="fetchDataVisit()" />
                   <label class="form-check-label" for="checkBoxBrand1">
                     Selang
                   </label>
@@ -315,7 +367,7 @@ export default {
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" checked type="checkbox" value="Tali" v-model="selectedProducts"
-                    id="checkBoxBrand2"  @change="fetchDataVisit()"/>
+                    id="checkBoxBrand2" @change="fetchDataVisit()" />
                   <label class="form-check-label" for="checkBoxBrand2">
                     Tali
                   </label>
@@ -334,6 +386,8 @@ export default {
 
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
+                    {{ (storesShow) ? storesShow.company : '' }}
+
 
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
@@ -345,15 +399,18 @@ export default {
 
 
                     <div class="form-check checkStore" v-for="(stores, index) in storesName">
-                      <input class="form-check-input"  type="radio" name="stores" :id="stores.id" :value="stores.id"
-                        v-model="selectedStore"  @change="fetchDataVisit()" />
+                      <input class="form-check-input" type="radio" name="stores" :id="stores.id" :value="stores.id"
+                        v-model="selectedStore" @change="fetchDataVisit()" />
                       <label class="form-check-label" :for="stores.id">{{ stores.company }}</label>
                     </div>
 
                   </div>
                 </div>
+
+
               </div>
             </div>
+
             <hr class="garis-sidebar" style=" margin-top: 20px" />
             <div class="d-grid gap-2 mt-2">
               <router-link to="" @click="logout" aria-expanded="true" tag="button"
@@ -384,6 +441,8 @@ export default {
             width="auto" />
           <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterPdf">Export to PDF</button>
           <button class="button btn1" data-toggle="modal" data-target="#exampleModalCenterCsv">Export to CSV</button>
+          <button class="button btn1" data-toggle="modal" data-target="#exampleModalShow">Show Store</button>
+
           <label class="period-date"><b>Period :</b></label>
           <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate" @change="fetchDataVisit()">
           <label class="label-date"><b>To</b></label>
@@ -393,53 +452,7 @@ export default {
           <div class="container-fluid mt-3 p-0">
             <h1 class="h4"><b>Overview</b></h1>
           </div>
-          <div class="row mt-4 mb-2">
-            <div class="col-sm-4">
-              <div class="row">
-                <div class="col-sm-6">
-                  <p><b>
-                      Nama Toko :
-                    </b></p>
-                </div>
-                <div class="col-sm-6">
-                  <p>
-                    {{ storesName.company }}
-                  </p>
-                </div>
 
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="row">
-                <div class="col-sm-6">
-                  <p><b>
-                      Customer Name :
-                    </b></p>
-                </div>
-                <div class="col-sm-6">
-                  <p>
-                    {{ storesCust.name }}
-                  </p>
-                </div>
-
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="row">
-                <div class="col-sm-6">
-                  <p><b>
-                      Area :
-                    </b></p>
-                </div>
-                <div class="col-sm-6">
-                  <p>
-                    {{ storesArea.address }}
-                  </p>
-                </div>
-
-              </div>
-            </div>
-          </div>
           <div class="row mt-4">
             <div class="col-sm-4">
               <div class="card ">
@@ -538,7 +551,7 @@ export default {
                   <div class="card-body">
                     <p class="card-title"><b>Detail Stock</b></p>
                     <div class="col-sm-12 canvas2">
-                      <Bar :data="chartData3" :options="options" />
+                      <Bar :data="chartData3" v-if="loaded" :options="options" />
                     </div>
                   </div>
                 </div>
@@ -552,7 +565,7 @@ export default {
                   <div class="card-body">
                     <p class="card-title"><b>Detail Omzet</b></p>
                     <div class="col-sm-12 canvas2">
-                      <Bar :data="chartData4" :options="options" />
+                      <Bar :data="chartData4" v-if="loaded" :options="options" />
                     </div>
                   </div>
                 </div>
@@ -565,13 +578,15 @@ export default {
                 <div class="card-body">
                   <div class="card-body">
                     <p class="card-title"><b>Detail Order</b></p>
-                    <div class="col-sm-12 canvas2">
+
+
+                    <div class="col-sm-12 canvas2" v-if="isTali">
                       <p class="card-title2"><b>Product : Tali</b></p>
-                      <Line :data="chartData5" :options="options" />
+                      <Line :data="chartData5" v-if="loaded" :options="options" />
                     </div>
-                    <div class="col-sm-12 canvas2">
+                    <div class="col-sm-12 canvas2" v-if="isSelang">
                       <p class="card-title2 mt-5"><b>Product : Selang</b></p>
-                      <Line :data="chartData6" :options="options" />
+                      <Line :data="chartData6" v-if="loaded" :options="options" />
                     </div>
                   </div>
                 </div>
@@ -804,6 +819,53 @@ export default {
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
               <button class="btn button3">Export CSV</button>
             </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal 3 -->
+    <div class="modal fade" id="exampleModalShow">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Show Store</h5>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <p><b>
+                    Store Name
+                  </b></p>
+              </div>
+              <div class="col-sm-8">
+                <p>
+                  : {{ (storesShow) ? storesShow.company : '' }}
+                </p>
+              </div>
+              <div class="col-sm-4">
+                <p>
+                  <b>Customer Name</b>
+                </p>
+              </div>
+              <div class="col-sm-8">
+                <p>
+                  : {{ (storesShow) ? storesShow.name : '' }}
+                </p>
+              </div>
+              <div class="col-sm-4">
+                <p>
+                  <b>Area</b>
+                </p>
+              </div>
+              <div class="col-sm-8">
+                <p>
+                  : {{ (storesShow) ? storesShow.area : '' }}
+                </p>
+              </div>
+            </div>
+
           </div>
           <div class="modal-footer">
           </div>

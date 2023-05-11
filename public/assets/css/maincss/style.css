@@ -234,6 +234,7 @@ h6{
 }
 .navbar {
   box-shadow: none !important;
+  
 }
 
 .period-bar1 {
@@ -525,4 +526,26 @@ p {
 
 .modal-content {
   border-radius: 1rem !important;
+}
+
+.col-sm-3 {
+  padding: 0 !important;
+}
+
+.col-sm-9 {
+  padding: 0 !important;
+}
+
+.top-overview{
+  width: 300px;
+  background-color: rgba(237, 237, 237, 1);
+  height: 35px;
+  border: none;
+  border-radius: 10px;
+  color: #244065;
+}
+
+.txt-top-overview p{
+  margin-bottom: 0px !important;
+  font-size: 12px !important;
 }
