@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, getDataIsLogin, } from '../config/functions';
+import { flashMessage, getDataIsLogin, formatRupiah } from '../config/functions';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -135,13 +135,15 @@ export default {
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
-      selectedProducts: 'Tali',
+      selectedProducts: ['Tali', 'Selang'],
+      selectedStore: '18',
 
     }
   },
   mounted() {
     this.fetchDataVisit();
     this.fetchDataStores();
+    // this.filterDataStores();
   },
 
   methods: {
@@ -155,37 +157,45 @@ export default {
       const [dd, mm, yyyy] = dateString.split('-');
       return `${dd}-${mm}-${yyyy}`;
     },
-   
-      async fetchDataVisit() {
-        try {
-          if (getDataIsLogin()) {
-            this.token = getDataIsLogin().token
-            const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
-              headers: {
-                "authorization": `${getDataIsLogin().token_type} ${this.token}`,
-              },
-              params:
-                this.fetchDataParams,
-            }
 
-            )
-            const visit = response.data;
-            this.salesName = visit.sales_name;
-            this.salesLastVisited = visit.sales_last_visited;
-            this.totalStock = visit.total_stock;
-            this.totalOmzet = visit.total_omzet;
-            this.totalVisit = visit.total_checkin;
-            const stockData = visit.chart_detail_stock;
-            // this.labelChartTiga = stockData.[].code;
-            // this.dataChartTiga = stockData.total;
-            // console.log(this.labelChartTiga);
+    async fetchDataVisit() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const selectProduc = this.selectedProducts
+
+          // console.log(`${(selectProduc[0]) ? selectProduc[0] : ''}${(selectProduc[1] ? "-"+selectProduc[1] : '')}`);
+          const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
+            headers: {
+              "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+            },
+            params:
+            {
+              periode_start: this.formatDate(this.periodeStart),
+              periode_end: this.formatDate(this.periodeEnd),
+              products: `${(selectProduc[0]) ? selectProduc[0] : ''}${(selectProduc[1] ? "-"+selectProduc[1] : '')}`,
+              store_id: this.selectedStore,
+            }
           }
-        } catch (error) {
-          flashMessage('error', 'Gagal Mendapatkan Data', error)
-        } finally {
-          this.isLoading = false;
+
+          )
+          const visit = response.data;
+          this.salesName = visit.sales_name;
+          this.salesLastVisited = visit.sales_last_visited;
+          this.totalStock = visit.total_stock;
+          this.totalOmzet = visit.total_omzet;
+          this.totalVisit = visit.total_checkin;
+          const stockData = visit.chart_detail_stock;
+          // this.labelChartTiga = stockData.[].code;
+          // this.dataChartTiga = stockData.total;
+          console.log(visit);
         }
-      },
+      } catch (error) {
+        flashMessage('error', 'Gagal Mendapatkan Data', error)
+      } finally {
+        this.isLoading = false;
+      }
+    },
 
     async fetchDataStores() {
       try {
@@ -211,19 +221,10 @@ export default {
         this.isLoading = false;
       }
     },
-    
-    
-    
+
+
   },
 
-  watch: {
-    fetchDataParams: {
-      handler() {
-        this.fetchDataVisit();
-      },
-      deep: true,
-    },
-  },
 
   computed: {
     isAuthenticated() {
@@ -234,10 +235,10 @@ export default {
         periode_start: this.formatDate(this.periodeStart),
         periode_end: this.formatDate(this.periodeEnd),
         products: this.selectedProducts,
-        store_id: 3,
+        storeId: this.selectedStore,
       }
     },
-    
+
 
   },
 
@@ -305,14 +306,16 @@ export default {
               </div>
               <div class="col-sm-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="Selang" v-model="selectedProducts" id="checkBoxBrand1"/>
+                  <input class="form-check-input" checked type="checkbox" value="Selang" v-model="selectedProducts"
+                    id="checkBoxBrand1"  @change="fetchDataVisit()" />
                   <label class="form-check-label" for="checkBoxBrand1">
                     Selang
                   </label>
 
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="Tali" v-model="selectedProducts" id="checkBoxBrand2" />
+                  <input class="form-check-input" checked type="checkbox" value="Tali" v-model="selectedProducts"
+                    id="checkBoxBrand2"  @change="fetchDataVisit()"/>
                   <label class="form-check-label" for="checkBoxBrand2">
                     Tali
                   </label>
@@ -328,9 +331,10 @@ export default {
               <div class="col-sm-6">
 
                 <div class="dropdown">
+
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    {{ selectedStore ? selectedStore : "All" }}
+
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
@@ -340,9 +344,9 @@ export default {
                     <hr>
 
 
-                    <div class="form-check checkStore" v-for="stores in storesName" >
-                      <input class="form-check-input" type="radio" name="stores" :id="stores.id" :value="stores.id"
-                        v-model="selectedStore" />
+                    <div class="form-check checkStore" v-for="(stores, index) in storesName">
+                      <input class="form-check-input"  type="radio" name="stores" :id="stores.id" :value="stores.id"
+                        v-model="selectedStore"  @change="fetchDataVisit()" />
                       <label class="form-check-label" :for="stores.id">{{ stores.company }}</label>
                     </div>
 
@@ -381,9 +385,9 @@ export default {
           <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterPdf">Export to PDF</button>
           <button class="button btn1" data-toggle="modal" data-target="#exampleModalCenterCsv">Export to CSV</button>
           <label class="period-date"><b>Period :</b></label>
-          <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate">
+          <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate" @change="fetchDataVisit()">
           <label class="label-date"><b>To</b></label>
-          <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate">
+          <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate" @change="fetchDataVisit()">
         </div>
         <main class="content">
           <div class="container-fluid mt-3 p-0">
@@ -394,8 +398,8 @@ export default {
               <div class="row">
                 <div class="col-sm-6">
                   <p><b>
-                    Nama Toko :
-                  </b></p>
+                      Nama Toko :
+                    </b></p>
                 </div>
                 <div class="col-sm-6">
                   <p>
@@ -409,8 +413,8 @@ export default {
               <div class="row">
                 <div class="col-sm-6">
                   <p><b>
-                    Customer Name :
-                  </b></p>
+                      Customer Name :
+                    </b></p>
                 </div>
                 <div class="col-sm-6">
                   <p>
@@ -424,8 +428,8 @@ export default {
               <div class="row">
                 <div class="col-sm-6">
                   <p><b>
-                    Area :
-                  </b></p>
+                      Area :
+                    </b></p>
                 </div>
                 <div class="col-sm-6">
                   <p>
@@ -475,7 +479,7 @@ export default {
                       </div>
                     </div>
                   </div>
-                  <p class="card-count mt-1 mb-1">Rp. {{ totalOmzet }} -</p>
+                  <p class="card-count mt-1 mb-1">Rp. {{ formatRupiah(totalOmzet.toString()) }} -</p>
                 </div>
               </div>
             </div>
@@ -623,8 +627,8 @@ export default {
                             </div>
                           </div>
                         </div>
-                        
-                        
+
+
                       </div>
                       <div class="col-sm-4">
                         <div class="accordion accordion-flush" id="accordion2">
@@ -668,8 +672,8 @@ export default {
                             </div>
                           </div>
                         </div>
-                        
-                        
+
+
                       </div>
                       <div class="col-sm-4">
                         <div class="accordion accordion-flush" id="accordion3">
@@ -713,15 +717,15 @@ export default {
                             </div>
                           </div>
                         </div>
-                        
-                        
+
+
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            </div>
+          </div>
         </main>
       </div>
     </div>
