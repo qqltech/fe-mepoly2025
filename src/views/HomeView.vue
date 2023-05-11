@@ -41,13 +41,15 @@ export default {
       role: '',
       periodeEnd: '',
       periodeStart: '',
-      products: '',
+      products: [],
       storeId: '',
       isLoading: false,
       visit: [],
       data: null,
       user: null,
       token: '',
+      stockData: '',
+
       chartData1: {
         labels: ['Brand A', 'Brand B'],
         datasets: [
@@ -81,6 +83,8 @@ export default {
           }
         ]
       },
+      labelChartTiga: '',
+      dataChartTiga: '',
       chartData4: {
         labels: ['Mepoly', 'Trilliun', 'Sumber Jaya', 'Pusso', 'Turbo Hose'],
         datasets: [
@@ -124,14 +128,14 @@ export default {
       isLoading: false,
       salesName: '',
       salesLastVisited: '',
-      stores: [
-      ],
+      stores: [],
       storesName: [],
+      storesCust: [],
+      storesArea: [],
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
-      searchStores: '',
-      selectedStore:'',
+      selectedProducts: 'Tali',
 
     }
   },
@@ -152,33 +156,36 @@ export default {
       return `${dd}-${mm}-${yyyy}`;
     },
    
-    async fetchDataVisit() {
-      try {
-        if (getDataIsLogin()) {
-          this.token = getDataIsLogin().token
-          const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
-            headers: {
-              "authorization": `${getDataIsLogin().token_type} ${this.token}`,
-            },
-            params:
-              this.fetchDataParams,
-          }
+      async fetchDataVisit() {
+        try {
+          if (getDataIsLogin()) {
+            this.token = getDataIsLogin().token
+            const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
+              headers: {
+                "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+              },
+              params:
+                this.fetchDataParams,
+            }
 
-          )
-          const visit = response.data;
-          this.salesName = visit.sales_name;
-          this.salesLastVisited = visit.sales_last_visited;
-          this.totalStock = visit.total_stock;
-          this.totalOmzet = visit.total_omzet;
-          this.totalVisit = visit.total_checkin;
-          console.log(visit);
+            )
+            const visit = response.data;
+            this.salesName = visit.sales_name;
+            this.salesLastVisited = visit.sales_last_visited;
+            this.totalStock = visit.total_stock;
+            this.totalOmzet = visit.total_omzet;
+            this.totalVisit = visit.total_checkin;
+            const stockData = visit.chart_detail_stock;
+            // this.labelChartTiga = stockData.[].code;
+            // this.dataChartTiga = stockData.total;
+            // console.log(this.labelChartTiga);
+          }
+        } catch (error) {
+          flashMessage('error', 'Gagal Mendapatkan Data', error)
+        } finally {
+          this.isLoading = false;
         }
-      } catch (error) {
-        flashMessage('error', 'Gagal Mendapatkan Data', error)
-      } finally {
-        this.isLoading = false;
-      }
-    },
+      },
 
     async fetchDataStores() {
       try {
@@ -194,7 +201,8 @@ export default {
           )
           const stores = response.data;
           this.storesName = stores.data;
-          // this.filteredStores = this.storesName
+          this.storesArea = stores.data;
+          this.storesCust = stores.data;
           console.log(stores);
         }
       } catch (error) {
@@ -225,17 +233,10 @@ export default {
       return {
         periode_start: this.formatDate(this.periodeStart),
         periode_end: this.formatDate(this.periodeEnd),
-        products: 'Tali',
+        products: this.selectedProducts,
         store_id: 3,
       }
     },
-    filteredStores() {
-      return this.storesName.filter(store => {
-        const regex = new RegExp(this.searchStores, 'i');
-        return store.company.match(regex);
-      });
-    },
-    
     
 
   },
@@ -304,14 +305,14 @@ export default {
               </div>
               <div class="col-sm-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" v-model="products" value="Selang" id="checkBoxBrand1" />
+                  <input class="form-check-input" type="checkbox" value="Selang" v-model="selectedProducts" id="checkBoxBrand1"/>
                   <label class="form-check-label" for="checkBoxBrand1">
                     Selang
                   </label>
 
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" v-model="products" value="Tali" id="checkBoxBrand2" />
+                  <input class="form-check-input" type="checkbox" value="Tali" v-model="selectedProducts" id="checkBoxBrand2" />
                   <label class="form-check-label" for="checkBoxBrand2">
                     Tali
                   </label>
@@ -340,7 +341,7 @@ export default {
 
 
                     <div class="form-check checkStore" v-for="stores in storesName" >
-                      <input class="form-check-input" type="checkbox" name="stores" :id="stores.id" :value="stores.id"
+                      <input class="form-check-input" type="radio" name="stores" :id="stores.id" :value="stores.id"
                         v-model="selectedStore" />
                       <label class="form-check-label" :for="stores.id">{{ stores.company }}</label>
                     </div>
@@ -387,6 +388,53 @@ export default {
         <main class="content">
           <div class="container-fluid mt-3 p-0">
             <h1 class="h4"><b>Overview</b></h1>
+          </div>
+          <div class="row mt-4 mb-2">
+            <div class="col-sm-4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p><b>
+                    Nama Toko :
+                  </b></p>
+                </div>
+                <div class="col-sm-6">
+                  <p>
+                    {{ storesName.company }}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p><b>
+                    Customer Name :
+                  </b></p>
+                </div>
+                <div class="col-sm-6">
+                  <p>
+                    {{ storesCust.name }}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p><b>
+                    Area :
+                  </b></p>
+                </div>
+                <div class="col-sm-6">
+                  <p>
+                    {{ storesArea.address }}
+                  </p>
+                </div>
+
+              </div>
+            </div>
           </div>
           <div class="row mt-4">
             <div class="col-sm-4">
