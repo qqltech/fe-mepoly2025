@@ -1,8 +1,11 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, getDataIsLogin, formatRupiah } from '../config/functions';
+import { flashMessage, format_date, getDataIsLogin, formatRupiah } from '../config/functions';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import * as XLSX from 'xlsx'
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -45,6 +48,7 @@ export default {
       storeId: '',
       isLoading: false,
       visit: [],
+      visitData: [],
       data: null,
       user: null,
       token: '',
@@ -97,6 +101,9 @@ export default {
       selectedStore: '18',
       isTali: true,
       isSelang: true,
+      rptFrom: '',
+      rptTo: '',
+
 
 
     }
@@ -104,6 +111,10 @@ export default {
   mounted() {
     this.fetchDataVisit();
     this.fetchDataStores();
+    const date = new Date();
+    this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-01`;
+    this.rptTo = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
+
   },
 
   methods: {
@@ -138,7 +149,6 @@ export default {
             this.isTali = false;
           }
           this.getfilterCompany(this.selectedStore)
-          // console.log(`${(selectProduc[0]) ? selectProduc[0] : ''}${(selectProduc[1] ? "-"+selectProduc[1] : '')}`);
           const response = await axios.get(`https://backend.qqltech.com:7021/operation/dashboard/web`, {
             headers: {
               "authorization": `${getDataIsLogin().token_type} ${this.token}`,
@@ -154,8 +164,11 @@ export default {
 
           )
           const visit = response.data;
+          this.visitData = visit;
+
           console.log(visit);
           this.salesName = visit.sales_name;
+          this.salesStoreVisited = 
           this.salesLastVisited = visit.sales_last_visited;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
@@ -213,13 +226,13 @@ export default {
           };
           this.chartData6 = resultchartData6;
 
-          
+
 
           this.loaded = true;
 
         }
       } catch (error) {
-        flashMessage('error','Waktu Habis!', 'Silahkan Login kembali')
+        flashMessage('error', 'Waktu Habis!', 'Silahkan Login kembali')
       } finally {
         this.isLoading = false;
       }
@@ -240,11 +253,11 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          console.log(stores);
+          // console.log(stores);
 
         }
       } catch (error) {
-        flashMessage('error', 'Gagal Mendapatkan Data', error)
+        flashMessage('error', 'Waktu Habis!', 'Silahkan Login kembali')
       } finally {
         this.isLoading = false;
       }
@@ -266,8 +279,61 @@ export default {
         label,
         data
       }
-    }
+    },
 
+    exportReportPDF() {
+            const doc = new jsPDF();
+            if (this.rptFrom === this.rptTo) {
+                doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n                    Periode ${format_date(this.rptFrom)}`, 35, 15)
+            } else {
+                doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n    Periode ${format_date(this.rptFrom)} s/d ${format_date(this.rptTo)}`, 35, 15)
+            }
+            
+            const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
+            console.log(data)
+            const header = [['Hari & Tanggal', 'Salesman', 'Sales Last Visit']]
+            let rows = ''
+
+            data.forEach((itemReports) => {
+                let row = ''; 
+
+                row.push(format_date(itemReports.date));
+                row.push(itemReports.sales_name);
+                row.push(itemReports.sales_last_visited);
+                rows.push(row)
+            })
+            doc.autoTable({
+                head: header,
+                body: rows,
+                startY: 27,
+            })
+            doc.save('Report PT. Mepoly Industry.pdf')
+
+        },
+    exportReportCSV(){
+      const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
+            const dataToExport = data.map(item => {
+                const result = {
+                    'Hari & Tanggal': item.date,
+                    // Username: item.users.name,
+                    // 'User ID': item.users.employee_id,
+                    // 'Check In': (item.attendances_details[0]) ? item.attendances_details[0].time : 'Tidak Check In',
+                    // StatusCheckIn: (item.attendances_details[0])
+                    //     ? (item.attendances_details[0].on_site ? 'On Scope' : 'Out Scope')
+                    //     : 'Out Scope',
+                    // 'Check Out': (item.attendances_details[1]) ? item.attendances_details[1].time : 'Tidak Check Out',
+                    // StatusCheckOut: (item.attendances_details[1])
+                    //     ? (item.attendances_details[1].on_site ? 'On Scope' : 'Out Scope')
+                    //     : 'Out Scope',
+                    // StatusKerja: item.status
+                }
+                return result;
+            })
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+            XLSX.writeFile(workbook, 'Report PT. Mepoly Industry.xlsx');
+    },
 
 
 
@@ -389,7 +455,7 @@ export default {
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
                     <form class="px-4 py-2">
                       <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
-                      autofocus="autofocus">
+                        autofocus="autofocus">
                     </form>
                     <hr>
 
@@ -617,7 +683,7 @@ export default {
                               <div class="accordion-body">
                                 <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">{{ visit.chart_detail_omzet }}</small><br>
                                     <small class="salesman-history-txt">Quantum Leap</small><br>
                                     <small class="salesman-history-txt">Quantum Leap</small><br>
                                     <small class="salesman-history-txt">Quantum Leap</small><br>
@@ -760,20 +826,20 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date">
+                  <input type="date" class="form-control export-date" v-model="rptFrom">
                 </div>
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">To</label>
+                  <label class="color-black label-modal" style="align-items: center;" >To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date">
+                  <input type="date" class="form-control export-date" v-model="rptTo">
                 </div>
               </div>
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
-              <button class="btn button3">Export PDF</button>
+              <button class="btn button3" @click="exportReportPDF()">Export PDF</button>
             </div>
           </div>
           <div class="modal-footer">
@@ -800,7 +866,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date">
+                  <input type="date" class="form-control export-date" v-model="rptFrom">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -808,12 +874,12 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date">
+                  <input type="date" class="form-control export-date" v-model="rptTo">
                 </div>
               </div>
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
-              <button class="btn button3">Export CSV</button>
+              <button class="btn button3" @click="exportReportCSV()">Export CSV</button>
             </div>
           </div>
           <div class="modal-footer">
