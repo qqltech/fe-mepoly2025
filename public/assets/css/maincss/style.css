@@ -450,7 +450,11 @@ h6{
   width: 225px;
   padding: 0 !important;
 }
+.dropdown-modal {
+  width: 225px !important;
+  padding: 0 !important;
 
+}
 .label-modal {
   display: flex;
   text-align: center;
@@ -584,3 +588,12 @@ p {
   }
 }
 
+
+.form-select {
+  color: #244065 !important;
+  background-color: rgba(237, 237, 237, 1) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 6px 12px 6px 12px !important;
+  width: 16vw !important;
+}

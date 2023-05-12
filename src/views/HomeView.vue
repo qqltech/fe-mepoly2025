@@ -4,8 +4,9 @@ import { flashMessage, format_date, getDataIsLogin, formatRupiah } from '../conf
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import jsPDF from 'jspdf'
+import html2pdf from "html2pdf.js";
+
 import autoTable from 'jspdf-autotable'
-import * as XLSX from 'xlsx'
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -124,6 +125,7 @@ export default {
         this.$router.push('/')
       }
     },
+
     formatDate(dateString) {
       const [dd, mm, yyyy] = dateString.split('-');
       return `${dd}-${mm}-${yyyy}`;
@@ -164,15 +166,23 @@ export default {
 
           )
           const visit = response.data;
-          this.visitData = visit;
-
+          
+          // this.visitData = visit;
           console.log(visit);
-          this.salesName = visit.sales_name;
-          this.salesStoreVisited = 
+          // this.salesName = visit.sales_name;
+          // this.salesStoreVisited = visit.sales_checkin;
+
+          // const dataSalesman = this.eachDataSalesman(visit.sales_checkin)
+          // this.salesName = dataSalesman.name;
+          // this.salesStorevisit = dataSalesman.checkin;
+          // console.log(this.salesName);
+
+          // console.log(this.salesStoreVisited);
           this.salesLastVisited = visit.sales_last_visited;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
+          
           const dataStock = this.eachDataChart(visit.chart_detail_stock)
           const resultchartData3 = {
             labels: dataStock.label,
@@ -201,26 +211,27 @@ export default {
           };
           this.chartData4 = resultchartData4;
 
-          const dataOrder = this.eachDataChart(visit.chart_detail_order)
+          const dataOrdertali = this.eachDataChart(visit.chart_detail_order_tali)
           const resultchartData5 = {
-            labels: dataOrder.label,
+            labels: dataOrdertali.label,
             datasets: [
               {
                 label: 'Detail Order',
                 backgroundColor: '#244065',
-                data: dataOrder.data
+                data: dataOrdertali.data
               }
             ]
           };
           this.chartData5 = resultchartData5;
+          const dataOrderselang = this.eachDataChart(visit.chart_detail_order_selang)
 
           const resultchartData6 = {
-            labels: dataOrder.label,
+            labels: dataOrderselang.label,
             datasets: [
               {
                 label: 'Detail Order',
                 backgroundColor: '#244065',
-                data: dataOrder.data
+                data: dataOrderselang.data
               }
             ]
           };
@@ -232,7 +243,7 @@ export default {
 
         }
       } catch (error) {
-        flashMessage('error', 'Waktu Habis!', 'Silahkan Login kembali')
+        flashMessage('error', 'AXIOS EROR', error)
       } finally {
         this.isLoading = false;
       }
@@ -253,11 +264,11 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          // console.log(stores);
+          console.log(stores);
 
         }
       } catch (error) {
-        flashMessage('error', 'Waktu Habis!', 'Silahkan Login kembali')
+        flashMessage('error', 'TES', 'Silahkan Login kembali')
       } finally {
         this.isLoading = false;
       }
@@ -281,6 +292,16 @@ export default {
       }
     },
 
+    // eachDataSalesman(array){
+    //   const name = []
+    //   const lastVisit = []
+    //   array.forEach(elementSales => {
+    //     name.push(elementSales.name)
+    //     lastVisit.push(elementSales.checkin)
+    //   });
+
+    // },
+
     exportReportPDF() {
             const doc = new jsPDF();
             if (this.rptFrom === this.rptTo) {
@@ -290,8 +311,8 @@ export default {
             }
             
             const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-            console.log(data)
-            const header = [['Hari & Tanggal', 'Salesman', 'Sales Last Visit']]
+            // console.log(data)
+            const header = [['Hari & Tanggal', 'Kategori Produk', 'Kategori Produk', 'Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
             let rows = ''
 
             data.forEach((itemReports) => {
@@ -373,6 +394,7 @@ export default {
 </script>
 
 <template>
+
   <main v-if="isAuthenticated">
     <!-- Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -510,6 +532,7 @@ export default {
           <label class="label-date"><b>To</b></label>
           <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate" @change="fetchDataVisit()">
         </div>
+        <div id="element-to-convert">
         <main class="content">
           <div class="container-fluid mt-3 p-0">
             <h1 class="h4"><b>Overview</b></h1>
@@ -683,7 +706,7 @@ export default {
                               <div class="accordion-body">
                                 <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <small class="salesman-history-txt">{{ visit.chart_detail_omzet }}</small><br>
+                                    <small class="salesman-history-txt"></small><br>
                                     <small class="salesman-history-txt">Quantum Leap</small><br>
                                     <small class="salesman-history-txt">Quantum Leap</small><br>
                                     <small class="salesman-history-txt">Quantum Leap</small><br>
@@ -804,6 +827,7 @@ export default {
             </div>
           </div>
         </main>
+        </div>
       </div>
     </div>
     <!-- END Main Page -->
@@ -835,6 +859,20 @@ export default {
                 </div>
                 <div class="col-sm-6 input-modal">
                   <input type="date" class="form-control export-date" v-model="rptTo">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6 label-modal">
+                  <label class="color-black label-modal" style="align-items: center;" >Pilih Data</label>
+                </div>
+                <div class="col-sm-6">
+                  <div class="col-sm-12">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected></option>
+                      <option value="1">Product</option>
+                      <option value="2">Omzet</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -875,6 +913,20 @@ export default {
                 </div>
                 <div class="col-sm-6 input-modal">
                   <input type="date" class="form-control export-date" v-model="rptTo">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6 label-modal">
+                  <label class="color-black label-modal" style="align-items: center;" >Pilih Data</label>
+                </div>
+                <div class="col-sm-6">
+                  <div class="col-sm-12">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected></option>
+                      <option value="1">Product</option>
+                      <option value="2">Omzet</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
