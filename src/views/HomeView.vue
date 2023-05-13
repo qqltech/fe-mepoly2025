@@ -152,7 +152,7 @@ export default {
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
           const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065', ];
-          const backgroundColorBarLine = ['#22AAD9', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
+          const backgroundColorBarLine = ['#1F5399', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
           const resultchartData1 = {
             labels: dataDifStock.label,
@@ -267,7 +267,7 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          console.log(stores);
+          // console.log(stores);
 
         }
       } catch (error) {
@@ -301,6 +301,7 @@ export default {
       const total = array.reduce((accumulator, element) => {
         return accumulator + element.tali + element.selang
       }, 0)
+      
       array.forEach(element => {
         label.push(element.code)
         data.push(element.tali + element.selang) / total * 100
