@@ -175,12 +175,13 @@ export default {
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
+          const backgroundColor = ['#244065', '#FAD02E', '#F79B51', '#F16045', '#EB4F6C', '#C7447F', '#865E9C', '#4D5A75'];
           const resultchartData1 = {
             labels: dataDifStock.label,
             datasets: [{
               data: dataDifStock.data,
               label: 'Product Stock in %',
-              backgroundColor: '#244065',
+              backgroundColor: dataDifStock.label.map((_, index) => backgroundColor[index % backgroundColor.length]),
 
             }]
 
@@ -197,14 +198,14 @@ export default {
             datasets: [{
               label: 'Product Omzet in %',
 
-              backgroundColor: '#244065',
+              backgroundColor: dataDifStock.label.map((_, index) => backgroundColor[index % backgroundColor.length]),
 
               data: dataDifOmzet.data,
 
             }],
           };
 
-          console.log(dataDifOmzet);
+          // console.log(dataDifOmzet);
           this.chartData2 = resultchartData2;
           const dataStock = this.eachDataChart(visit.chart_detail_stock)
           const resultchartData3 = {
