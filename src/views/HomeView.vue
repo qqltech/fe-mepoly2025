@@ -167,7 +167,7 @@ export default {
 
           };
           this.chartData1 = resultchartData1;
-
+          console.log(this.chartData1);
 
           const dataDifOmzet = this.eachDataDifChart(visit.chart_detail_differentiation_omzet
           )
@@ -267,7 +267,6 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          // console.log(stores);
 
         }
       } catch (error) {
@@ -301,7 +300,6 @@ export default {
       const total = array.reduce((accumulator, element) => {
         return accumulator + element.tali + element.selang
       }, 0)
-      
       array.forEach(element => {
         label.push(element.code)
         data.push(element.tali + element.selang) / total * 100
