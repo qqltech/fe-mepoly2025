@@ -53,28 +53,8 @@ export default {
       token: '',
       stockData: '',
       loaded: false,
-      chartData1: {
-        labels: ['Brand A', 'Brand B'],
-        datasets: [
-          {
-            label: 'Stock Amount',
-            backgroundColor: ['#244065', '#22AAD9'],
-            data: [400, 200,],
-          }
-        ],
-
-      },
-      chartData2: {
-        labels: ['Brand A', 'Brand B'],
-        datasets: [
-          {
-            label: 'Stock Amount',
-            backgroundColor: ['#244065', '#22AAD9'],
-            data: [400, 200,],
-          }
-        ],
-
-      },
+      chartData1: null,
+      chartData2: null,
       chartData3: null,
       chartData4: null,
       chartData5: null,
@@ -98,7 +78,7 @@ export default {
       totalOmzet: '',
       totalStock: '',
       selectedProducts: ['Tali', 'Selang'],
-      selectedStore: '18',
+      selectedStore: '2',
       isTali: true,
       isSelang: true,
       rptFrom: '',
@@ -166,16 +146,14 @@ export default {
 
           )
           const visit = response.data;
-
-
-
           console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
+          const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065', ];
+          const backgroundColorBarLine = ['#22AAD9', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
-          const backgroundColor = ['#244065', '#FAD02E', '#F79B51', '#F16045', '#EB4F6C', '#C7447F', '#865E9C', '#4D5A75'];
           const resultchartData1 = {
             labels: dataDifStock.label,
             datasets: [{
@@ -205,8 +183,9 @@ export default {
             }],
           };
 
-          // console.log(dataDifOmzet);
           this.chartData2 = resultchartData2;
+
+          
           const dataStock = this.eachDataChart(visit.chart_detail_stock)
           const resultchartData3 = {
             labels: dataStock.label,
@@ -214,7 +193,7 @@ export default {
               {
                 indexAxis: 'y',
                 label: 'Detail Stock',
-                backgroundColor: '#244065',
+                backgroundColor: dataStock.label.map((_, index) => backgroundColorBarLine[index % backgroundColor.length]),
                 data: dataStock.data
               }
             ]
@@ -228,7 +207,7 @@ export default {
               {
                 indexAxis: 'y',
                 label: 'Detail Omzet',
-                backgroundColor: '#244065',
+                backgroundColor: dataOmset.label.map((_, index) => backgroundColorBarLine[index % backgroundColor.length]),
                 data: dataOmset.data
               }
             ]
@@ -241,7 +220,7 @@ export default {
             datasets: [
               {
                 label: 'Detail Order',
-                backgroundColor: '#244065',
+                backgroundColor: dataOrdertali.label.map((_, index) => backgroundColorBarLine[index % backgroundColor.length]),
                 data: dataOrdertali.data
               }
             ]
@@ -254,7 +233,7 @@ export default {
             datasets: [
               {
                 label: 'Detail Order',
-                backgroundColor: '#244065',
+                backgroundColor: dataOrderselang.label.map((_, index) => backgroundColorBarLine[index % backgroundColor.length]),
                 data: dataOrderselang.data
               }
             ]
@@ -288,7 +267,7 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          // console.log(stores);
+          console.log(stores);
 
         }
       } catch (error) {
@@ -320,8 +299,8 @@ export default {
       const label = []
       const data = []
       const total = array.reduce((accumulator, element) => {
-    return accumulator + element.tali + element.selang
-  }, 0)
+        return accumulator + element.tali + element.selang
+      }, 0)
       array.forEach(element => {
         label.push(element.code)
         data.push(element.tali + element.selang) / total * 100
@@ -343,7 +322,6 @@ export default {
       }
 
       const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-      // console.log(data)
       const header = [['Hari & Tanggal', 'Kategori Produk', 'Kategori Produk', 'Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
       let rows = ''
 
@@ -363,6 +341,7 @@ export default {
       doc.save('Report PT. Mepoly Industry.pdf')
 
     },
+
     // exportReportCSV() {
     //   const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
     //   const dataToExport = data.map(item => {
