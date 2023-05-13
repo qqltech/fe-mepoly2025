@@ -32,8 +32,6 @@ ChartJS.register(ArcElement, Tooltip, Legend,
   LinearScale,
   PointElement,
   LineElement,)
-
-// const dataUser = getDataIsLogin();
 export default {
 
   name: 'BarChart',
@@ -70,11 +68,12 @@ export default {
         labels: ['Brand A', 'Brand B'],
         datasets: [
           {
-            label: 'Omzet Amount',
+            label: 'Stock Amount',
             backgroundColor: ['#244065', '#22AAD9'],
-            data: [100, 250,],
+            data: [400, 200,],
           }
-        ]
+        ],
+
       },
       chartData3: null,
       chartData4: null,
@@ -167,15 +166,46 @@ export default {
 
           )
           const visit = response.data;
-         
-          
-          
+
+
+
           console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
-          
+          const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
+          const resultchartData1 = {
+            labels: dataDifStock.label,
+            datasets: [{
+              data: dataDifStock.data,
+              label: 'Product Stock in %',
+              backgroundColor: '#244065',
+
+            }]
+
+
+
+          };
+          this.chartData1 = resultchartData1;
+
+
+          const dataDifOmzet = this.eachDataDifChart(visit.chart_detail_differentiation_omzet
+          )
+          const resultchartData2 = {
+            labels: dataDifOmzet.label,
+            datasets: [{
+              label: 'Product Omzet in %',
+
+              backgroundColor: '#244065',
+
+              data: dataDifOmzet.data,
+
+            }],
+          };
+
+          console.log(dataDifOmzet);
+          this.chartData2 = resultchartData2;
           const dataStock = this.eachDataChart(visit.chart_detail_stock)
           const resultchartData3 = {
             labels: dataStock.label,
@@ -257,7 +287,7 @@ export default {
           const stores = response.data;
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
-          console.log(stores);
+          // console.log(stores);
 
         }
       } catch (error) {
@@ -285,62 +315,66 @@ export default {
       }
     },
 
-    // eachDataSalesman(array){
-    //   const name = []
-    //   const lastVisit = []
-    //   array.forEach(elementSales => {
-    //     name.push(elementSales.name)
-    //     lastVisit.push(elementSales.checkin)
-    //   });
+    eachDataDifChart(array) {
+      const label = []
+      const data = []
+      const total = array.reduce((accumulator, element) => {
+    return accumulator + element.tali + element.selang
+  }, 0)
+      array.forEach(element => {
+        label.push(element.code)
+        data.push(element.tali + element.selang) / total * 100
+      });
 
-    //   return{
-    //     name, lastVisit
-    //   }
+      return {
+        label,
+        data
+      }
+    },
 
-    // },
 
     exportReportPDF() {
-            const doc = new jsPDF();
-            if (this.rptFrom === this.rptTo) {
-                doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n                    Periode ${format_date(this.rptFrom)}`, 35, 15)
-            } else {
-                doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n    Periode ${format_date(this.rptFrom)} s/d ${format_date(this.rptTo)}`, 35, 15)
-            }
-            
-            const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-            // console.log(data)
-            const header = [['Hari & Tanggal', 'Kategori Produk', 'Kategori Produk', 'Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
-            let rows = ''
+      const doc = new jsPDF();
+      if (this.rptFrom === this.rptTo) {
+        doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n                    Periode ${format_date(this.rptFrom)}`, 35, 15)
+      } else {
+        doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n    Periode ${format_date(this.rptFrom)} s/d ${format_date(this.rptTo)}`, 35, 15)
+      }
 
-            data.forEach((itemReports) => {
-                let row = ''; 
-
-                row.push(format_date(itemReports.date));
-                row.push(itemReports.sales_name);
-                row.push(itemReports.sales_last_visited);
-                rows.push(row)
-            })
-            doc.autoTable({
-                head: header,
-                body: rows,
-                startY: 27,
-            })
-            doc.save('Report PT. Mepoly Industry.pdf')
-
-        },
-    exportReportCSV(){
       const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-            const dataToExport = data.map(item => {
-                const result = {
+      // console.log(data)
+      const header = [['Hari & Tanggal', 'Kategori Produk', 'Kategori Produk', 'Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
+      let rows = ''
 
-                }
-                return result;
-            })
-            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-            XLSX.writeFile(workbook, 'Report PT. Mepoly Industry.xlsx');
+      data.forEach((itemReports) => {
+        let row = '';
+
+        row.push(format_date(itemReports.date));
+        row.push(itemReports.sales_name);
+        row.push(itemReports.sales_last_visited);
+        rows.push(row)
+      })
+      doc.autoTable({
+        head: header,
+        body: rows,
+        startY: 27,
+      })
+      doc.save('Report PT. Mepoly Industry.pdf')
+
     },
+    // exportReportCSV() {
+    //   const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
+    //   const dataToExport = data.map(item => {
+    //     const result = {
+
+    //     }
+    //     return result;
+    //   })
+    //   const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    //   const workbook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    //   XLSX.writeFile(workbook, 'Report PT. Mepoly Industry.xlsx');
+    // },
 
 
 
@@ -380,7 +414,6 @@ export default {
 </script>
 
 <template>
-
   <main v-if="isAuthenticated">
     <!-- Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -519,204 +552,205 @@ export default {
           <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate" @change="fetchDataVisit()">
         </div>
         <div id="element-to-convert">
-        <main class="content">
-          <div class="container-fluid mt-3 p-0">
-            <h1 class="h4"><b>Overview</b></h1>
-          </div>
+          <main class="content">
+            <div class="container-fluid mt-3 p-0">
+              <h1 class="h4"><b>Overview</b></h1>
+            </div>
 
-          <div class="row mt-4">
-            <div class="col-sm-4">
-              <div class="card ">
-                <div class="card-body card-1">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <div class="row">
-                        <div class="col-sm-2">
-                          <div class="stat text-primary">
-                            <img class="img-stat" src="/assets/image/box.png" alt="">
-                          </div>
-                        </div>
-                        <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title"><b>Total Stock</b></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="card-count mt-1 mb-1">{{ totalStock }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="card ">
-                <div class="card-body card-2">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <div class="row">
-                        <div class="col-sm-2">
-                          <div class="stat text-primary">
-                            <img class="img-stat2" src="/assets/image/money.png" alt="">
-                          </div>
-                        </div>
-                        <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title"><b>Total Omzet</b></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="card-count mt-1 mb-1">Rp. {{ formatRupiah(totalOmzet.toString()) }} -</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="card ">
-                <div class="card-body card-3">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <div class="row">
-                        <div class="col-sm-2">
-                          <div class="stat text-primary">
-                            <img class="img-stat3" src="/assets/image/maps.png" alt="">
-                          </div>
-                        </div>
-                        <div class="col-sm-10" style="justify-content: center;">
-                          <p class="card-title"><b>Total Visit</b></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="card-count mt-1 mb-1">{{ totalVisit }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-4">
-            <div class="col-sm-6">
-              <div class="card card-4 ">
-                <div class="card-body ">
-                  <div class="card-body">
-                    <p class="card-title"><b>Product Stock Differentiation</b></p>
-                    <div class="col-sm-12 canvas1">
-                      <Doughnut :data="chartData1" :options="options" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="card card-4 ">
-                <div class="card-body ">
-                  <div class="card-body">
-                    <p class="card-title"><b>Product Omzet Differentiation</b></p>
-                    <div class="col-sm-12 canvas1">
-                      <Doughnut :data="chartData2" :options="options" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-4">
-            <div class="col-sm-12">
-              <div class="card card-5">
-                <div class="card-body">
-                  <div class="card-body">
-                    <p class="card-title"><b>Detail Stock</b></p>
-                    <div class="col-sm-12 canvas2">
-                      <Bar :data="chartData3" v-if="loaded" :options="options" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-4">
-            <div class="col-sm-12">
-              <div class="card card-5">
-                <div class="card-body">
-                  <div class="card-body">
-                    <p class="card-title"><b>Detail Omzet</b></p>
-                    <div class="col-sm-12 canvas2">
-                      <Bar :data="chartData4" v-if="loaded" :options="options" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-4">
-            <div class="col-sm-12">
-              <div class="card mb-4 card-5">
-                <div class="card-body">
-                  <div class="card-body">
-                    <p class="card-title"><b>Detail Order</b></p>
-
-
-                    <div class="col-sm-12 canvas2" v-if="isTali">
-                      <p class="card-title2"><b>Product : Tali</b></p>
-                      <Line :data="chartData5" v-if="loaded" :options="options" />
-                    </div>
-                    <div class="col-sm-12 canvas2" v-if="isSelang">
-                      <p class="card-title2 mt-5"><b>Product : Selang</b></p>
-                      <Line :data="chartData6" v-if="loaded" :options="options" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-4">
-            <div class="col-sm-12">
-              <div class="card mb-4 card-5">
-                <div class="card-body">
-                  <div class="card-body">
-                    <p class="card-title"><b>Salesman Info</b></p>
+            <div class="row mt-4">
+              <div class="col-sm-4">
+                <div class="card ">
+                  <div class="card-body card-1">
                     <div class="row">
-                      <div class="col-sm-6">
-                        <div class="accordion accordion-flush" id="accordion1">
-                          <div class="accordion-item">
-                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
-                                <div class="col-sm-1 area-img-salesman">
-                                  <img class="img-salesman"
-                                    src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
-                                    alt="" />
+                      <div class="col mt-0">
+                        <div class="row">
+                          <div class="col-sm-2">
+                            <div class="stat text-primary">
+                              <img class="img-stat" src="/assets/image/box.png" alt="">
+                            </div>
+                          </div>
+                          <div class="col-sm-10" style="justify-content: center;">
+                            <p class="card-title"><b>Total Stock</b></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="card-count mt-1 mb-1">{{ totalStock }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card ">
+                  <div class="card-body card-2">
+                    <div class="row">
+                      <div class="col mt-0">
+                        <div class="row">
+                          <div class="col-sm-2">
+                            <div class="stat text-primary">
+                              <img class="img-stat2" src="/assets/image/money.png" alt="">
+                            </div>
+                          </div>
+                          <div class="col-sm-10" style="justify-content: center;">
+                            <p class="card-title"><b>Total Omzet</b></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="card-count mt-1 mb-1">Rp. {{ formatRupiah(totalOmzet.toString()) }} -</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card ">
+                  <div class="card-body card-3">
+                    <div class="row">
+                      <div class="col mt-0">
+                        <div class="row">
+                          <div class="col-sm-2">
+                            <div class="stat text-primary">
+                              <img class="img-stat3" src="/assets/image/maps.png" alt="">
+                            </div>
+                          </div>
+                          <div class="col-sm-10" style="justify-content: center;">
+                            <p class="card-title"><b>Total Visit</b></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="card-count mt-1 mb-1">{{ totalVisit }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-6">
+                <div class="card card-4 ">
+                  <div class="card-body ">
+                    <div class="card-body">
+                      <p class="card-title"><b>Product Stock Differentiation</b></p>
+                      <div class="col-sm-12 canvas1">
+                        <Doughnut v-if="loaded" :data="chartData1" :options="options" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card card-4 ">
+                  <div class="card-body ">
+                    <div class="card-body">
+                      <p class="card-title"><b>Product Omzet Differentiation</b></p>
+                      <div class="col-sm-12 canvas1">
+                        <Doughnut v-if="loaded" :data="chartData2" :options="options" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="card card-5">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <p class="card-title"><b>Detail Stock</b></p>
+                      <div class="col-sm-12 canvas2">
+                        <Bar :data="chartData3" v-if="loaded" :options="options" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="card card-5">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <p class="card-title"><b>Detail Omzet</b></p>
+                      <div class="col-sm-12 canvas2">
+                        <Bar :data="chartData4" v-if="loaded" :options="options" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="card mb-4 card-5">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <p class="card-title"><b>Detail Order</b></p>
 
-                                </div>
-                                <div class="col-sm-8">
-                                  <h6 id="txt-salesman">{{ salesName }}</h6>
-                                </div>
-                              </button>
-                            </h2>
-                            <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion1">
-                              <div class="accordion-body">
-                                <div class="row salesman-history">
-                                  <div class="col-sm-6">
-                                    <small class="salesman-history-txt">{{ (storesShow) ? storesShow.company : '' }}</small><br>
+
+                      <div class="col-sm-12 canvas2" v-if="isTali">
+                        <p class="card-title2"><b>Product : Tali</b></p>
+                        <Line :data="chartData5" v-if="loaded" :options="options" />
+                      </div>
+                      <div class="col-sm-12 canvas2" v-if="isSelang">
+                        <p class="card-title2 mt-5"><b>Product : Selang</b></p>
+                        <Line :data="chartData6" v-if="loaded" :options="options" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="card mb-4 card-5">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <p class="card-title"><b>Salesman Info</b></p>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="accordion accordion-flush" id="accordion1">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                  data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
+                                  <div class="col-sm-1 area-img-salesman">
+                                    <img class="img-salesman"
+                                      src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
+                                      alt="" />
 
                                   </div>
-                                  <div class="col-sm-6">
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-
+                                  <div class="col-sm-8">
+                                    <h6 id="txt-salesman">{{ salesName }}</h6>
                                   </div>
-                                </div>
+                                </button>
+                              </h2>
+                              <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion1">
+                                <div class="accordion-body">
+                                  <div class="row salesman-history">
+                                    <div class="col-sm-6">
+                                      <small class="salesman-history-txt">{{ (storesShow) ? storesShow.company : ''
+                                      }}</small><br>
 
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+
+                                    </div>
+                                  </div>
+
+                                </div>
                               </div>
                             </div>
                           </div>
+
+
                         </div>
 
 
                       </div>
-                      
-                   
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
         </div>
       </div>
     </div>
@@ -745,7 +779,7 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;" >To</label>
+                  <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
                   <input type="date" class="form-control export-date" v-model="rptTo">
@@ -753,12 +787,12 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;" >Pilih Data</label>
+                  <label class="color-black label-modal" style="align-items: center;">Pilih Data</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
                     <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
-                      <option value="product" >Product</option>
+                      <option value="product">Product</option>
                       <option value="omzet">Omzet</option>
                     </select>
 
@@ -807,7 +841,7 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;" >Pilih Data</label>
+                  <label class="color-black label-modal" style="align-items: center;">Pilih Data</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
