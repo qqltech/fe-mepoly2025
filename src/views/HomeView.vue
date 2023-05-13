@@ -474,11 +474,11 @@ export default {
 
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
-                    <form class="px-4 py-2">
+                    <!-- <form class="px-4 py-2">
                       <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
                         autofocus="autofocus">
                     </form>
-                    <hr>
+                    <hr> -->
 
 
                     <div class="form-check checkStore" v-for="(stores, index) in storesName">
