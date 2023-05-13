@@ -417,6 +417,10 @@ h6 {
    opacity: 0;
  }
 
+ .form-select {
+  width: 100vw;
+ }
+
  .header .search-bar-show {
    top: 60px;
    visibility: visible;

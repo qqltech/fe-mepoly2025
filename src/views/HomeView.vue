@@ -104,6 +104,7 @@ export default {
       isSelang: true,
       rptFrom: '',
       rptTo: '',
+      selectedDataexports: '',
 
 
 
@@ -166,18 +167,10 @@ export default {
 
           )
           const visit = response.data;
+         
           
-          // this.visitData = visit;
+          
           console.log(visit);
-          // this.salesName = visit.sales_name;
-          // this.salesStoreVisited = visit.sales_checkin;
-
-          // const dataSalesman = this.eachDataSalesman(visit.sales_checkin)
-          // this.salesName = dataSalesman.name;
-          // this.salesStorevisit = dataSalesman.checkin;
-          // console.log(this.salesName);
-
-          // console.log(this.salesStoreVisited);
           this.salesLastVisited = visit.sales_last_visited;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
@@ -268,7 +261,7 @@ export default {
 
         }
       } catch (error) {
-        flashMessage('error', 'TES', 'Silahkan Login kembali')
+        flashMessage('error', 'Error', error)
       } finally {
         this.isLoading = false;
       }
@@ -299,6 +292,10 @@ export default {
     //     name.push(elementSales.name)
     //     lastVisit.push(elementSales.checkin)
     //   });
+
+    //   return{
+    //     name, lastVisit
+    //   }
 
     // },
 
@@ -335,18 +332,7 @@ export default {
       const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
             const dataToExport = data.map(item => {
                 const result = {
-                    'Hari & Tanggal': item.date,
-                    // Username: item.users.name,
-                    // 'User ID': item.users.employee_id,
-                    // 'Check In': (item.attendances_details[0]) ? item.attendances_details[0].time : 'Tidak Check In',
-                    // StatusCheckIn: (item.attendances_details[0])
-                    //     ? (item.attendances_details[0].on_site ? 'On Scope' : 'Out Scope')
-                    //     : 'Out Scope',
-                    // 'Check Out': (item.attendances_details[1]) ? item.attendances_details[1].time : 'Tidak Check Out',
-                    // StatusCheckOut: (item.attendances_details[1])
-                    //     ? (item.attendances_details[1].on_site ? 'On Scope' : 'Out Scope')
-                    //     : 'Out Scope',
-                    // StatusKerja: item.status
+
                 }
                 return result;
             })
@@ -685,7 +671,7 @@ export default {
                   <div class="card-body">
                     <p class="card-title"><b>Salesman Info</b></p>
                     <div class="row">
-                      <div class="col-sm-4">
+                      <div class="col-sm-6">
                         <div class="accordion accordion-flush" id="accordion1">
                           <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -706,18 +692,10 @@ export default {
                               <div class="accordion-body">
                                 <div class="row salesman-history">
                                   <div class="col-sm-6">
-                                    <small class="salesman-history-txt"></small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
+                                    <small class="salesman-history-txt">{{ (storesShow) ? storesShow.company : '' }}</small><br>
 
                                   </div>
                                   <div class="col-sm-6">
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
                                     <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
 
                                   </div>
@@ -730,96 +708,8 @@ export default {
 
 
                       </div>
-                      <div class="col-sm-4">
-                        <div class="accordion accordion-flush" id="accordion2">
-                          <div class="accordion-item">
-                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapse2">
-                                <div class="col-sm-1 area-img-salesman">
-                                  <img class="img-salesman"
-                                    src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
-                                    alt="" />
-
-                                </div>
-                                <div class="col-sm-8">
-                                  <h6 id="txt-salesman">{{ salesName }}</h6>
-                                </div>
-                              </button>
-                            </h2>
-                            <div id="flush-collapse2" class="accordion-collapse collapse" data-bs-parent="#accordion2">
-                              <div class="accordion-body">
-                                <div class="row salesman-history">
-                                  <div class="col-sm-6">
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-
-                                  </div>
-                                  <div class="col-sm-6">
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="accordion accordion-flush" id="accordion3">
-                          <div class="accordion-item">
-                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapse3" aria-expanded="false" aria-controls="flush-collapse3">
-                                <div class="col-sm-1 area-img-salesman">
-                                  <img class="img-salesman"
-                                    src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
-                                    alt="" />
-
-                                </div>
-                                <div class="col-sm-8">
-                                  <h6 id="txt-salesman">{{ salesName }}</h6>
-                                </div>
-                              </button>
-                            </h2>
-                            <div id="flush-collapse3" class="accordion-collapse collapse" data-bs-parent="#accordion3">
-                              <div class="accordion-body">
-                                <div class="row salesman-history">
-                                  <div class="col-sm-6">
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-                                    <small class="salesman-history-txt">Quantum Leap</small><br>
-
-                                  </div>
-                                  <div class="col-sm-6">
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-                                    <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
-
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-                      </div>
+                      
+                   
                     </div>
                   </div>
                 </div>
@@ -867,11 +757,11 @@ export default {
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected></option>
-                      <option value="1">Product</option>
-                      <option value="2">Omzet</option>
+                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
+                      <option value="product" >Product</option>
+                      <option value="omzet">Omzet</option>
                     </select>
+
                   </div>
                 </div>
               </div>
@@ -921,10 +811,10 @@ export default {
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
                       <option selected></option>
-                      <option value="1">Product</option>
-                      <option value="2">Omzet</option>
+                      <option value="product">Product</option>
+                      <option value="omzet">Omzet</option>
                     </select>
                   </div>
                 </div>
