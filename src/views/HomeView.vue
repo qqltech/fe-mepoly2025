@@ -99,6 +99,22 @@ export default {
   },
 
   methods: {
+
+    searchStores() {
+        const input = document.querySelector('.searchCheck');
+        const filter = input.value.toUpperCase();
+        const stores = document.querySelectorAll('.checkStore');
+        
+        stores.forEach((store) => {
+          const label = store.querySelector('label');
+          const txtValue = label.textContent || label.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            store.style.display = '';
+          } else {
+            store.style.display = 'none';
+          }
+        });
+      },
     logout() {
       if (confirm("Apakah Anda yakin ingin keluar?")) {
         localStorage.removeItem('admin')
@@ -473,11 +489,11 @@ export default {
 
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
-                    <!-- <form class="px-4 py-2">
-                      <input type="search" class="form-control searchCheck" id="searchStore" placeholder="Search Store..."
-                        autofocus="autofocus">
+                    <form class="px-4 py-2">
+                      <input type="search" class="form-control searchCheck" placeholder="Search Store..."
+                        autofocus="autofocus" @input="searchStores()">
                     </form>
-                    <hr> -->
+                    <hr>
 
 
                     <div class="form-check checkStore" v-for="(stores, index) in storesName">
