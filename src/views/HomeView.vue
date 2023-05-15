@@ -84,8 +84,7 @@ export default {
       rptFrom: '',
       rptTo: '',
       selectedDataexports: '',
-
-
+      salesInfo: '',
 
     }
   },
@@ -164,9 +163,11 @@ export default {
           const visit = response.data;
           console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
+          this.salesInfo = visit.sales_checkin;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
+          console.log(this.salesInfo);
           const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065', ];
           const backgroundColorBarLine = ['#1F5399', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
@@ -183,7 +184,6 @@ export default {
 
           };
           this.chartData1 = resultchartData1;
-          console.log(this.chartData1);
 
           const dataDifOmzet = this.eachDataDifChart(visit.chart_detail_differentiation_omzet
           )
@@ -281,6 +281,7 @@ export default {
 
           )
           const stores = response.data;
+          console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
 
@@ -699,12 +700,12 @@ export default {
                     <div class="card-body">
                       <p class="card-title"><b>Salesman Info</b></p>
                       <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" v-for="(salesman, index) in salesInfo" :key="index">
                           <div class="accordion accordion-flush" id="accordion1">
-                            <div class="accordion-item">
+                            <div class="accordion-item" >
                               <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                  data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
+                                :data-bs-target="'#flush-collapse-' + index" aria-expanded="false" :aria-controls="'flush-collapse-' + index">
                                   <div class="col-sm-1 area-img-salesman">
                                     <img class="img-salesman"
                                       src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
@@ -712,20 +713,32 @@ export default {
 
                                   </div>
                                   <div class="col-sm-8">
-                                    <h6 id="txt-salesman">{{ salesName }}</h6>
+                                    <h6 id="txt-salesman" name="salesman" :value="name">
+                                      {{ salesman.name }}
+                                      
+                                    </h6>
                                   </div>
                                 </button>
                               </h2>
-                              <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion1">
+                              <div :id="'flush-collapse-' + index" class="accordion-collapse collapse" :data-bs-parent="'#accordion1'">
                                 <div class="accordion-body">
                                   <div class="row salesman-history">
                                     <div class="col-sm-6">
-                                      <small class="salesman-history-txt">{{ (storesShow) ? storesShow.company : ''
-                                      }}</small><br>
+                                      <small class="salesman-history-txt">
+                                        {{ (storesShow) ? storesShow.company : '' }}
+                                      </small><br>
 
                                     </div>
                                     <div class="col-sm-6">
-                                      <small class="salesman-history-txt">{{ salesLastVisited }}</small><br>
+                                      <div v-if="salesman.checkin">
+                                      <small  class="salesman-history-txt">
+                                        {{ salesman.checkin }}
+                                      </small><br></div>
+                                      <div v-else>
+                                        <small  class="salesman-history-txt">
+                                        Tidak ada Data
+                                      </small><br>
+                                      </div>
 
                                     </div>
                                   </div>
