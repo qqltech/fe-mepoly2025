@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, format_date, getDataIsLogin, formatRupiah, formattedNumber} from '../config/functions';
+import { flashMessage, format_date, getDataIsLogin, formatRupiah, formattedNumber } from '../config/functions';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import jsPDF from 'jspdf'
@@ -89,6 +89,7 @@ export default {
     }
   },
   mounted() {
+    this.isLoading = true;
     this.fetchDataVisit();
     this.fetchDataStores();
     const date = new Date();
@@ -100,20 +101,20 @@ export default {
   methods: {
 
     searchStores() {
-        const input = document.querySelector('.searchCheck');
-        const filter = input.value.toUpperCase();
-        const stores = document.querySelectorAll('.checkStore');
-        
-        stores.forEach((store) => {
-          const label = store.querySelector('label');
-          const txtValue = label.textContent || label.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            store.style.display = '';
-          } else {
-            store.style.display = 'none';
-          }
-        });
-      },
+      const input = document.querySelector('.searchCheck');
+      const filter = input.value.toUpperCase();
+      const stores = document.querySelectorAll('.checkStore');
+
+      stores.forEach((store) => {
+        const label = store.querySelector('label');
+        const txtValue = label.textContent || label.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          store.style.display = '';
+        } else {
+          store.style.display = 'none';
+        }
+      });
+    },
     logout() {
       if (confirm("Apakah Anda yakin ingin keluar?")) {
         localStorage.removeItem('admin')
@@ -167,7 +168,7 @@ export default {
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
-          const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065', ];
+          const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065',];
           const backgroundColorBarLine = ['#1F5399', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
           const resultchartData1 = {
@@ -200,7 +201,7 @@ export default {
 
           this.chartData2 = resultchartData2;
 
-          
+
           const dataStock = this.eachDataChart(visit.chart_detail_stock)
           const resultchartData3 = {
             labels: dataStock.label,
@@ -622,8 +623,18 @@ export default {
                   <div class="card-body ">
                     <div class="card-body">
                       <p class="card-title"><b>Product Stock Differentiation</b></p>
-                      <div class="col-sm-12 canvas1">
-                        <Doughnut v-if="loaded" :data="chartData1" :options="options" />
+                      <div class="col-sm-12 canvas1" :loading="isLoading">
+                        <div v-if="isLoading">
+                          <div class="d-flex align-items-center px-3">
+                            <strong class="me-4">Loading...</strong>
+                            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                          </div>
+
+                        </div>
+                        <div v-else>
+                          <Doughnut v-if="loaded" :data="chartData1" :options="options" />
+
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -635,7 +646,17 @@ export default {
                     <div class="card-body">
                       <p class="card-title"><b>Product Omzet Differentiation</b></p>
                       <div class="col-sm-12 canvas1">
-                        <Doughnut v-if="loaded" :data="chartData2" :options="options" />
+                        <div v-if="isLoading">
+                          <div class="d-flex align-items-center px-3">
+                            <strong class="me-4">Loading...</strong>
+                            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                          </div>
+
+                        </div>
+                        <div v-else>
+                          <Doughnut v-if="loaded" :data="chartData2" :options="options" />
+
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -649,7 +670,18 @@ export default {
                     <div class="card-body">
                       <p class="card-title"><b>Detail Stock</b></p>
                       <div class="col-sm-12 canvas2">
-                        <Bar :data="chartData3" v-if="loaded" :options="options" />
+                        <div v-if="isLoading">
+                          <div class="d-flex align-items-center px-3">
+                            <strong class="me-4">Loading...</strong>
+                            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                          </div>
+
+                        </div>
+                        <div v-else>
+                          <Bar :data="chartData3" v-if="loaded" :options="options" />
+
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -663,14 +695,24 @@ export default {
                     <div class="card-body">
                       <p class="card-title"><b>Detail Omzet</b></p>
                       <div class="col-sm-12 canvas2">
-                        <Bar :data="chartData4" v-if="loaded" :options="options" />
+                        <div v-if="isLoading">
+                          <div class="d-flex align-items-center px-3">
+                            <strong class="me-4">Loading...</strong>
+                            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                          </div>
+
+                        </div>
+                        <div v-else>
+                          <Bar :data="chartData4" v-if="loaded" :options="options" />
+
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-4 mb-2">
               <div class="col-sm-12">
                 <div class="card mb-4 card-5">
                   <div class="card-body">
@@ -680,11 +722,30 @@ export default {
 
                       <div class="col-sm-12 canvas2" v-if="isTali">
                         <p class="card-title2"><b>Product : Tali</b></p>
-                        <Line :data="chartData5" v-if="loaded" :options="options" />
+                        <div v-if="isLoading">
+                          <div class="d-flex align-items-center px-3">
+                            <strong class="me-4">Loading...</strong>
+                            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                          </div>
+
+                        </div>
+                        <div v-else>
+
+                          <Line :data="chartData5" v-if="loaded" :options="options" />
+                        </div>
                       </div>
                       <div class="col-sm-12 canvas2" v-if="isSelang">
                         <p class="card-title2 mt-5"><b>Product : Selang</b></p>
-                        <Line :data="chartData6" v-if="loaded" :options="options" />
+                        <div v-if="isLoading">
+                          <div class="d-flex align-items-center px-3">
+                            <strong class="me-4">Loading...</strong>
+                            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                          </div>
+
+                        </div>
+                        <div v-else>
+                          <Line :data="chartData6" v-if="loaded" :options="options" />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -698,12 +759,14 @@ export default {
                     <div class="card-body">
                       <p class="card-title"><b>Salesman Info</b></p>
                       <div class="row">
+                        
                         <div class="col-sm-6" v-for="(salesman, index) in salesInfo" :key="index">
                           <div class="accordion accordion-flush" id="accordion1">
-                            <div class="accordion-item" >
+                            <div class="accordion-item">
                               <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                :data-bs-target="'#flush-collapse-' + index" aria-expanded="false" :aria-controls="'flush-collapse-' + index">
+                                  :data-bs-target="'#flush-collapse-' + index" aria-expanded="false"
+                                  :aria-controls="'flush-collapse-' + index">
                                   <div class="col-sm-1 area-img-salesman">
                                     <img class="img-salesman"
                                       src="https://www.shareicon.net/data/512x512/2016/07/26/802001_man_512x512.png"
@@ -713,12 +776,13 @@ export default {
                                   <div class="col-sm-8">
                                     <h6 id="txt-salesman" name="salesman" :value="name">
                                       {{ salesman.name }}
-                                      
+
                                     </h6>
                                   </div>
                                 </button>
                               </h2>
-                              <div :id="'flush-collapse-' + index" class="accordion-collapse collapse" :data-bs-parent="'#accordion1'">
+                              <div :id="'flush-collapse-' + index" class="accordion-collapse collapse"
+                                :data-bs-parent="'#accordion1'">
                                 <div class="accordion-body">
                                   <div class="row salesman-history">
                                     <div class="col-sm-6">
@@ -729,13 +793,14 @@ export default {
                                     </div>
                                     <div class="col-sm-6">
                                       <div v-if="salesman.checkin">
-                                      <small  class="salesman-history-txt">
-                                        {{ salesman.checkin }}
-                                      </small><br></div>
+                                        <small class="salesman-history-txt">
+                                          {{ salesman.checkin }}
+                                        </small><br>
+                                      </div>
                                       <div v-else>
-                                        <small  class="salesman-history-txt">
-                                        Tidak ada Data
-                                      </small><br>
+                                        <small class="salesman-history-txt">
+                                          Tidak ada Data
+                                        </small><br>
                                       </div>
 
                                     </div>
@@ -916,5 +981,4 @@ export default {
         </div>
       </div>
     </div>
-  </main>
-</template>
+  </main></template>
