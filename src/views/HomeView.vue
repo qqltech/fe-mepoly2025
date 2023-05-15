@@ -337,7 +337,7 @@ export default {
       }
 
       const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-      const header = [['Hari & Tanggal', 'Kategori Produk', 'Kategori Produk', 'Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
+      const header = [['Hari & Tanggal', 'Kategori Produk', 'Sub Kategori', 'Qty','Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
       let rows = ''
 
       data.forEach((itemReports) => {
