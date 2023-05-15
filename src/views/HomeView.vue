@@ -363,9 +363,7 @@ export default {
       return localStorage.getItem('admin') !== null;
     },
 
-    fullDownloadUrl() {
-    return `https://${this.downloadUrl}`;
-  }
+
 
 
 
@@ -837,7 +835,7 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">Pilih Data</label>
+                  <label class="color-black label-modal" style="align-items: center;">Select Data</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
@@ -852,7 +850,7 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">Pilih Tipe File</label>
+                  <label class="color-black label-modal" style="align-items: center;">Select File Type</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
@@ -867,8 +865,11 @@ export default {
               </div>
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
-              <router-link :to="fullDownloadUrl" tag="button" class="btn button3" @click.prevent="handleDataExport()">Export
-                PDF</router-link>
+
+              <a :href="downloadUrl" class="btn button3" @click.prevent="handleDataExport()">Export {{ selectedTypeexports }}</a>
+              
+
+                
               <!-- <a :href="fileUrl" download="file.pdf">Export PDF</a> -->
             </div>
           </div>
