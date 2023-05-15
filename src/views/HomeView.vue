@@ -115,6 +115,7 @@ export default {
       params.set("type", this.selectedDataexports);
       params.set("format", this.selectedTypeexports);
       this.downloadUrl = url.href;
+      window.location.href = this.downloadUrl;
       // console.log(this.downloadUrl);
     },
     handleDownload() {
@@ -841,7 +842,7 @@ export default {
                   <div class="col-sm-12">
                     <select class="form-select" aria-label="Default select example" v-model="selectedDataexports"
                       @change="handleDataExport">
-                      <option value="product">Product</option>
+                      <option value="product" selected>Product</option>
                       <option value="omzet">Omzet</option>
                     </select>
 
@@ -856,7 +857,7 @@ export default {
                   <div class="col-sm-12">
                     <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports"
                       @change="handleDataExport">
-                      <option value="pdf">PDF</option>
+                      <option value="pdf" selected>PDF</option>
                       <option value="excel">EXCEL</option>
                     </select>
 
