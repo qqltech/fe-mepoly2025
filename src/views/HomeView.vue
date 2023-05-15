@@ -1,10 +1,11 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, format_date, getDataIsLogin, formatRupiah, formattedNumber } from '../config/functions';
+import { flashMessage, format_date, getDataIsLogin, formatRupiah, formattedNumber, exportReport } from '../config/functions';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import jsPDF from 'jspdf'
 import html2pdf from "html2pdf.js";
+
 
 import autoTable from 'jspdf-autotable'
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -24,6 +25,7 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js'
+import { RouterLink } from 'vue-router';
 
 ChartJS.register(ArcElement, Tooltip, Legend,
   Title,
@@ -35,7 +37,7 @@ ChartJS.register(ArcElement, Tooltip, Legend,
 export default {
 
   name: 'BarChart',
-  components: { Bar, Line, Doughnut },
+  components: { Bar, Line, Doughnut, RouterLink },
   data() {
     return {
       today: new Date(),
@@ -84,7 +86,11 @@ export default {
       rptFrom: '',
       rptTo: '',
       selectedDataexports: '',
+      selectedTypeexports: '',
       salesInfo: '',
+      exportReport: [],
+      fileUrl: null,
+      downloadUrl: "",
 
     }
   },
@@ -92,6 +98,7 @@ export default {
     this.isLoading = true;
     this.fetchDataVisit();
     this.fetchDataStores();
+    // this.fetchDataExport();
     const date = new Date();
     this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-01`;
     this.rptTo = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
@@ -99,6 +106,20 @@ export default {
   },
 
   methods: {
+
+    handleDataExport() {
+      const url = new URL("https://backend.qqltech.com:7021/public/dashboard/export");
+      const params = url.searchParams;
+      params.set("from", this.rptFrom);
+      params.set("to", this.rptTo);
+      params.set("type", this.selectedDataexports);
+      params.set("format", this.selectedTypeexports);
+      this.downloadUrl = url.href;
+      console.log(this.downloadUrl);
+    },
+    handleDownload() {
+      alert("Download will start soon!");
+    },
 
     searchStores() {
       const input = document.querySelector('.searchCheck');
@@ -125,6 +146,11 @@ export default {
     formatDate(dateString) {
       const [dd, mm, yyyy] = dateString.split('-');
       return `${dd}-${mm}-${yyyy}`;
+    },
+
+    formatDate2(dateString) {
+      const [dd, mm, yyyy] = dateString.split('/');
+      return `${dd}/${mm}/${yyyy}`;
     },
 
     async fetchDataVisit() {
@@ -262,7 +288,7 @@ export default {
 
         }
       } catch (error) {
-        flashMessage('error', 'AXIOS EROR', error)
+        flashMessage('error', 'ERROR', error)
       } finally {
         this.isLoading = false;
       }
@@ -286,7 +312,7 @@ export default {
 
         }
       } catch (error) {
-        flashMessage('error', 'Error', error)
+        flashMessage('error', 'ERROR', error)
       } finally {
         this.isLoading = false;
       }
@@ -328,50 +354,6 @@ export default {
     },
 
 
-    exportReportPDF() {
-      const doc = new jsPDF();
-      if (this.rptFrom === this.rptTo) {
-        doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n                    Periode ${format_date(this.rptFrom)}`, 35, 15)
-      } else {
-        doc.text(`             Rekap Visit Sales PT. Mepoly Industry\n    Periode ${format_date(this.rptFrom)} s/d ${format_date(this.rptTo)}`, 35, 15)
-      }
-
-      const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-      const header = [['Hari & Tanggal', 'Kategori Produk', 'Sub Kategori', 'Qty','Nama Supplier', 'Brand', 'Nama Sales', 'Catatan']]
-      let rows = ''
-
-      data.forEach((itemReports) => {
-        let row = '';
-
-        row.push(format_date(itemReports.date));
-        row.push(itemReports.sales_name);
-        row.push(itemReports.sales_last_visited);
-        rows.push(row)
-      })
-      doc.autoTable({
-        head: header,
-        body: rows,
-        startY: 27,
-      })
-      doc.save('Report PT. Mepoly Industry.pdf')
-
-    },
-
-    // exportReportCSV() {
-    //   const data = this.visit.filter((tgl) => tgl.date >= this.rptFrom && tgl.date <= this.rptTo).sort((a, b) => new Date(a.date) - new Date(b.date));
-    //   const dataToExport = data.map(item => {
-    //     const result = {
-
-    //     }
-    //     return result;
-    //   })
-    //   const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-    //   const workbook = XLSX.utils.book_new();
-    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    //   XLSX.writeFile(workbook, 'Report PT. Mepoly Industry.xlsx');
-    // },
-
-
 
   },
 
@@ -380,14 +362,11 @@ export default {
     isAuthenticated() {
       return localStorage.getItem('admin') !== null;
     },
-    fetchDataParams() {
-      return {
-        periode_start: this.formatDate(this.periodeStart),
-        periode_end: this.formatDate(this.periodeEnd),
-        products: this.selectedProducts,
-        storeId: this.selectedStore,
-      }
-    },
+
+    fullDownloadUrl() {
+    return `https://${this.downloadUrl}`;
+  }
+
 
 
   },
@@ -404,6 +383,7 @@ export default {
     const formattedDate = `${yyyy}-${mm}-${dd}`;
     this.periodeEnd = formattedDate;
     this.periodeStart = formattedDate;
+
   },
 }
 </script>
@@ -537,8 +517,7 @@ export default {
           </svg>
           <img class="header-img-logo" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" height="50px"
             width="auto" />
-          <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterPdf">Export to PDF</button>
-          <button class="button btn1" data-toggle="modal" data-target="#exampleModalCenterCsv">Export to CSV</button>
+          <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterReports">Export Data</button>
           <button class="button btn1" data-toggle="modal" data-target="#exampleModalShow">Show Store</button>
 
           <label class="period-date"><b>Period :</b></label>
@@ -827,7 +806,7 @@ export default {
     </div>
     <!-- END Main Page -->
     <!-- Modal 1 -->
-    <div class="modal fade" id="exampleModalCenterPdf">
+    <div class="modal fade" id="exampleModalCenterReports">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -845,7 +824,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom">
+                  <input type="date" class="form-control export-date" v-model="rptFrom" @change="handleDataExport">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -853,7 +832,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo">
+                  <input type="date" class="form-control export-date" v-model="rptTo" @change="handleDataExport">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -862,7 +841,8 @@ export default {
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
-                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
+                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports"
+                      @change="handleDataExport">
                       <option value="product">Product</option>
                       <option value="omzet">Omzet</option>
                     </select>
@@ -870,63 +850,26 @@ export default {
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="mt-4 d-grid gap-2" style="align-items: center;">
-              <button class="btn button3" @click="exportReportPDF()">Export PDF</button>
-            </div>
-          </div>
-          <div class="modal-footer">
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal 2 -->
-    <div class="modal fade" id="exampleModalCenterCsv">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Export Data</h5>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-6">
-                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
-                <div class="col-sm-6">
-                </div>
-              </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">From</label>
-                </div>
-                <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom">
-                </div>
-              </div>
-              <div class="row tanggal-modal">
-                <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">To</label>
-                </div>
-                <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo">
-                </div>
-              </div>
-              <div class="row tanggal-modal">
-                <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">Pilih Data</label>
+                  <label class="color-black label-modal" style="align-items: center;">Pilih Tipe File</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
-                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
-                      <option selected></option>
-                      <option value="product">Product</option>
-                      <option value="omzet">Omzet</option>
+                    <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports"
+                      @change="handleDataExport">
+                      <option value="pdf">PDF</option>
+                      <option value="csv">CSV</option>
                     </select>
+
                   </div>
                 </div>
               </div>
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
-              <button class="btn button3" @click="exportReportCSV()">Export CSV</button>
+              <router-link :to="fullDownloadUrl" tag="button" class="btn button3" @click.prevent="handleDataExport()">Export
+                PDF</router-link>
+              <!-- <a :href="fileUrl" download="file.pdf">Export PDF</a> -->
             </div>
           </div>
           <div class="modal-footer">
@@ -934,7 +877,8 @@ export default {
         </div>
       </div>
     </div>
-    <!-- Modal 3 -->
+
+    <!-- Modal 2 -->
     <div class="modal fade" id="exampleModalShow">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -981,5 +925,4 @@ export default {
         </div>
       </div>
     </div>
-  </main>
-</template>
+  </main></template>

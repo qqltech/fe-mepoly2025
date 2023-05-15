@@ -64,4 +64,29 @@ function formattedNumber(totalStock) {
     return Math.floor(totalStock).toLocaleString()
   }
 
-export {flashMessage, isLogin, getDataIsLogin, format_date, formatRupiah, formattedNumber};
+
+  import axios from 'axios';
+  function exportReport(params) {
+    axios.get('https://backend.qqltech.com:7021/public/dashboard/export', {
+      params: {
+        from: params.from,
+        to: params.to,
+        type: params.type,
+        format: params.format
+      },
+      responseType: 'blob'
+    })
+    .then(response => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf');
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+export {flashMessage, isLogin, getDataIsLogin, format_date, formatRupiah, formattedNumber, exportReport};
