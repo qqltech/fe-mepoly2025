@@ -115,7 +115,6 @@ export default {
       params.set("type", this.selectedDataexports);
       params.set("format", this.selectedTypeexports);
       this.downloadUrl = url.href;
-      window.location.href = this.downloadUrl;
       // console.log(this.downloadUrl);
     },
     handleDownload() {
@@ -858,7 +857,7 @@ export default {
                     <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports"
                       @change="handleDataExport">
                       <option value="pdf">PDF</option>
-                      <option value="csv">CSV</option>
+                      <option value="excel">EXCEL</option>
                     </select>
 
                   </div>
