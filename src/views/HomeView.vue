@@ -116,7 +116,7 @@ export default {
       params.set("format", this.selectedTypeexports);
       this.downloadUrl = url.href;
       window.location.href = this.downloadUrl;
-      console.log(this.downloadUrl);
+      // console.log(this.downloadUrl);
     },
     handleDownload() {
       alert("Download will start soon!");
