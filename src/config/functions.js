@@ -60,4 +60,8 @@ function formatRupiah(angka, prefix){
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 }
 
-export {flashMessage, isLogin, getDataIsLogin, format_date, formatRupiah};
+function formattedNumber(totalStock) {
+    return Math.floor(totalStock).toLocaleString()
+  }
+
+export {flashMessage, isLogin, getDataIsLogin, format_date, formatRupiah, formattedNumber};

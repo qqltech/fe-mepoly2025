@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { flashMessage, format_date, getDataIsLogin, formatRupiah } from '../config/functions';
+import { flashMessage, format_date, getDataIsLogin, formatRupiah, formattedNumber} from '../config/functions';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import jsPDF from 'jspdf'
@@ -161,13 +161,12 @@ export default {
 
           )
           const visit = response.data;
-          console.log(visit);
+          // console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
-          console.log(this.salesInfo);
           const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065', ];
           const backgroundColorBarLine = ['#1F5399', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
@@ -281,7 +280,6 @@ export default {
 
           )
           const stores = response.data;
-          console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
 
@@ -571,7 +569,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <p class="card-count mt-1 mb-1">{{ totalStock }}</p>
+                    <p class="card-count mt-1 mb-1">{{ formattedNumber(totalStock.toLocaleString()) }}</p>
                   </div>
                 </div>
               </div>
