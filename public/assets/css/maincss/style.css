@@ -601,3 +601,7 @@ p {
 .spinner-border {
   color: #244065 !important;
 }
+
+.spinner-border-login {
+  color: #fff!important;
+}

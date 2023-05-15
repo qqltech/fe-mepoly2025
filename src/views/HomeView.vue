@@ -115,6 +115,7 @@ export default {
       params.set("type", this.selectedDataexports);
       params.set("format", this.selectedTypeexports);
       this.downloadUrl = url.href;
+      window.location.href = this.downloadUrl;
       console.log(this.downloadUrl);
     },
     handleDownload() {
@@ -866,7 +867,7 @@ export default {
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
 
-              <a :href="downloadUrl" class="btn button3" @click.prevent="handleDataExport()">Export {{ selectedTypeexports }}</a>
+              <a :href="downloadUrl" download class="btn button3" @click.prevent="handleDataExport()">Export {{ selectedTypeexports }}</a>
               
 
                 

@@ -87,7 +87,7 @@ export default {
                   </div>
                   <div class="input-field mt-5 mb-3">
                     <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login">Login <div
-                        v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                        v-if="isLoading" class="spinner-border spinner-border-login spinner-border-sm" role="status">
                         <span class="visually-hidden">Loading...</span>
                       </div></button>
                   </div>
