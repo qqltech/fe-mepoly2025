@@ -759,7 +759,7 @@ export default {
                     <div class="card-body">
                       <p class="card-title"><b>Salesman Info</b></p>
                       <div class="row">
-                        
+
                         <div class="col-sm-6" v-for="(salesman, index) in salesInfo" :key="index">
                           <div class="accordion accordion-flush" id="accordion1">
                             <div class="accordion-item">
@@ -981,4 +981,5 @@ export default {
         </div>
       </div>
     </div>
-  </main></template>
+  </main>
+</template>
