@@ -867,10 +867,6 @@ export default {
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
 
               <a :href="downloadUrl" download class="btn button3" @click.prevent="handleDataExport()">Export {{ selectedTypeexports }}</a>
-              
-
-                
-              <!-- <a :href="fileUrl" download="file.pdf">Export PDF</a> -->
             </div>
           </div>
           <div class="modal-footer">
