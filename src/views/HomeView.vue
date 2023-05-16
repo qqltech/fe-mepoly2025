@@ -823,7 +823,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom" @change="handleDataExport">
+                  <input type="date" class="form-control export-date" v-model="rptFrom" >
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -831,7 +831,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo" @change="handleDataExport">
+                  <input type="date" class="form-control export-date" v-model="rptTo" >
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -841,7 +841,7 @@ export default {
                 <div class="col-sm-6">
                   <div class="col-sm-12">
                     <select class="form-select" aria-label="Default select example" v-model="selectedDataexports"
-                      @change="handleDataExport">
+                     >
                       <option value="product" selected>Product</option>
                       <option value="omzet">Omzet</option>
                     </select>
@@ -855,8 +855,7 @@ export default {
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
-                    <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports"
-                      @change="handleDataExport">
+                    <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
                       <option value="pdf" selected>PDF</option>
                       <option value="excel">EXCEL</option>
                     </select>
