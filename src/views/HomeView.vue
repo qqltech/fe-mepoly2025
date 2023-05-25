@@ -80,7 +80,7 @@ export default {
       totalOmzet: '',
       totalStock: '',
       selectedProducts: ['Tali', 'Selang'],
-      selectedStore: '2',
+      selectedStore: '4262',
       isTali: true,
       isSelang: true,
       rptFrom: '',
@@ -309,7 +309,7 @@ export default {
 
           )
           const stores = response.data;
-          // console.log(stores);
+          console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
 
