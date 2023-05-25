@@ -91,6 +91,7 @@ export default {
       exportReport: [],
       fileUrl: null,
       downloadUrl: "",
+      checkIn: '',
 
     }
   },
@@ -189,7 +190,7 @@ export default {
 
           )
           const visit = response.data;
-          // console.log(visit);
+          console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           this.totalStock = visit.total_stock;
@@ -308,6 +309,7 @@ export default {
 
           )
           const stores = response.data;
+          console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
 
@@ -463,7 +465,7 @@ export default {
 
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    {{ (storesShow) ? storesShow.company : '' }}
+                    {{ (storesShow) ? storesShow.name : '' }}
 
 
                   </button>
@@ -478,7 +480,7 @@ export default {
                     <div class="form-check checkStore" v-for="(stores, index) in storesName">
                       <input class="form-check-input" type="radio" name="stores" :id="stores.id" :value="stores.id"
                         v-model="selectedStore" @change="fetchDataVisit()" />
-                      <label class="form-check-label" :for="stores.id">{{ stores.company }}</label>
+                      <label class="form-check-label" :for="stores.id">{{ stores.name }}</label>
                     </div>
 
                   </div>
@@ -763,16 +765,43 @@ export default {
                                 :data-bs-parent="'#accordion1'">
                                 <div class="accordion-body">
                                   <div class="row salesman-history">
-                                    <div class="col-sm-6">
-                                      <small class="salesman-history-txt">
-                                        {{ (storesShow) ? storesShow.company : '' }}
-                                      </small><br>
-
-                                    </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                       <div v-if="salesman.checkin">
                                         <small class="salesman-history-txt">
-                                          {{ salesman.checkin }}
+                                          <!-- {{ salesman.checkin[0].store }} -->
+                                          <li v-for="(item, index) in salesman.checkin" :key="index">
+                                            {{ item.store }}
+                                          </li>
+                                        </small><br>
+                                      </div>
+                                      <div v-else>
+                                        <small class="salesman-history-txt">
+                                          Tidak ada Data
+                                        </small><br>
+                                      </div>
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <div v-if="salesman.checkin">
+                                        <small class="salesman-history-txt">
+                                          <li v-for="(item, index) in salesman.checkin" :key="index">
+                                            {{ item.date }}
+                                          </li>
+                                        </small><br>
+                                      </div>
+                                      <div v-else>
+                                        <small class="salesman-history-txt">
+                                          Tidak ada Data
+                                        </small><br>
+                                      </div>
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <div v-if="salesman.checkin">
+                                        <small class="salesman-history-txt">
+                                          <li v-for="(item, index) in salesman.checkin" :key="index">
+                                            {{ item.time }}
+                                          </li>
                                         </small><br>
                                       </div>
                                       <div v-else>
@@ -823,7 +852,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">From</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom" >
+                  <input type="date" class="form-control export-date" v-model="rptFrom">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -831,7 +860,7 @@ export default {
                   <label class="color-black label-modal" style="align-items: center;">To</label>
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo" >
+                  <input type="date" class="form-control export-date" v-model="rptTo">
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -840,8 +869,7 @@ export default {
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
-                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports"
-                     >
+                    <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
                       <option value="product" selected>Product</option>
                       <option value="omzet">Omzet</option>
                     </select>
@@ -866,7 +894,8 @@ export default {
             </div>
             <div class="mt-4 d-grid gap-2" style="align-items: center;">
 
-              <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Export {{ selectedTypeexports }}</a>
+              <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Export {{
+                selectedTypeexports }}</a>
             </div>
           </div>
           <div class="modal-footer">
@@ -922,4 +951,5 @@ export default {
         </div>
       </div>
     </div>
-  </main></template>
+  </main>
+</template>
