@@ -190,7 +190,7 @@ export default {
 
           )
           const visit = response.data;
-          console.log(visit);
+          // console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           this.totalStock = visit.total_stock;
@@ -309,7 +309,7 @@ export default {
 
           )
           const stores = response.data;
-          console.log(stores);
+          // console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
 
