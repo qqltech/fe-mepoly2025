@@ -190,7 +190,7 @@ export default {
 
           )
           const visit = response.data;
-          // console.log(visit);
+          console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           this.totalStock = visit.total_stock;
@@ -379,11 +379,15 @@ export default {
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
+    const dd1 = '01';
+
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
     const formattedDate = `${yyyy}-${mm}-${dd}`;
+    const formattedDatestart = `${yyyy}-${mm}-${dd1}`;
+
     this.periodeEnd = formattedDate;
-    this.periodeStart = formattedDate;
+    this.periodeStart = formattedDatestart;
 
   },
 }
