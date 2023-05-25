@@ -203,7 +203,7 @@ export default {
             labels: dataDifStock.label,
             datasets: [{
               data: dataDifStock.data,
-              label: 'Product Stock in %',
+              label: 'Product Stock',
               backgroundColor: dataDifStock.label.map((_, index) => backgroundColor[index % backgroundColor.length]),
 
             }]
@@ -218,7 +218,7 @@ export default {
           const resultchartData2 = {
             labels: dataDifOmzet.label,
             datasets: [{
-              label: 'Product Omzet in %',
+              label: 'Product Omzet',
 
               backgroundColor: dataDifStock.label.map((_, index) => backgroundColor[index % backgroundColor.length]),
 
