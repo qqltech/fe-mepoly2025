@@ -531,7 +531,7 @@ export default {
 
             <hr class="garis-sidebar" style=" margin-top: 20px" />
             <div class="d-grid gap-2 mt-2">
-              <router-link to="" aria-expanded="true" tag="button" class="button3 btn-primary rtlink-btn4"><svg
+              <router-link to="/account" aria-expanded="true" tag="button" class="button3 btn-primary rtlink-btn4"><svg
                   xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-person-fill-gear" viewBox="0 0 16 16">
                   <path
