@@ -465,11 +465,12 @@ input[type="date"] {
 }
 
 canvas {
-  width: auto !important;
+  width: 100% !important;
   height: 250px !important;
   text-align: center !important;
   align-items: center !important;
   margin: 0 !important;
+  display: block;
 }
 
 .canvas1 {
