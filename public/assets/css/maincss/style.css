@@ -627,3 +627,17 @@ p {
   border: 2px solid #244065;
   width: 16vw;
 }
+
+.header-text {
+  font-size: 20px !important;
+  font-weight: bold;
+  font-family: "Noto Sans", sans-serif;
+  text-align: center;
+  justify-content: center;
+  /* padding-top: 5px !important; */
+  margin: 0 !important;
+}
+
+.button-backtohome {
+  color: #244065 !important;
+}

@@ -1052,55 +1052,10 @@ export default {
                 </div>
               </div>
 
-              <!-- <div class="row tanggal-modal">
-                  <div class="col-sm-6 label-modal">
-                    <label class="color-black label-modal" style="align-items: center;">From</label>
-                  </div>
-                  <div class="col-sm-6 input-modal">
-                    <input type="date" class="form-control export-date" v-model="rptFrom">
-                  </div>
-                </div>
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6 label-modal">
-                    <label class="color-black label-modal" style="align-items: center;">To</label>
-                  </div>
-                  <div class="col-sm-6 input-modal">
-                    <input type="date" class="form-control export-date" v-model="rptTo">
-                  </div>
-                </div>
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6 label-modal">
-                    <label class="color-black label-modal" style="align-items: center;">Area</label>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="col-sm-12">
-                      <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
-                        <option value="product" selected>Product</option>
-                        <option value="omzet">Omzet</option>
-                      </select>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6 label-modal">
-                    <label class="color-black label-modal" style="align-items: center;">Salesman</label>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="col-sm-12">
-                      <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
-                        <option value="pdf" selected>PDF</option>
-                        <option value="excel">EXCEL</option>
-                      </select>
-
-                    </div>
-                  </div>
-                </div> -->
             </div>
             <div class="mt-2 d-grid gap-2" style="align-items: center;">
 
-              <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Export {{
-                selectedTypeexports }}</a>
+              <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Add Data</a>
             </div>
           </div>
 
