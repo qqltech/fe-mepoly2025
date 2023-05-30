@@ -19,7 +19,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
     "moment": "^2.29.4",
-    "sweetalert2": "^11.4.8",
+    "sweetalert2": "^11.7.9",
     "vue": "^3.2.47",
     "vue-chartjs": "^5.2.0",
     "vue-flash-message": "^0.7.2",

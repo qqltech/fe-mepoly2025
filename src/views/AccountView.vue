@@ -18,7 +18,7 @@ export default {
         { text: 'Role', value: 'role', sortable: true },
         { text: 'Status', value: 'status', sortable: true },
 
-        { text: 'Action', value: 'item' },
+        { text: 'Action', value: 'action' },
       ],
       userAccount: '',
     }
@@ -51,6 +51,54 @@ export default {
         this.isLoading = false;
       }
     },
+    async deleteFetch(data) {
+      try {
+        this.isLoading = true;
+        console.log(data);
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const response = await fetch(`https://backend.qqltech.com:7021/operation/default_users/${data.id}`, {
+            method: "DELETE",
+            headers: {
+              'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
+              "Content-Type": "application/json",
+            },
+          });
+          const result = await response.json();
+          console.log(result);
+          if (result.success) {
+            flashMessage('success', 'Berhasil', 'Data terhapus!')
+            this.isLoading = false
+            window.location.reload();
+          } else {
+            flashMessage('error', 'Error', result.message)
+            this.isLoading = false
+          }
+        }
+      } catch (error) {
+        flashMessage('error', 'Error', error)
+        this.isLoading = false
+      }
+    },
+
+    async deleteAccount(id) {
+      const data_byId = this.account.find(x => x.id === id)
+
+      Swal.fire({
+        icon: 'question',
+        title: `Delete ${data_byId.name}`,
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        iconColor: '#244065',
+        confirmButtonColor: '#244065',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.deleteFetch(data_byId);
+
+        }
+      })
+    }
   },
   computed: {
     isAuthenticated() {
@@ -109,9 +157,10 @@ export default {
                       <EasyDataTable :loading="isLoading" :headers="headers" :items="account" theme-color="#0068D4"
                         show-index-symbol="No." header-text-direction=center body-text-direction=center
                         table-class-name="customize-table" :rows-per-page=10>
-                        <template #item-id="item">
-                          <button class="btn2 btn-success" id="btn-detail"><svg xmlns="http://www.w3.org/2000/svg"
-                              width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <template #item-action="item">
+                          <button class="button5" id="btn-detail" @click="deleteAccount(item.id)"><svg
+                              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                              class="bi bi-trash" viewBox="0 0 16 16">
                               <path
                                 d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
                               <path
