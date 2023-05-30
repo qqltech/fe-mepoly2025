@@ -544,6 +544,10 @@ p {
 .col-sm-9 {
   padding: 0 !important;
 }
+.col-sm-6 {
+  padding: 0 !important;
+}
+
 
 .top-overview{
   width: 300px;
@@ -600,7 +604,7 @@ p {
   border: none !important;
   border-radius: 10px !important;
   padding: 6px 12px 6px 12px !important;
-  width: 16vw !important;
+  width: 16vw;
 }
 
 .spinner-border {
@@ -609,4 +613,17 @@ p {
 
 .spinner-border-login {
   color: #fff!important;
+}
+
+.btn-salesman-exports {
+  position: absolute;
+  right: 32px;
+  top: 40px ;
+}
+
+.form-masterdata {
+  color: #244065 !important;
+  border-radius: 10px !important;
+  border: 2px solid #244065;
+  width: 16vw;
 }

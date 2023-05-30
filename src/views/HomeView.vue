@@ -567,8 +567,9 @@ export default {
           </svg>
           <img class="header-img-logo" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" height="50px"
             width="auto" />
+          <button class="button btn1 " data-toggle="modal" data-target="#exampleModalData">Master Data</button>
           <button class="button btn1 " data-toggle="modal" data-target="#exampleModalCenterReports">Export Data</button>
-          <button class="button btn1" data-toggle="modal" data-target="#exampleModalShow">Show Store</button>
+          <button class="button btn1 " data-toggle="modal" data-target="#exampleModalShow">Show Store</button>
 
           <label class="period-date"><b>Period :</b></label>
           <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate" @change="fetchDataVisit()">
@@ -787,6 +788,9 @@ export default {
                   <div class="card-body">
                     <div class="card-body">
                       <p class="card-title"><b>Salesman Info</b></p>
+                      <button class="button btn1 btn-salesman-exports" data-toggle="modal"
+                        data-target="#exampleModalExportSalesman">Export</button>
+
                       <div class="row">
 
                         <div class="col-sm-6" v-for="(salesman, index) in salesInfo" :key="index">
@@ -892,7 +896,7 @@ export default {
           <div class="modal-body">
             <div class="row">
               <div class="col-sm-6">
-                <label class="color-black col-form-label" style="font-weight: bold;">Select Date :</label>
+                <label class="color-black col-form-label" style="font-weight: bold;">Select Date</label>
                 <div class="col-sm-6">
                 </div>
               </div>
@@ -914,7 +918,8 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">Select Data</label>
+                  <label class="color-black label-modal" style="align-items: center; font-weight: bold;">Select
+                    Data</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
@@ -928,7 +933,8 @@ export default {
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center;">Select File Type</label>
+                  <label class="color-black label-modal" style="align-items: center; font-weight: bold;">Select File
+                    Type</label>
                 </div>
                 <div class="col-sm-6">
                   <div class="col-sm-12">
@@ -991,6 +997,185 @@ export default {
                 <p>
                   : {{ (storesShow) ? storesShow.area : '' }}
                 </p>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="exampleModalData">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Master Data</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <div class="row tanggal-modal">
+                <div class="col-sm-6">
+                  <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-masterdata">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6">
+                  <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-masterdata">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6">
+                  <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-masterdata">
+                </div>
+              </div>
+              <div class="row tanggal-modal">
+                <div class="col-sm-6">
+                  <label class="color-black col-form-label" style="font-weight: bold;">Manager Area</label>
+                </div>
+                <div class="col-sm-6">
+                  <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
+                    <option value="pdf" selected>PDF</option>
+                    <option value="excel">EXCEL</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center;">From</label>
+                  </div>
+                  <div class="col-sm-6 input-modal">
+                    <input type="date" class="form-control export-date" v-model="rptFrom">
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center;">To</label>
+                  </div>
+                  <div class="col-sm-6 input-modal">
+                    <input type="date" class="form-control export-date" v-model="rptTo">
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center;">Area</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
+                        <option value="product" selected>Product</option>
+                        <option value="omzet">Omzet</option>
+                      </select>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center;">Salesman</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
+                        <option value="pdf" selected>PDF</option>
+                        <option value="excel">EXCEL</option>
+                      </select>
+
+                    </div>
+                  </div>
+                </div> -->
+            </div>
+            <div class="mt-2 d-grid gap-2" style="align-items: center;">
+
+              <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Export {{
+                selectedTypeexports }}</a>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal 4 -->
+    <div class="modal fade" id="exampleModalExportSalesman">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Export CheckIn Salesman</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="color-black col-form-label" style="font-weight: bold;">Select Date</label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center;">From</label>
+                  </div>
+                  <div class="col-sm-6 input-modal">
+                    <input type="date" class="form-control export-date" v-model="rptFrom">
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center;">To</label>
+                  </div>
+                  <div class="col-sm-6 input-modal">
+                    <input type="date" class="form-control export-date" v-model="rptTo">
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal" style="align-items: center; font-weight: bold;">Area</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
+                        <option value="product" selected>Product</option>
+                        <option value="omzet">Omzet</option>
+                      </select>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label class="color-black label-modal"
+                      style="align-items: center; font-weight: bold;">Salesman</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
+                        <option value="pdf" selected>PDF</option>
+                        <option value="excel">EXCEL</option>
+                      </select>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 d-grid gap-2" style="align-items: center;">
+
+                <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Export {{
+                  selectedTypeexports }}</a>
               </div>
             </div>
 
