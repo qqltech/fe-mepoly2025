@@ -198,6 +198,8 @@ export default {
           this.totalVisit = visit.total_checkin;
           const backgroundColor = ['#2234DA', '#ED1E1E', '#D92651', '#E8891D', '#244065',];
           const backgroundColorBarLine = ['#1F5399', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E', '#9E9E9E'];
+
+
           const dataDifStock = this.eachDataDifChart(visit.chart_detail_differentiation_stock)
           const resultchartData1 = {
             labels: dataDifStock.label,
@@ -339,22 +341,50 @@ export default {
       }
     },
 
+    // eachDataDifChart(array) {
+    //   const label = []
+    //   const data = []
+    //   const total = array.reduce((accumulator, element) => {
+    //     return accumulator + element.tali + element.selang
+    //   }, 0)
+    //   array.forEach(element => {
+    //     label.push(element.code)
+    //     data.push(element.tali + element.selang) / total * 100
+    //   });
+
+    //   return {
+    //     label,
+    //     data
+    //   }
+    // },
     eachDataDifChart(array) {
-      const label = []
-      const data = []
-      const total = array.reduce((accumulator, element) => {
-        return accumulator + element.tali + element.selang
-      }, 0)
+      const labels = [];
+      const data = [];
+      let total = 0;
+
       array.forEach(element => {
-        label.push(element.code)
-        data.push(element.tali + element.selang) / total * 100
+        const sum = element.tali + element.selang;
+        if (sum !== 0) {
+          labels.push(element.code);
+          data.push(sum);
+          total += sum;
+        }
       });
 
+      const dataPercentage = data.map(value => (value / total) * 100);
+
       return {
-        label,
-        data
-      }
-    },
+        label: labels,
+        data: dataPercentage
+      };
+    }
+
+
+
+
+
+
+
 
 
 
@@ -575,7 +605,10 @@ export default {
           <input type="date" v-model="periodeStart" class="period-bar1" id="fromDate" @change="fetchDataVisit()">
           <label class="label-date"><b>To</b></label>
           <input type="date" v-model="periodeEnd" class="period-bar2" id="toDate" @change="fetchDataVisit()">
+
         </div>
+        <hr class="garis-sidebar" style="margin-top: 0px !important;" />
+
         <div id="element-to-convert">
           <main class="content">
             <div class="container-fluid mt-3 p-0">
