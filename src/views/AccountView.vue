@@ -86,7 +86,7 @@ export default {
         icon: 'question',
         title: `Delete ${data_byId.name}`,
         showCancelButton: true,
-        confirmButtonText: 'Delete',
+        confirmButtonText: 'Confirm Delete',
         iconColor: '#244065',
         confirmButtonColor: '#244065',
       }).then((result) => {
