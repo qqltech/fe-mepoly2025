@@ -154,9 +154,9 @@ export default {
 
                     </div>
                     <div v-else>
-                      <EasyDataTable :loading="isLoading" :headers="headers" :items="account" theme-color="#0068D4"
-                        show-index-symbol="No." header-text-direction=center body-text-direction=center
-                        table-class-name="customize-table" :rows-per-page=10>
+                      <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="account"
+                        theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
+                        body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
                         <template #item-action="item">
                           <button class="button5" id="btn-detail" @click="deleteAccount(item.id)"><svg
                               xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
