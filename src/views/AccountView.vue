@@ -139,7 +139,7 @@ export default {
         <hr class="garis-sidebar" style="margin-top: 0px !important;" />
 
 
-        <div class="row mt-4">
+        <div class="row mt-4 mb-4">
           <div class="col-sm-12">
             <div class="card card-5">
               <div class="card-body">
