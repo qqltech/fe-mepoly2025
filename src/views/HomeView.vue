@@ -469,7 +469,7 @@ export default {
 
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    {{ (storesShow) ? storesShow.name : '' }}
+                    <!-- {{ (storesShow) ? storesShow.name : '' }} -->
 
 
                   </button>
