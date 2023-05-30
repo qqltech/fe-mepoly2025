@@ -10,14 +10,12 @@ export default {
       account: [],
       headers: [
         { text: 'Name', value: 'name', filter: 'format_date', sortable: true },
-        { text: 'Username', value: 'username', filter: 'format_date', sortable: true },
-
-        { text: 'Email', value: 'email', sortable: true },
-        { text: 'Phone', value: 'phone', sortable: true },
         { text: 'Employee ID', value: 'nip', sortable: true },
+        { text: 'Email', value: 'email', sortable: true },
+        { text: 'Username', value: 'username', filter: 'format_date', sortable: true },
+        { text: 'Phone', value: 'phone', sortable: true },
         { text: 'Role', value: 'role', sortable: true },
         { text: 'Status', value: 'status', sortable: true },
-
         { text: 'Action', value: 'action' },
       ],
       userAccount: '',
