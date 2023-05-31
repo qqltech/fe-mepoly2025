@@ -349,7 +349,7 @@ export default {
 
       array.forEach(element => {
         const sum = parseInt(element.tali) + parseInt(element.selang);
-        console.log(sum);
+        // console.log(sum);
         if (sum !== 0) {
           labels.push(element.code);
           data.push(sum);
