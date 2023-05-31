@@ -97,7 +97,7 @@ export default {
       distributor: '',
       manager_id: '',
       managerData: [],
-      managerNames: '',
+      managerNames: [],
       managerShow: '',
       manager: [],
       selectedManager: '',
@@ -384,41 +384,113 @@ export default {
       };
     },
 
-    async addMasterData() {
+    // async addMasterData() {
+    //   const payload = {
+    //     distributor: this.distributor,
+    //     manager_id: this.manager_id,
+    //     brand: this.brand,
+    //     area: this.area,
+    //   }
+    //   try {
+    //     if (getDataIsLogin()) {
+    //       this.token = getDataIsLogin().token
+    //       const response = await fetch(`https://backend.qqltech.com:7021/operation/dashboard/master`, {
+    //         method: "POST",
+    //         headers: {
+    //           'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
+    //           "Content-Type": "application/json",
+    //         },
+
+    //         body: JSON.stringify(payload)
+    //       });
+    //       console.log(response);
+    //       const result = await response.json();
+
+    //       if (result.success) {
+    //         flashMessage('success', 'Success!', 'Data Added!')
+    //         this.$router.push('/home');
+    //       } else {
+    //         flashMessage('error', 'Error', result.errormsg)
+    //         this.isLoading = false
+    //       }
+    //     }
+    //   } catch (error) {
+    //     flashMessage('error', 'Error', error)
+    //   }
+    // },
+
+
+    // async addMasterData() {
+    //   const payload = {
+    //     distributor: this.distributor,
+    //     manager_id: this.manager_id,
+    //     brand: this.brand,
+    //     area: this.area,
+    //   };
+    //   try {
+    //     if (getDataIsLogin()) {
+    //       this.token = getDataIsLogin().token;
+    //       const response = await fetch(`https://backend.qqltech.com:7021/operation/dashboard/master`, {
+    //         method: "POST",
+    //         headers: {
+    //           'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(payload)
+    //       });
+
+    //       if (response.ok) {
+    //         const result = await response.json();
+    //         if (result.success) {
+    //           flashMessage('success', 'Success!', 'Data Added!')
+    //           this.$router.push('/home');
+    //         } else {
+    //           flashMessage('error', 'Error', result.errormsg)
+
+    //         }
+    //       } else {
+    //         throw new Error('error', 'Error', result.errormsg);
+    //       }
+    //     }
+    //   } catch (error) {
+    //     flashMessage('error', 'Error', error);
+    //   }
+    // },
+
+    addMasterData() {
       const payload = {
         distributor: this.distributor,
         manager_id: this.manager_id,
         brand: this.brand,
         area: this.area,
-      }
-      try {
-        if (getDataIsLogin()) {
-          this.token = getDataIsLogin().token
-          const response = await fetch(`https://backend.qqltech.com:7021/operation/dashboard/master`, {
-            method: "POST",
-            headers: {
-              'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
-              "Content-Type": "application/json",
-            },
+      };
+      const config = {
+        headers: {
+          'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      axios.post('https://backend.qqltech.com:7021/operation/dashboard/master', payload, config)
+        .then(response => {
+          console.log('Data sent successfully:', response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Data sent successfully',
+            iconColor: '#244065',
+            confirmButtonColor: '#244065',
+            allowOutsideClick: false,
 
-            body: JSON.stringify(payload)
-          });
-          console.log(response);
-          const result = await response.json();
-
-          if (result.success) {
-            flashMessage('success', 'Success!', 'Data deleted!')
-            this.$router.push('/home');
-          } else {
-            flashMessage('error', 'Error', result.errormsg)
-            this.isLoading = false
-          }
-        }
-      } catch (error) {
-        flashMessage('error', 'Error', error)
-      }
+          })
+            .then(() => {
+              this.$router.push('/home');
+              location.reload();
+            });
+        })
+        .catch(error => {
+          console.error('Failed to send data:', error);
+        });
     },
-
     async fetchDataManager() {
       try {
         if (getDataIsLogin()) {
@@ -444,6 +516,8 @@ export default {
         this.isLoading = false;
       }
     },
+
+
 
 
 
@@ -1160,25 +1234,33 @@ export default {
 
                         <div class="form-check checkStore" v-for="(manager, index) in managerNames">
                           <input class="form-check-input" type="radio" name="manager_id" :id="manager.id"
-                            :value="manager.name" v-model="manager_id" />
+                            :value="manager.id" v-model="manager_id" />
                           <label class="form-check-label" :for="manager.id">{{ manager.name }}</label>
                         </div>
+
+                        <p>{{ manager_id }}</p>
 
                       </div>
 
                     </div>
 
+                    <!-- <select class="form-select" aria-label="Default select example" v-model="manager_id">
+                      <option value="">Select Manager</option>
+                      <option v-for="manager in managerNames" :value="manager.id">{{ manager.name }}</option>
+                    </select>
+                    <p>{{ manager_id }}</p> -->
                   </div>
                 </div>
+
+                <div class="mt-2 d-grid gap-2" style="align-items: center;">
+
+                  <!-- <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Add Data</a> -->
+
+                  <button type="submit" class="btn button3" title="Add Data">
+                    Add Data
+                  </button>
+                </div>
               </form>
-            </div>
-            <div class="mt-2 d-grid gap-2" style="align-items: center;">
-
-              <!-- <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Add Data</a> -->
-
-              <button type="submit" class="btn button3" title="Add Data">
-                Add Data
-              </button>
             </div>
           </div>
 
