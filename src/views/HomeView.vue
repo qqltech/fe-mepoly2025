@@ -77,6 +77,10 @@ export default {
       stores: [],
       storesName: [],
       storesShow: '',
+      storesShowArea: '',
+      area: [],
+      uniqueStoresArea: [],
+      selectedArea: null,
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
@@ -112,6 +116,7 @@ export default {
     this.fetchDataVisit();
     this.fetchDataStores();
     this.fetchDataManager();
+    this.fetchDataStoresArea();
     // this.fetchDataExport();
     const date = new Date();
     this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-01`;
@@ -325,15 +330,54 @@ export default {
 
           )
           const stores = response.data;
-          console.log(stores);
+          // console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore)
+
 
         }
       } catch (error) {
         flashMessage('error', 'ERROR', error)
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    async fetchDataStoresArea() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const response = await axios.get(`https://backend.qqltech.com:7021/operation/m_customer`, {
+            headers: {
+              "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+            },
+
+          }
+
+          )
+          const area = response.data;
+          this.storesArea = area.data;
+          this.selectedArea = this.storesArea;
+          const uniqueAreas = [...new Set(this.storesArea.map(area => area.area))];
+          this.uniqueStoresArea = uniqueAreas;
+          console.log(this.uniqueStoresArea);
+
+
+        }
+      } catch (error) {
+        flashMessage('error', 'ERROR', error)
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    filterStoresByArea() {
+      if (this.selectedArea) {
+        this.storesName = this.allStores.filter(store => store.area === this.selectedArea);
+        this.storesShowArea = this.storesName.find(store => store.area === this.selectedArea);
+      } else {
+        this.storesName = this.allStores;
+        this.storesShowArea = null;
       }
     },
 
@@ -571,24 +615,17 @@ export default {
 
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <!-- {{ (storesShow) ? storesShow.name : '' }} -->
+                    {{ (selectedArea) ? selectedArea : '' }}
 
 
                   </button>
                   <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
-                    <form class="px-4 py-2">
-                      <input type="search" class="form-control searchCheck" placeholder="Search Store..."
-                        autofocus="autofocus" @input="searchStores()">
-                    </form>
-                    <hr>
 
-
-                    <div class="form-check checkStore" v-for="(stores, index) in storesName">
-                      <input class="form-check-input" type="radio" name="stores" :id="stores.id" :value="stores.id"
-                        v-model="selectedStore" @change="fetchDataVisit()" />
-                      <label class="form-check-label" :for="stores.id">{{ stores.area }}</label>
+                    <div class="form-check checkStore" v-for="area in uniqueStoresArea" :key="area">
+                      <input class="form-check-input" type="radio" name="stores" :value="area" v-model="selectedArea" />
+                      <label class="form-check-label">{{ area }}</label>
                     </div>
-
+                    
                   </div>
                 </div>
 
