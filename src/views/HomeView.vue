@@ -205,7 +205,7 @@ export default {
             labels: dataDifStock.label,
             datasets: [{
               data: dataDifStock.data,
-              label: 'Product Stock',
+              label: 'Product Stock in %',
               backgroundColor: dataDifStock.label.map((_, index) => backgroundColor[index % backgroundColor.length]),
 
             }]
@@ -220,7 +220,7 @@ export default {
           const resultchartData2 = {
             labels: dataDifOmzet.label,
             datasets: [{
-              label: 'Product Omzet',
+              label: 'Product Omzet in %',
 
               backgroundColor: dataDifStock.label.map((_, index) => backgroundColor[index % backgroundColor.length]),
 
@@ -341,29 +341,14 @@ export default {
       }
     },
 
-    // eachDataDifChart(array) {
-    //   const label = []
-    //   const data = []
-    //   const total = array.reduce((accumulator, element) => {
-    //     return accumulator + element.tali + element.selang
-    //   }, 0)
-    //   array.forEach(element => {
-    //     label.push(element.code)
-    //     data.push(element.tali + element.selang) / total * 100
-    //   });
-
-    //   return {
-    //     label,
-    //     data
-    //   }
-    // },
     eachDataDifChart(array) {
       const labels = [];
       const data = [];
       let total = 0;
 
       array.forEach(element => {
-        const sum = element.tali + element.selang;
+        const sum = parseInt(element.tali) + parseInt(element.selang);
+        console.log(sum);
         if (sum !== 0) {
           labels.push(element.code);
           data.push(sum);
@@ -375,7 +360,7 @@ export default {
 
       return {
         label: labels,
-        data: dataPercentage
+        data: dataPercentage,
       };
     }
 
