@@ -341,6 +341,7 @@ export default {
       }
     },
 
+
     eachDataDifChart(array) {
       const labels = [];
       const data = [];
