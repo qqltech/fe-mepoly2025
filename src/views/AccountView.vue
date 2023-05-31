@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { flashMessage, format_date, getDataIsLogin } from '../config/functions';
+import Swal from 'sweetalert2'
 
 </script>
 <script>
@@ -11,8 +12,10 @@ export default {
       headers: [
         { text: 'Name', value: 'name', filter: 'format_date', sortable: true },
         { text: 'Employee ID', value: 'nip', sortable: true },
+        { text: 'Area', value: 'area_ids', sortable: true, customDisplay: (value) => value ? value : '-' },
+
         { text: 'Email', value: 'email', sortable: true },
-        { text: 'Username', value: 'username', filter: 'format_date', sortable: true },
+        { text: 'Username', value: 'username', sortable: true },
         { text: 'Phone', value: 'phone', sortable: true },
         { text: 'Role', value: 'role', sortable: true },
         { text: 'Status', value: 'status', sortable: true },
@@ -170,6 +173,9 @@ export default {
                               <path
                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
                             </svg></button>
+                        </template>
+                        <template #item.area_ids="{ item }">
+                          {{ item.area_ids ? item.area_ids : '-' }}
                         </template>
                       </EasyDataTable>
                     </div>

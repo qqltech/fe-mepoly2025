@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import jsPDF from 'jspdf'
 import html2pdf from "html2pdf.js";
+import Swal from 'sweetalert2'
 
 
 import autoTable from 'jspdf-autotable'
