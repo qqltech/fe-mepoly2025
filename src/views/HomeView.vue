@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import jsPDF from 'jspdf'
 import html2pdf from "html2pdf.js";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 
 import autoTable from 'jspdf-autotable'
@@ -440,7 +440,7 @@ export default {
           )
           const managerData = response.data;
           this.managerNames = managerData.data;
-          console.log(this.managerNames);
+          // console.log(this.managerNames);
         }
       } catch (error) {
         flashMessage('error', 'ERROR', error)
@@ -586,7 +586,7 @@ export default {
                     <div class="form-check checkStore" v-for="(stores, index) in storesName">
                       <input class="form-check-input" type="radio" name="stores" :id="stores.id" :value="stores.id"
                         v-model="selectedStore" @change="fetchDataVisit()" />
-                      <label class="form-check-label" :for="stores.id">{{ stores.name }}</label>
+                      <label class="form-check-label" :for="stores.id">{{ stores.area }}</label>
                     </div>
 
                   </div>
@@ -726,7 +726,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <p class="card-count mt-1 mb-1">{{ formattedNumber(totalOmzet.toLocaleString()) }} Pcs</p>
+                    <p class="card-count mt-1 mb-1">{{ totalOmzet }} Pcs</p>
                   </div>
                 </div>
               </div>

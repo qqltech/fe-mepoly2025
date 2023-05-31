@@ -22,6 +22,7 @@ export default {
         { text: 'Action', value: 'action' },
       ],
       userAccount: '',
+      isLoading: true,
     }
   },
   mounted() {
@@ -40,7 +41,7 @@ export default {
             },
           })
           this.account = response.data.data;
-          console.log(this.account);
+          // console.log(this.account);
 
 
 
@@ -55,7 +56,7 @@ export default {
     async deleteFetch(data) {
       try {
         this.isLoading = true;
-        console.log(data);
+        // console.log(data);
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token
           const response = await fetch(`https://backend.qqltech.com:7021/operation/default_users/${data.id}`, {
@@ -66,7 +67,7 @@ export default {
             },
           });
           const result = await response.json();
-          console.log(result);
+          // console.log(result);
           if (result.success) {
             flashMessage('success', 'Success!', 'Data deleted!')
             this.isLoading = false
@@ -89,7 +90,7 @@ export default {
         icon: 'question',
         title: `Delete ${data_byId.name}`,
         showCancelButton: true,
-        confirmButtonText: 'Confirm',
+        confirmButtonText: 'Yes',
         iconColor: '#244065',
         confirmButtonColor: '#244065',
       }).then((result) => {
