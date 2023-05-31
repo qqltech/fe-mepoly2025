@@ -92,6 +92,17 @@ export default {
       fileUrl: null,
       downloadUrl: "",
       checkIn: '',
+      brand: '',
+      area: '',
+      distributor: '',
+      manager_id: '',
+      managerData: [],
+      managerNames: '',
+      managerShow: '',
+      manager: [],
+      selectedManager: '',
+
+
 
     }
   },
@@ -99,6 +110,7 @@ export default {
     this.isLoading = true;
     this.fetchDataVisit();
     this.fetchDataStores();
+    this.fetchDataManager();
     // this.fetchDataExport();
     const date = new Date();
     this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-01`;
@@ -138,6 +150,7 @@ export default {
         }
       });
     },
+
     logout() {
       if (confirm("Apakah Anda yakin ingin keluar?")) {
         localStorage.removeItem('admin')
@@ -323,8 +336,14 @@ export default {
       }
     },
 
+
+
     getfilterCompany(id) {
       this.storesShow = this.storesName.find(data => data.id == id)
+    },
+
+    getfilterManager(id) {
+      this.managerShow = this.managerNames.find(data => data.id == id)
     },
 
     eachDataChart(array) {
@@ -363,7 +382,68 @@ export default {
         label: labels,
         data: dataPercentage,
       };
-    }
+    },
+
+    async addMasterData() {
+      const payload = {
+        distributor: this.distributor,
+        manager_id: this.manager_id,
+        brand: this.brand,
+        area: this.area,
+      }
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const response = await fetch(`https://backend.qqltech.com:7021/operation/dashboard/master`, {
+            method: "POST",
+            headers: {
+              'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify(payload)
+          });
+          console.log(response);
+          const result = await response.json();
+
+          if (result.success) {
+            flashMessage('success', 'Success!', 'Data deleted!')
+            this.$router.push('/home');
+          } else {
+            flashMessage('error', 'Error', result.errormsg)
+            this.isLoading = false
+          }
+        }
+      } catch (error) {
+        flashMessage('error', 'Error', error)
+      }
+    },
+
+    async fetchDataManager() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token
+          const response = await axios.get(`https://backend.qqltech.com:7021/operation/default_users`, {
+            headers: {
+              "authorization": `${getDataIsLogin().token_type} ${this.token}`,
+            },
+            params: {
+              where: "role = 'Manager'",
+            },
+
+          }
+
+          )
+          const managerData = response.data;
+          this.managerNames = managerData.data;
+          console.log(this.managerNames);
+        }
+      } catch (error) {
+        flashMessage('error', 'ERROR', error)
+      } finally {
+        this.isLoading = false;
+      }
+    },
 
 
 
@@ -1035,46 +1115,70 @@ export default {
           </div>
           <div class="modal-body">
             <div class="modal-body">
-              <div class="row tanggal-modal">
-                <div class="col-sm-6">
-                  <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
-                </div>
-                <div class="col-sm-6">
-                  <input type="text" class="form-control form-masterdata">
-                </div>
-              </div>
-              <div class="row tanggal-modal">
-                <div class="col-sm-6">
-                  <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
-                </div>
-                <div class="col-sm-6">
-                  <input type="text" class="form-control form-masterdata">
-                </div>
-              </div>
-              <div class="row tanggal-modal">
-                <div class="col-sm-6">
-                  <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
-                </div>
-                <div class="col-sm-6">
-                  <input type="text" class="form-control form-masterdata">
-                </div>
-              </div>
-              <div class="row tanggal-modal">
-                <div class="col-sm-6">
-                  <label class="color-black col-form-label" style="font-weight: bold;">Manager Area</label>
-                </div>
-                <div class="col-sm-6">
-                  <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
-                    <option value="pdf" selected>PDF</option>
-                    <option value="excel">EXCEL</option>
-                  </select>
-                </div>
-              </div>
+              <form method="POST" @submit.prevent="addMasterData">
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-masterdata" v-model="brand">
 
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-masterdata" v-model="area">
+
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-masterdata" v-model="distributor">
+
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Manager Area</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="dropdown">
+
+                      <button class=" dropdown-toggle dropdown-toggle2" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ (manager_id) ? manager_id : 'Select Manager' }}
+
+
+                      </button>
+                      <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+
+                        <div class="form-check checkStore" v-for="(manager, index) in managerNames">
+                          <input class="form-check-input" type="radio" name="manager_id" :id="manager.id"
+                            :value="manager.name" v-model="manager_id" />
+                          <label class="form-check-label" :for="manager.id">{{ manager.name }}</label>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </form>
             </div>
             <div class="mt-2 d-grid gap-2" style="align-items: center;">
 
-              <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Add Data</a>
+              <!-- <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Add Data</a> -->
+
+              <button type="submit" class="btn button3" title="Add Data">
+                Add Data
+              </button>
             </div>
           </div>
 

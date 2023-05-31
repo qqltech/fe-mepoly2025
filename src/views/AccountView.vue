@@ -65,7 +65,7 @@ export default {
           const result = await response.json();
           console.log(result);
           if (result.success) {
-            flashMessage('success', 'Berhasil', 'Data terhapus!')
+            flashMessage('success', 'Success!', 'Data deleted!')
             this.isLoading = false
             window.location.reload();
           } else {
@@ -86,7 +86,7 @@ export default {
         icon: 'question',
         title: `Delete ${data_byId.name}`,
         showCancelButton: true,
-        confirmButtonText: 'Confirm Delete',
+        confirmButtonText: 'Confirm',
         iconColor: '#244065',
         confirmButtonColor: '#244065',
       }).then((result) => {
@@ -96,7 +96,13 @@ export default {
 
         }
       })
-    }
+    },
+    logout() {
+      if (confirm("Apakah Anda yakin ingin keluar?")) {
+        localStorage.removeItem('admin')
+        this.$router.push('/')
+      }
+    },
   },
   computed: {
     isAuthenticated() {

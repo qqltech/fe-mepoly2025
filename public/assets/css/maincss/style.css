@@ -490,7 +490,7 @@ canvas {
 .canvas2 {
   width: 500px !important;
   position: relative;
-  left: 25%;
+  left:formadasdasd 25%;
   right: 25%;
   text-align: center;
   align-items: center;
@@ -513,6 +513,20 @@ p {
   height: 30px;
 }
 .dropdown-toggle:hover {
+  background-color: white !important;
+  border: 1px solid #244065 !important;
+  color: #244065 !important;
+}
+
+.dropdown-toggle2 {
+  width: 15vw;
+  background-color: #244065 !important;
+  color: white !important;
+  border-radius: 10px;
+  border: 1px solid #244065;
+  height: 35px;
+}
+.dropdown-toggle2:hover {
   background-color: white !important;
   border: 1px solid #244065 !important;
   color: #244065 !important;
