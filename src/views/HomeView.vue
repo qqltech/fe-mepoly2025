@@ -619,7 +619,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <p class="card-count mt-1 mb-1">{{ formattedNumber(totalStock.toLocaleString()) }}</p>
+                    <p class="card-count mt-1 mb-1">{{ formattedNumber(totalStock.toLocaleString()) }} Pcs</p>
                   </div>
                 </div>
               </div>
@@ -640,7 +640,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <p class="card-count mt-1 mb-1">Rp. {{ formatRupiah(totalOmzet.toString()) }} -</p>
+                    <p class="card-count mt-1 mb-1">{{ formattedNumber(totalOmzet.toLocaleString()) }} Pcs</p>
                   </div>
                 </div>
               </div>
@@ -661,7 +661,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <p class="card-count mt-1 mb-1">{{ totalVisit }}</p>
+                    <p class="card-count mt-1 mb-1">{{ totalVisit }} Times</p>
                   </div>
                 </div>
               </div>
