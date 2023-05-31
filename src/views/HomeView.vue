@@ -383,79 +383,10 @@ export default {
         data: dataPercentage,
       };
     },
-
-    // async addMasterData() {
-    //   const payload = {
-    //     distributor: this.distributor,
-    //     manager_id: this.manager_id,
-    //     brand: this.brand,
-    //     area: this.area,
-    //   }
-    //   try {
-    //     if (getDataIsLogin()) {
-    //       this.token = getDataIsLogin().token
-    //       const response = await fetch(`https://backend.qqltech.com:7021/operation/dashboard/master`, {
-    //         method: "POST",
-    //         headers: {
-    //           'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
-    //           "Content-Type": "application/json",
-    //         },
-
-    //         body: JSON.stringify(payload)
-    //       });
-    //       console.log(response);
-    //       const result = await response.json();
-
-    //       if (result.success) {
-    //         flashMessage('success', 'Success!', 'Data Added!')
-    //         this.$router.push('/home');
-    //       } else {
-    //         flashMessage('error', 'Error', result.errormsg)
-    //         this.isLoading = false
-    //       }
-    //     }
-    //   } catch (error) {
-    //     flashMessage('error', 'Error', error)
-    //   }
-    // },
-
-
-    // async addMasterData() {
-    //   const payload = {
-    //     distributor: this.distributor,
-    //     manager_id: this.manager_id,
-    //     brand: this.brand,
-    //     area: this.area,
-    //   };
-    //   try {
-    //     if (getDataIsLogin()) {
-    //       this.token = getDataIsLogin().token;
-    //       const response = await fetch(`https://backend.qqltech.com:7021/operation/dashboard/master`, {
-    //         method: "POST",
-    //         headers: {
-    //           'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(payload)
-    //       });
-
-    //       if (response.ok) {
-    //         const result = await response.json();
-    //         if (result.success) {
-    //           flashMessage('success', 'Success!', 'Data Added!')
-    //           this.$router.push('/home');
-    //         } else {
-    //           flashMessage('error', 'Error', result.errormsg)
-
-    //         }
-    //       } else {
-    //         throw new Error('error', 'Error', result.errormsg);
-    //       }
-    //     }
-    //   } catch (error) {
-    //     flashMessage('error', 'Error', error);
-    //   }
-    // },
+    getManagerName(managerId) {
+      const manager = this.managerNames.find(manager => manager.id === managerId);
+      return manager ? manager.name : '';
+    },
 
     addMasterData() {
       const payload = {
@@ -1226,7 +1157,7 @@ export default {
 
                       <button class=" dropdown-toggle dropdown-toggle2" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ (manager_id) ? manager_id : 'Select Manager' }}
+                        {{ (manager_id) ? getManagerName(manager_id) : 'Select Manager' }}
 
 
                       </button>
@@ -1238,23 +1169,15 @@ export default {
                           <label class="form-check-label" :for="manager.id">{{ manager.name }}</label>
                         </div>
 
-                        <p>{{ manager_id }}</p>
 
                       </div>
 
                     </div>
 
-                    <!-- <select class="form-select" aria-label="Default select example" v-model="manager_id">
-                      <option value="">Select Manager</option>
-                      <option v-for="manager in managerNames" :value="manager.id">{{ manager.name }}</option>
-                    </select>
-                    <p>{{ manager_id }}</p> -->
                   </div>
                 </div>
 
                 <div class="mt-2 d-grid gap-2" style="align-items: center;">
-
-                  <!-- <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Add Data</a> -->
 
                   <button type="submit" class="btn button3" title="Add Data">
                     Add Data
