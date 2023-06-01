@@ -673,7 +673,7 @@ export default {
                     d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z" />
                 </svg> Logout</router-link>
             </div>
-            
+
           </div>
         </div>
 
@@ -919,10 +919,13 @@ export default {
                       <button class="button btn1 btn-salesman-exports" data-toggle="modal"
                         data-target="#exampleModalExportSalesman">Export</button>
 
-                      <div class="row">
+                        
+                      <div class="row"  v-for="(salesman, index) in salesInfo" :key="index">
+                        
+                        <div class="col-sm-12 mt-1" v-if="salesman.checkin && salesman.checkin.length > 0">
 
-                        <div class="col-sm-6" v-for="(salesman, index) in salesInfo" :key="index">
-                          <div class="accordion accordion-flush" id="accordion1">
+                          <div class="accordion accordion-flush" id="accordion1"
+                           >
                             <div class="accordion-item">
                               <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -997,10 +1000,17 @@ export default {
                                 </div>
                               </div>
                             </div>
+
+                            <p v-if="salesInfo.every(salesman => !salesman.checkin || salesman.checkin.length === 0)">
+                              Tidak ada Salesman Checkin
+                            </p>
                           </div>
 
-
                         </div>
+<!-- 
+                        <v-else>
+                              Tidak ada Salesman Checkin
+                        </v-else> -->
 
 
                       </div>
