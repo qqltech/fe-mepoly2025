@@ -3,6 +3,10 @@ import axios from 'axios';
 import { flashMessage, format_date, getDataIsLogin } from '../config/functions';
 import Swal from 'sweetalert2'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 </script>
 <script>
@@ -19,8 +23,8 @@ export default {
         { text: 'Username', value: 'username', sortable: true },
         { text: 'Phone', value: 'phone', sortable: true },
         { text: 'Role', value: 'role', sortable: true },
-        { text: 'Status', value: 'status' },
-        { text: 'Action', value: 'action' },
+        { text: 'Status', value: 'status', sortable: true },
+        { text: 'Action', value: 'action', width: 100 },
       ],
       userAccount: '',
       isLoading: true,
@@ -136,10 +140,14 @@ export default {
           });
           console.log(response);
 
+         
           if (response.data.success) {
-            flashMessage('success', 'SUCCESS', 'Data Saved!');
+            flashMessage('success', 'Success!', 'Data Saved!')
+            this.isLoading = false
+            window.location.reload();
           } else {
-            flashMessage('error', 'Error', result.errormsg);
+            flashMessage('error', 'Error', result.message)
+            this.isLoading = false
           }
         }
       } catch (error) {
@@ -212,25 +220,55 @@ export default {
                       <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="account"
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
                         body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
-                        <template #item-status="item">
-                          <select class="select-status-acc" aria-label="Status" v-model="value"
-                            @change="editData(item.id)">
-                            <option value="ACTIVE">ACTIVE</option>
-                            <option value="INACTIVE">INACTIVE</option>
-                          </select>
-                        </template>
+                        <!-- <select class="select-status-acc" aria-label="Status" v-model="value"
+                          @change="editData(item.id)">
+                          <option value="ACTIVE">ACTIVE</option>
+                          <option value="INACTIVE">INACTIVE</option>
+                        </select> -->
+
                         <template #item-action="item">
-
-                          <button class="button5" id="btn-detail" @click="deleteAccount(item.id)"><svg
-                              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              class="bi bi-trash" viewBox="0 0 16 16">
-                              <path
-                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                              <path
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                            </svg></button>
                           <div>
+                            <div class="button-container">
+                              <div class="dropdown">
 
+                                <button class="button6 " type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                  aria-haspopup="true" aria-expanded="false">
+                                  <!-- {{ (value) ? value : 'Change Status' }} -->
+                                  <i class="bi bi-pencil"></i>
+
+                                </button>
+                                <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+
+                                  <div class="form-check checkStore">
+                                    <input class="form-check-input" type="radio" name="status" :id="status_disabled"
+                                      disabled />
+                                    <label class="form-check-label" :for="status_disabled">Select Status</label>
+                                  </div>
+                                  <div class="form-check checkStore">
+                                    <input class="form-check-input" type="radio" name="status" :id="status_active"
+                                      value="ACTIVE" v-model="value" @change="editData(item.id)" />
+                                    <label class="form-check-label" :for="status_active">ACTIVE</label>
+                                  </div>
+                                  <div class="form-check checkStore">
+                                    <input class="form-check-input" type="radio" name="status" :id="status_inactive"
+                                      value="INACTIVE" v-model="value" @change="editData(item.id)" />
+                                    <label class="form-check-label" :for="status_inactive">INACTIVE</label>
+                                  </div>
+
+
+                                </div>
+
+                              </div>
+                              <br>
+                              <button class="button5" id="btn-detail" @click="deleteAccount(item.id)"><svg
+                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-trash" viewBox="0 0 16 16">
+                                  <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                  <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                </svg></button>
+                            </div>
                           </div>
                         </template>
                         <template #item.area_ids="{ item }">
@@ -261,5 +299,11 @@ export default {
   --easy-table-header-font-color: #fff;
   --easy-table-header-font-size: 14px;
   --easy-table-header-background-color: #244065;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

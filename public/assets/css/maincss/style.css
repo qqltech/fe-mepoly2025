@@ -199,6 +199,21 @@ h6{
   font-weight: bold; 
 }
 
+.button6 {
+  background-color: #244065;
+  color: white;
+  border-radius: 10px;
+  width: auto;
+  height: 25px;
+  padding: 7px, 12px, 7px, 12px;
+  border: none;
+}
+.button6:hover {
+  background-color: white;
+  border: 2px solid #244065;
+  color: #244065;
+  font-weight: bold; 
+}
 .rtlink-btn4 {
   overflow: hidden;
   text-decoration: none;
@@ -784,10 +799,10 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.select-status-acc {
+.check-status-acc {
 
-    color: #244065 !important;
-    background-color: rgba(237, 237, 237, 1) !important;
+    color: #fff !important;
+    background-color: #244065 !important;
     border: none !important;
     border-radius: 10px !important;
     padding: 2px 6px 2px 10px !important;
