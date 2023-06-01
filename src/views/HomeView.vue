@@ -334,7 +334,7 @@ export default {
           this.selectedArea = this.storesArea;
           const uniqueAreas = [...new Set(this.storesArea.map(area => area.area))];
           this.uniqueStoresArea = ['All', ...uniqueAreas];
-          console.log(this.selectedArea);
+          // console.log(this.selectedArea);
           const stores = response.data;
           // console.log(stores);
           this.storesName = stores.data;
