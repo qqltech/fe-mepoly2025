@@ -137,7 +137,7 @@ export default {
           console.log(response);
 
           if (response.data.success) {
-            flashMessage('success', 'Berhasil', 'Data Tersimpan!');
+            flashMessage('success', 'SUCCESS', 'Data Saved!');
           } else {
             flashMessage('error', 'Error', result.errormsg);
           }
@@ -213,7 +213,7 @@ export default {
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
                         body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
                         <template #item-status="item">
-                          <select class="select-status-acc" aria-label="Default select example" v-model="value"
+                          <select class="select-status-acc" aria-label="Status" v-model="value"
                             @change="editData(item.id)">
                             <option value="ACTIVE">ACTIVE</option>
                             <option value="INACTIVE">INACTIVE</option>
