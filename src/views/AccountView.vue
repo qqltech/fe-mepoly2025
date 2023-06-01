@@ -24,7 +24,7 @@ export default {
         { text: 'Phone', value: 'phone', sortable: true },
         { text: 'Role', value: 'role', sortable: true },
         { text: 'Status', value: 'status', sortable: true },
-        { text: 'Action', value: 'action', width: 100 },
+        { text: 'Action', value: 'action' },
       ],
       userAccount: '',
       isLoading: true,
@@ -36,6 +36,9 @@ export default {
       },
       value: '',
       token: '',
+      status_active: '',
+      status_disabled: '',
+      status_disabled: '',
     }
   },
   mounted() {
