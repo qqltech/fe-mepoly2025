@@ -910,7 +910,7 @@ export default {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-1 mb-4">
               <div class="col-sm-12">
                 <div class="card mb-4 card-5">
                   <div class="card-body">
