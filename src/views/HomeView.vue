@@ -80,7 +80,7 @@ export default {
       storesShowArea: '',
       area: [],
       uniqueStoresArea: [],
-      selectedArea: '5',
+      selectedArea: 'All',
       totalVisit: '',
       totalOmzet: '',
       totalStock: '',
@@ -106,6 +106,8 @@ export default {
       managerShow: '',
       manager: [],
       selectedManager: '',
+      isAllSelected: true,
+      isDropdownOpen: false,
 
 
 
@@ -331,8 +333,8 @@ export default {
           this.storesArea = area.data;
           this.selectedArea = this.storesArea;
           const uniqueAreas = [...new Set(this.storesArea.map(area => area.area))];
-          this.uniqueStoresArea = uniqueAreas;
-          console.log(this.uniqueStoresArea);
+          this.uniqueStoresArea = ['All', ...uniqueAreas];
+          console.log(this.selectedArea);
           const stores = response.data;
           // console.log(stores);
           this.storesName = stores.data;
@@ -349,9 +351,17 @@ export default {
     },
 
     filterStoresByArea() {
+      if (this.selectedArea === 'All') {
+        this.isAllSelected = true;
+        this.storesName = this.storesArea;
+      } else {
+        this.isAllSelected = false;
+        this.storesName = this.storesArea.filter((store) => store.area === this.selectedArea);
+      }
       this.selectedStore = {};
-      this.storesName = this.storesArea.filter((store) => store.area === this.selectedArea);
-      console.log(this.storesName);
+      this.isDropdownOpen = false;
+
+      // console.log(this.storesName);
     },
 
 
@@ -587,8 +597,9 @@ export default {
                 <div class="dropdown">
 
                   <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    {{ (selectedArea) ? selectedArea : '' }}
+                    :aria-expanded="isDropdownOpen ? 'true' : 'false'" @click="isDropdownOpen = !isDropdownOpen">
+                    {{ isAllSelected ? 'All' : selectedArea }}
+
 
 
                   </button>
