@@ -374,20 +374,70 @@ export default {
       this.managerShow = this.managerNames.find(data => data.id == id)
     },
 
+    // eachDataChart(array) {
+    //   const label = []
+    //   const data = []
+    //   array.forEach(element => {
+    //     label.push(element.code)
+    //     data.push(element.total)
+    //   });
+
+    //   return {
+    //     label,
+    //     data
+    //   }
+    // },
+
     eachDataChart(array) {
-      const label = []
+      const labels = []
       const data = []
+
       array.forEach(element => {
-        label.push(element.code)
-        data.push(element.total)
-      });
+        if (element.total !== 0 ? parseInt(element.total) : null) {
+          labels.push(element.code)
+          data.push(parseInt(element.total))
+        }
+      })
 
       return {
-        label,
+        label: labels,
         data
       }
     },
 
+
+
+
+
+
+
+
+    // eachDataChart(array) {
+    //   const label = []
+    //   const data = []
+
+    //   array.forEach(element => {
+    //     if (element.total !== 0) {
+    //       label.push(element.code)
+    //       data.push(element.total)
+    //     }
+    //   })
+
+    //   const chartData = {
+    //     label: label.map((label, index) => label || `Label ${index + 1}`),
+    //     datasets: [
+    //       {
+    //         label: 'Data',
+    //         data,
+    //         backgroundColor: 'rgba(0, 123, 255, 0.5)', // Atur warna latar belakang sesuai kebutuhan
+    //         borderColor: 'rgba(0, 123, 255, 1)', // Atur warna border sesuai kebutuhan
+    //         borderWidth: 1 // Atur lebar border sesuai kebutuhan
+    //       }
+    //     ]
+    //   }
+
+    //   return chartData
+    // },
 
     eachDataDifChart(array) {
       const labels = [];
