@@ -519,7 +519,7 @@ p {
 }
 
 .dropdown-toggle2 {
-  width: 15vw;
+  width: 100%;
   background-color: #244065 !important;
   color: white !important;
   border-radius: 10px;
