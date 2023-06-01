@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { flashMessage, format_date, getDataIsLogin } from '../config/functions';
 import Swal from 'sweetalert2'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 </script>
 <script>
@@ -18,16 +19,25 @@ export default {
         { text: 'Username', value: 'username', sortable: true },
         { text: 'Phone', value: 'phone', sortable: true },
         { text: 'Role', value: 'role', sortable: true },
-        { text: 'Status', value: 'status', sortable: true },
+        { text: 'Status', value: 'status' },
         { text: 'Action', value: 'action' },
       ],
       userAccount: '',
       isLoading: true,
+      status: "ACTIVE",
+      selectedEdit: '',
+      item: {
+        id: '',
+        value: '',
+      },
+      value: '',
+      token: '',
     }
   },
   mounted() {
     this.isLoading = true;
     this.fetchDataAccount();
+
 
   },
   methods: {
@@ -56,7 +66,6 @@ export default {
     async deleteFetch(data) {
       try {
         this.isLoading = true;
-        // console.log(data);
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token
           const response = await fetch(`https://backend.qqltech.com:7021/operation/default_users/${data.id}`, {
@@ -83,6 +92,8 @@ export default {
       }
     },
 
+
+
     async deleteAccount(id) {
       const data_byId = this.account.find(x => x.id === id)
 
@@ -107,6 +118,42 @@ export default {
         this.$router.push('/')
       }
     },
+
+
+    async editData(id) {
+      try {
+        const dataIsLogin = await getDataIsLogin();
+        if (getDataIsLogin()) {
+          this.token = dataIsLogin.token
+          const response = await axios.put(`https://backend.qqltech.com:7021/operation/default_users/${id}`, null, {
+            headers: {
+              "Authorization": `${getDataIsLogin().token_type} ${this.token}`,
+              "Cache-Control": "no-cache"
+            },
+            params: {
+              status: this.value.toString()
+            },
+          });
+          console.log(response);
+
+          if (response.data.success) {
+            flashMessage('success', 'Berhasil', 'Data Tersimpan!');
+          } else {
+            flashMessage('error', 'Error', result.errormsg);
+          }
+        }
+      } catch (error) {
+        flashMessage('error', 'Error', error);
+      } finally {
+        this.isLoading = false;
+      }
+    }
+
+
+
+
+
+
   },
   computed: {
     isAuthenticated() {
@@ -165,7 +212,15 @@ export default {
                       <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="account"
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
                         body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
+                        <template #item-status="item">
+                          <select class="select-status-acc" aria-label="Default select example" v-model="value"
+                            @change="editData(item.id)">
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="INACTIVE">INACTIVE</option>
+                          </select>
+                        </template>
                         <template #item-action="item">
+
                           <button class="button5" id="btn-detail" @click="deleteAccount(item.id)"><svg
                               xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                               class="bi bi-trash" viewBox="0 0 16 16">
@@ -174,12 +229,16 @@ export default {
                               <path
                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
                             </svg></button>
+                          <div>
+
+                          </div>
                         </template>
                         <template #item.area_ids="{ item }">
                           {{ item.area_ids ? item.area_ids : '-' }}
                         </template>
                       </EasyDataTable>
                     </div>
+
 
 
 
