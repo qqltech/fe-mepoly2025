@@ -3,8 +3,8 @@ import axios from 'axios';
 import { flashMessage, format_date, getDataIsLogin, formatRupiah, formattedNumber, exportReport } from '../config/functions';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
-import jsPDF from 'jspdf'
-import html2pdf from "html2pdf.js";
+import jsPDF from 'jspdf';
+
 import Swal from 'sweetalert2';
 
 
@@ -476,6 +476,49 @@ export default {
       }
     },
 
+    exportCheckinSalesmanPDF() {
+      const doc = new jsPDF();
+      const data = this.salesInfo;
+
+
+
+      if (this.rptFrom === this.rptTo) {
+        doc.text(`Salesman Check In Reports PT. Mepoly Industry\n                    Period ${format_date(this.periodeStart)}\n`, 35, 15)
+      } else {
+        doc.text(`      Salesman Check In Reports PT. Mepoly Industry\n    Period ${format_date(this.periodeStart)} to ${format_date(this.periodeEnd)}`, 35, 15)
+      }
+      const header = [['Salesman Name', 'Date', 'Time', 'Store']]
+      let rows = []
+
+      data.forEach((item) => {
+        let row = [];
+
+        row.push(item.name);
+
+
+        if (item.checkin && item.checkin.length > 0) {
+          const firstCheckin = item.checkin[0];
+          row.push(firstCheckin.date || '');
+          row.push(firstCheckin.time || '');
+          row.push(firstCheckin.store || '');
+        } else {
+          row.push('');
+          row.push('');
+          row.push('');
+        };
+
+        rows.push(row)
+
+      })
+      doc.autoTable({
+        head: header,
+        body: rows,
+        startY: 27,
+      })
+      doc.save('Salesman Check In Reports.pdf')
+
+    },
+
 
 
 
@@ -916,16 +959,14 @@ export default {
                   <div class="card-body">
                     <div class="card-body">
                       <p class="card-title"><b>Salesman Info</b></p>
-                      <button class="button btn1 btn-salesman-exports" data-toggle="modal"
-                        data-target="#exampleModalExportSalesman">Export</button>
+                      <button class="button btn1 btn-salesman-exports" @click="exportCheckinSalesmanPDF()">Export</button>
 
-                        
-                      <div class="row"  v-for="(salesman, index) in salesInfo" :key="index">
-                        
+
+                      <div class="row" v-for="(salesman, index) in salesInfo" :key="index">
+
                         <div class="col-sm-12 mt-1" v-if="salesman.checkin && salesman.checkin.length > 0">
 
-                          <div class="accordion accordion-flush" id="accordion1"
-                           >
+                          <div class="accordion accordion-flush" id="accordion1">
                             <div class="accordion-item">
                               <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1007,7 +1048,7 @@ export default {
                           </div>
 
                         </div>
-<!-- 
+                        <!-- 
                         <v-else>
                               Tidak ada Salesman Checkin
                         </v-else> -->
@@ -1266,8 +1307,7 @@ export default {
                   <div class="col-sm-6">
                     <div class="col-sm-12">
                       <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
-                        <option value="product" selected>Product</option>
-                        <option value="omzet">Omzet</option>
+                        <option v-for="(salesman, index) in salesInfo" :key="index">{{ salesman.name }}</option>
                       </select>
 
                     </div>
@@ -1280,19 +1320,18 @@ export default {
                   </div>
                   <div class="col-sm-6">
                     <div class="col-sm-12">
-                      <select class="form-select" aria-label="Default select example" v-model="selectedTypeexports">
-                        <option value="pdf" selected>PDF</option>
-                        <option value="excel">EXCEL</option>
+                      <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
+                        <option v-for="(salesman, index) in salesInfo" :key="index">{{ salesman.name }}</option>
                       </select>
 
                     </div>
+
                   </div>
                 </div>
               </div>
               <div class="mt-4 d-grid gap-2" style="align-items: center;">
 
-                <a :href="downloadUrl" download="" class="btn button3" @click.prevent="handleDataExport()">Export {{
-                  selectedTypeexports }}</a>
+                <button download="" class="btn button3" @click="exportCheckinSalesmanPDF()">Export</button>
               </div>
             </div>
 

@@ -40,7 +40,7 @@ function format_date(date) {
         day: "numeric",
     };
     const dateTemp = new Date(date);
-    return dateTemp.toLocaleDateString("id-ID", options);
+    return dateTemp.toLocaleDateString("en-EN", options);
 }
 
 function formatRupiah(angka, prefix){

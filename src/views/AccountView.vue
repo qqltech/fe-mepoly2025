@@ -41,7 +41,7 @@ export default {
             },
           })
           this.account = response.data.data;
-          // console.log(this.account);
+          console.log(this.account);
 
 
 
