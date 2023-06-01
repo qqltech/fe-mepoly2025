@@ -260,7 +260,7 @@ export default {
 
                               </div>
                               <br>
-                              <button class="button5" id="btn-detail" @click="deleteAccount(item.id)"><svg
+                              <button class="button5" style="margin-left: 5px;" id="btn-detail" @click="deleteAccount(item.id)"><svg
                                   xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                   class="bi bi-trash" viewBox="0 0 16 16">
                                   <path
@@ -305,5 +305,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 </style>
