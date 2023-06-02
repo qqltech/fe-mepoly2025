@@ -14,10 +14,28 @@ export default {
   data() {
     return {
       account: [],
+      area_ids: '',
       headers: [
         { text: 'Name', value: 'name', filter: 'format_date', sortable: true },
         { text: 'Employee ID', value: 'nip', sortable: true },
-        { text: 'Area', value: 'area_ids', sortable: true, customDisplay: (value) => value ? value : '-' },
+        {
+          text: 'Area', value: 'area_ids', sortable: true, customDisplay: (value) => {
+            const areaTexts = value.area_ids.map(areaId => {
+              switch (areaId) {
+                case 1:
+                  return 'SBY';
+                case 2:
+                  return 'JKT';
+                case 3:
+                  return 'Medan';
+                default:
+                  return 'Out Scope';
+              }
+            });
+            return areaTexts.join(', ');
+          }
+
+        },
 
         { text: 'Email', value: 'email', sortable: true },
         { text: 'Username', value: 'username', sortable: true },
@@ -162,8 +180,8 @@ export default {
 
     getAreaText(areaId) {
       switch (areaId) {
-        case 1:
-          return 'SBY';
+        case "1":
+          return "SBY";
         case 2:
           return 'JKT';
         case 3:
@@ -182,6 +200,9 @@ export default {
   computed: {
     isAuthenticated() {
       return localStorage.getItem('admin') !== null;
+    },
+    dataText() {
+      return JSON.stringify(this.area_ids);
     }
   },
 }

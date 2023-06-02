@@ -485,7 +485,7 @@ export default {
 
 
 
-      if (this.rptFrom === this.rptTo) {
+      if (this.periodeStart === this.periodeEnd) {
         doc.text(`Salesman Check In Reports PT. Mepoly Industry\n                    Period ${format_date(this.periodeStart)}\n`, 35, 15)
       } else {
         doc.text(`      Salesman Check In Reports PT. Mepoly Industry\n    Period ${format_date(this.periodeStart)} to ${format_date(this.periodeEnd)}`, 35, 15)
@@ -496,9 +496,9 @@ export default {
       data.forEach((item) => {
         let row = [];
 
+
+
         row.push(item.name);
-
-
         if (item.checkin && item.checkin.length > 0) {
           const firstCheckin = item.checkin[0];
           row.push(firstCheckin.date || '');
