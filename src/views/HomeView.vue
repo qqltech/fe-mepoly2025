@@ -451,6 +451,16 @@ export default {
         })
         .catch(error => {
           console.error('Failed to send data:', error);
+          if (error.response && error.response.status === 422) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Data already exists',
+              iconColor: '#244065',
+              confirmButtonColor: '#244065',
+              allowOutsideClick: false,
+            });
+          }
         });
     },
     async fetchDataManager() {
@@ -1215,7 +1225,7 @@ export default {
                     <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="brand">
+                    <input type="text" class="form-control form-masterdata" v-model="brand" required>
 
                   </div>
                 </div>
@@ -1224,7 +1234,7 @@ export default {
                     <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="area">
+                    <input type="text" class="form-control form-masterdata" v-model="area" required>
 
                   </div>
                 </div>
@@ -1233,7 +1243,7 @@ export default {
                     <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="distributor">
+                    <input type="text" class="form-control form-masterdata" v-model="distributor" required>
 
                   </div>
                 </div>

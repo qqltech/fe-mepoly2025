@@ -14,28 +14,19 @@ export default {
   data() {
     return {
       account: [],
+      listAcc: [],
+      areaCodes: [],
       area_ids: '',
+      items: [],
+      areaMap: {},
       headers: [
         { text: 'Name', value: 'name', filter: 'format_date', sortable: true },
         { text: 'Employee ID', value: 'nip', sortable: true },
         {
-          text: 'Area', value: 'area_ids', sortable: true, customDisplay: (value) => {
-            const areaTexts = value.area_ids.map(areaId => {
-              switch (areaId) {
-                case 1:
-                  return 'SBY';
-                case 2:
-                  return 'JKT';
-                case 3:
-                  return 'Medan';
-                default:
-                  return 'Out Scope';
-              }
-            });
-            return areaTexts.join(', ');
-          }
-
+          text: 'Area', value: 'areaMap', sortable: true
         },
+
+
 
         { text: 'Email', value: 'email', sortable: true },
         { text: 'Username', value: 'username', sortable: true },
@@ -55,7 +46,7 @@ export default {
       value: '',
       token: '',
       status_active: '',
-      status_disabled: '',
+      status_inactive: '',
       status_disabled: '',
     }
   },
@@ -75,8 +66,33 @@ export default {
               "authorization": `${getDataIsLogin().token_type} ${this.token}`,
             },
           })
-          this.account = response.data.data;
-          console.log(this.account);
+          const account = response.data.data;
+          this.listAcc = account
+
+          const areaSales = account.flatMap(item => item.area);
+          console.log(areaSales);
+          // const areaCodes = areaSales.map(areaSales => areaSales.code);
+          // console.log(areaCodes);
+          const areaMap = [];
+
+          account.forEach(item => {
+            const area = item.area;
+            if (area) {
+              this.areaMap = {
+                ...this.areaMap,
+                [area.id]: area.code
+              };
+            }
+          });
+
+
+          areaSales.forEach(area => {
+            areaMap[area.id] = area.code;
+          });
+
+
+          this.areaMap = areaMap
+          console.log(this.areaMap);
 
 
 
@@ -88,6 +104,7 @@ export default {
         this.isLoading = false;
       }
     },
+
     async deleteFetch(data) {
       try {
         this.isLoading = true;
@@ -201,9 +218,21 @@ export default {
     isAuthenticated() {
       return localStorage.getItem('admin') !== null;
     },
-    dataText() {
-      return JSON.stringify(this.area_ids);
-    }
+    // areaCodes() {
+    //   const areaCodes = [];
+
+    //   this.account.forEach(array1 => {
+    //     array1.forEach(array2 => {
+    //       array2.forEach(item => {
+    //         if (item.code) {
+    //           areaCodes.push(item.code);
+    //         }
+    //       });
+    //     });
+    //   });
+    //   return areaCodes;
+    //   console.log(areaCodes);
+    // }
   },
 }
 </script>
@@ -254,7 +283,7 @@ export default {
 
                     </div>
                     <div v-else>
-                      <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="account"
+                      <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="listAcc"
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
                         body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
                         <!-- <select class="select-status-acc" aria-label="Status" v-model="value"
@@ -312,6 +341,12 @@ export default {
                           {{ item.area_ids ? item.area_ids : '-' }}
                         </template>
                       </EasyDataTable>
+                    </div>
+                    <div>
+                      <!-- Tampilkan areaCodes di dalam komponen -->
+                      <ul>
+                        <li v-for="code in areaCodes" :key="code">{{ code }}</li>
+                      </ul>
                     </div>
 
 
