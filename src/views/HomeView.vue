@@ -141,6 +141,7 @@ export default {
       alert("Download will start soon!");
     },
 
+    
     searchStores() {
       const input = document.querySelector('.searchCheck');
       const filter = input.value.toUpperCase();

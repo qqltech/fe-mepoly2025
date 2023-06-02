@@ -22,15 +22,9 @@ export default {
       headers: [
         { text: 'Name', value: 'name', filter: 'format_date', sortable: true },
         { text: 'Employee ID', value: 'nip', sortable: true },
-        // {
-        //   text: 'Area', value: 'area', sortable: true, format: (value) => this.areaMap[value.id] || '-'
-        // },
         {
-          text: 'Area', value: 'area_ids', sortable: true,
+          text: 'Area', value: 'area_list', sortable: true
         },
-
-
-
         { text: 'Email', value: 'email', sortable: true },
         { text: 'Username', value: 'username', sortable: true },
         { text: 'Phone', value: 'phone', sortable: true },
@@ -69,35 +63,29 @@ export default {
               "authorization": `${getDataIsLogin().token_type} ${this.token}`,
             },
           })
-          const account = response.data.data;
+
+          const account = response.data.data.map(dt => {
+            dt['area_list'] = dt.area.map(dArea => dArea.code).join(',');
+            return dt;
+          });
+          console.log(account);
 
           this.listAcc = account
           console.log(this.listAcc);
 
-          const areaSales = account.flatMap(item => item.area);
-          console.log(areaSales);
-          // const areaCodes = areaSales.map(areaSales => areaSales.code);
-          // console.log(areaCodes);
-          const areaMap = [];
+          // const areaSales = account.flatMap(item => item.area);
+          // console.log(areaSales);
 
-          account.forEach(item => {
-            const area = item.area;
-            if (area) {
-              this.areaMap = {
-                ...this.areaMap,
-                [area.id]: area.code
-              };
-            }
-          });
+          // const areaMap = [];
+          // areaSales.map(dt => dt.code).join(',');
+          // let resultKoma = areaSales.map(dt => dt.code).join(',')
+          // console.log(resultKoma)
 
 
-          areaSales.forEach(area => {
-            areaMap[area.id] = area.code;
-          });
+          // this.areaMap = areaMap
+          // console.log(this.areaMap);
 
 
-          this.areaMap = areaMap
-          console.log(this.areaMap);
 
 
 
@@ -223,21 +211,7 @@ export default {
     isAuthenticated() {
       return localStorage.getItem('admin') !== null;
     },
-    // areaCodes() {
-    //   const areaCodes = [];
 
-    //   this.account.forEach(array1 => {
-    //     array1.forEach(array2 => {
-    //       array2.forEach(item => {
-    //         if (item.code) {
-    //           areaCodes.push(item.code);
-    //         }
-    //       });
-    //     });
-    //   });
-    //   return areaCodes;
-    //   console.log(areaCodes);
-    // }
   },
 }
 </script>
@@ -290,8 +264,7 @@ export default {
                     <div v-else>
                       <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="listAcc"
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
-                        body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
-
+                        table-class-name="customize-table" :rows-per-page=10>
 
                         <template #item-action="item">
                           <div>
@@ -338,9 +311,10 @@ export default {
                             </div>
                           </div>
                         </template>
-                        <template #item.area_ids="{ item }">
-                          {{ item.area_ids ? item.area_ids : '-' }}
+                        <template #item-status="item">
+                          <div class="centered-column">{{ item.status }}</div>
                         </template>
+
                       </EasyDataTable>
                     </div>
                     <div>
@@ -379,5 +353,9 @@ export default {
   justify-content: center;
   align-items: center;
 
+}
+
+.centered-column {
+  text-align: center;
 }
 </style>
