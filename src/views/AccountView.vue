@@ -141,7 +141,7 @@ export default {
               status: this.value.toString()
             },
           });
-          console.log(response);
+          // console.log(response);
 
          
           if (response.data.success) {

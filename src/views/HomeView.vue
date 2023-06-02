@@ -1106,7 +1106,7 @@ export default {
                 <div class="col-sm-6">
                   <div class="col-sm-12">
                     <select class="form-select" aria-label="Default select example" v-model="selectedDataexports">
-                      <option value="product" selected>Product</option>
+                      <option value="stock" selected>Stock</option>
                       <option value="omzet">Omzet</option>
                     </select>
 
