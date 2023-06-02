@@ -22,8 +22,11 @@ export default {
       headers: [
         { text: 'Name', value: 'name', filter: 'format_date', sortable: true },
         { text: 'Employee ID', value: 'nip', sortable: true },
+        // {
+        //   text: 'Area', value: 'area', sortable: true, format: (value) => this.areaMap[value.id] || '-'
+        // },
         {
-          text: 'Area', value: 'areaMap', sortable: true
+          text: 'Area', value: 'area_ids', sortable: true,
         },
 
 
@@ -67,7 +70,9 @@ export default {
             },
           })
           const account = response.data.data;
+
           this.listAcc = account
+          console.log(this.listAcc);
 
           const areaSales = account.flatMap(item => item.area);
           console.log(areaSales);
@@ -286,11 +291,7 @@ export default {
                       <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="listAcc"
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
                         body-text-direction=center table-class-name="customize-table" :rows-per-page=10>
-                        <!-- <select class="select-status-acc" aria-label="Status" v-model="value"
-                          @change="editData(item.id)">
-                          <option value="ACTIVE">ACTIVE</option>
-                          <option value="INACTIVE">INACTIVE</option>
-                        </select> -->
+
 
                         <template #item-action="item">
                           <div>
