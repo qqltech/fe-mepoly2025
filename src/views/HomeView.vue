@@ -494,30 +494,41 @@ export default {
       let rows = []
 
       data.forEach((item) => {
-        let row = [];
-
-
-
-        row.push(item.name);
         if (item.checkin && item.checkin.length > 0) {
-          const firstCheckin = item.checkin[0];
-          row.push(firstCheckin.date || '');
-          row.push(firstCheckin.time || '');
-          row.push(firstCheckin.store || '');
-        } else {
-          row.push('');
-          row.push('');
-          row.push('');
-        };
+          let row = [];
 
-        rows.push(row)
 
-      })
-      doc.autoTable({
-        head: header,
-        body: rows,
-        startY: 27,
-      })
+
+          row.push(item.name);
+          if (item.checkin && item.checkin.length > 0) {
+            const firstCheckin = item.checkin[0];
+            row.push(firstCheckin.date || '');
+            row.push(firstCheckin.time || '');
+            row.push(firstCheckin.store || '');
+          } else {
+            row.push('');
+            row.push('');
+            row.push('');
+          };
+
+          rows.push(row)
+        }
+      });
+      if (rows.length === 0) {
+        rows = [['Tidak ada Salesman Check-in']];
+        doc.autoTable({
+          head: header,
+          body: rows,
+          startY: 37,
+        });
+
+      } else {
+        doc.autoTable({
+          head: header,
+          body: rows,
+          startY: 27,
+        });
+      }
       doc.save('Salesman Check In Reports.pdf')
 
     },
