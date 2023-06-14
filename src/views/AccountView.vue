@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { flashMessage, format_date, getDataIsLogin } from '../config/functions';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       account: [],
+      accounts: [],
       listAcc: [],
       areaCodes: [],
       area_ids: '',
@@ -64,31 +65,14 @@ export default {
             },
           })
 
+
           const account = response.data.data.map(dt => {
             dt['area_list'] = dt.area.map(dArea => dArea.code).join(',');
             return dt;
           });
-          console.log(account);
-
           this.listAcc = account
-          console.log(this.listAcc);
-
-          // const areaSales = account.flatMap(item => item.area);
-          // console.log(areaSales);
-
-          // const areaMap = [];
-          // areaSales.map(dt => dt.code).join(',');
-          // let resultKoma = areaSales.map(dt => dt.code).join(',')
-          // console.log(resultKoma)
-
-
-          // this.areaMap = areaMap
-          // console.log(this.areaMap);
-
-
-
-
-
+          this.accounts = response.data.data;
+          console.log(this.accounts);
 
         }
       } catch (error) {
@@ -98,18 +82,19 @@ export default {
       }
     },
 
-    async deleteFetch(data) {
+    async deleteFetch(id) {
       try {
         this.isLoading = true;
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token
-          const response = await fetch(`https://backend.qqltech.com:7021/operation/default_users/${data.id}`, {
+          const response = await fetch(`https://backend.qqltech.com:7021/operation/default_users/${id.id}`, {
             method: "DELETE",
             headers: {
               'Authorization': `${getDataIsLogin().token_type} ${this.token}`,
               "Content-Type": "application/json",
             },
           });
+          // console.log(response);
           const result = await response.json();
           // console.log(result);
           if (result.success) {
@@ -130,22 +115,26 @@ export default {
 
 
     async deleteAccount(id) {
-      const data_byId = this.account.find(x => x.id === id)
-
+      // const accounts = this.accounts;
+      const data_byId = this.accounts.find(accounts => accounts.id === id)
+      console.log(data_byId);
       Swal.fire({
         icon: 'question',
-        title: `Delete ${data_byId.name}`,
+        title: `Delete ${data_byId.name}?`,
         showCancelButton: true,
         confirmButtonText: 'Yes',
         iconColor: '#244065',
         confirmButtonColor: '#244065',
       }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           this.deleteFetch(data_byId);
 
         }
       })
+    },
+    async handleDeleteAccount(id) {
+      await this.fetchDataAccount();
+      this.deleteAccount(id);
     },
     logout() {
       if (confirm("Apakah Anda yakin ingin keluar?")) {
@@ -187,24 +176,6 @@ export default {
         this.isLoading = false;
       }
     },
-
-    getAreaText(areaId) {
-      switch (areaId) {
-        case "1":
-          return "SBY";
-        case 2:
-          return 'JKT';
-        case 3:
-          return 'Area 3';
-        default:
-          return '-';
-      }
-    },
-
-
-
-
-
 
   },
   computed: {
