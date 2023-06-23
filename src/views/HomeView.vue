@@ -1222,108 +1222,6 @@ export default {
       </div>
     </div>
 
-    <!-- Modal 3 -->
-    <div class="modal fade" id="exampleModalData">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Master Data</h5>
-          </div>
-          <div class="modal-body">
-            <div class="modal-body">
-              <form method="POST" @submit.prevent="addMasterData">
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="brand">
-
-                  </div>
-                </div>
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="area">
-
-                  </div>
-                </div>
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="distributor">
-
-                  </div>
-                </div>
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold;">Select Area</label>
-                  </div>
-                  <div class="col-sm-6">
-                    <!-- <div class="dropdown">
-
-                      <button class=" dropdown-toggle dropdown-toggle2" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ (manager_id) ? getManagerName(manager_id) : 'Select Manager' }}
-
-
-                      </button>
-                      <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
-
-                        <div class="form-check checkStore" v-for="(manager, index) in managerNames">
-                          <input class="form-check-input" type="radio" name="manager_id" :id="manager.id"
-                            :value="manager.id" v-model="manager_id" />
-                          <label class="form-check-label" :for="manager.id">{{ manager.name }}</label>
-                        </div>
-
-
-                      </div>
-
-                    </div> -->
-
-                    
-                <div class="dropdown">
-
-<button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-  :aria-expanded="isDropdownOpen ? 'true' : 'false'" @click="isDropdownOpen = !isDropdownOpen">
-  {{ isAllSelected ? 'All' : selectedArea}}
-
-
-
-</button>
-<div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
-
-  <div class="form-check checkStore" v-for="area in uniqueStoresArea" :key="area">
-    <input class="form-check-input" type="radio" name="area" :value="area" v-model="selectedArea"
-      @change="filterStoresByArea" />
-    <label class="form-check-label">{{ area }}</label>
-  </div>
-
-</div>
-</div>
-
-                  </div>
-                </div>
-
-                <div class="mt-2 d-grid gap-2" style="align-items: center;">
-
-                  <button type="submit" class="btn button3" title="Add Data">
-                    Add Data
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
 
 
     <!-- Modal 4 -->
@@ -1395,6 +1293,110 @@ export default {
           </div>
           <div class="modal-footer">
           </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal 5 -->
+        <div class="modal fade" id="exampleModalData">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Master Data</h5>
+          </div>
+          <div class="modal-body">
+            <!-- <div class="modal-body">
+              <form method="POST" @submit.prevent="addMasterData">
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-masterdata" v-model="brand">
+
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-masterdata" v-model="area">
+
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-masterdata" v-model="distributor">
+
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label class="color-black col-form-label" style="font-weight: bold;">Select Area</label>
+                  </div>
+                  <div class="col-sm-6">
+                    
+
+                    
+                <div class="dropdown">
+
+<button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+  :aria-expanded="isDropdownOpen ? 'true' : 'false'" @click="isDropdownOpen = !isDropdownOpen">
+  {{ isAllSelected ? 'All' : selectedArea}}
+
+
+
+</button>
+<div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+
+  <div class="form-check checkStore" v-for="area in uniqueStoresArea" :key="area">
+    <input class="form-check-input" type="radio" name="area" :value="area" v-model="selectedArea"
+      @change="filterStoresByArea" />
+    <label class="form-check-label">{{ area }}</label>
+  </div>
+
+</div>
+</div>
+
+                  </div>
+                </div>
+
+                <div class="mt-2 d-grid gap-2" style="align-items: center;">
+
+                  <button type="submit" class="btn button3" title="Add Data">
+                    Add Data
+                  </button>
+                </div>
+              </form>
+            </div> -->
+            
+            <div class="mt-2 d-grid gap-2" style="align-items: center;">
+
+<button type="submit" class="btn button3" data-bs-target="#exampleModalBrand" data-bs-toggle="modal">
+  Add Brand
+</button>
+</div>
+<div class="mt-2 d-grid gap-2" style="align-items: center;">
+
+<button type="submit" class="btn button3" data-bs-target="#exampleModalArea" data-bs-toggle="modal">
+  Add Area
+</button>
+</div>
+<div class="mt-2 d-grid gap-2" style="align-items: center;">
+
+<button type="submit" class="btn button3" data-bs-target="#exampleModalDistributor" data-bs-toggle="modal">
+  Add Distributor
+</button>
+</div>
+          
+          </div>
+
+        </div>
+        <div class="modal-footer">
         </div>
       </div>
     </div>
