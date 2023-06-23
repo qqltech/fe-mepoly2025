@@ -424,7 +424,7 @@ export default {
     addMasterData() {
       const payload = {
         distributor: this.distributor,
-        area_id: this.area_id,
+        area_id: this.selectedArea,
         brand: this.brand,
         area: this.area,
       };
@@ -1290,7 +1290,7 @@ export default {
 
 <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
   :aria-expanded="isDropdownOpen ? 'true' : 'false'" @click="isDropdownOpen = !isDropdownOpen">
-  {{ isAllSelected ? 'All' : area.id }}
+  {{ isAllSelected ? 'All' : selectedArea}}
 
 
 
@@ -1298,7 +1298,7 @@ export default {
 <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
 
   <div class="form-check checkStore" v-for="area in uniqueStoresArea" :key="area">
-    <input class="form-check-input" type="radio" name="area" :value="area" v-model="area.id"
+    <input class="form-check-input" type="radio" name="area" :value="area" v-model="selectedArea"
       @change="filterStoresByArea" />
     <label class="form-check-label">{{ area }}</label>
   </div>
