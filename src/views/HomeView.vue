@@ -424,7 +424,7 @@ export default {
     addMasterData() {
       const payload = {
         distributor: this.distributor,
-        manager_id: this.manager_id,
+        area_id: this.area_id,
         brand: this.brand,
         area: this.area,
       };
@@ -1237,7 +1237,7 @@ export default {
                     <label class="color-black col-form-label" style="font-weight: bold;">Add Brand</label>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="brand" required>
+                    <input type="text" class="form-control form-masterdata" v-model="brand">
 
                   </div>
                 </div>
@@ -1246,7 +1246,7 @@ export default {
                     <label class="color-black col-form-label" style="font-weight: bold;">Add Area</label>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="area" required>
+                    <input type="text" class="form-control form-masterdata" v-model="area">
 
                   </div>
                 </div>
@@ -1255,16 +1255,16 @@ export default {
                     <label class="color-black col-form-label" style="font-weight: bold;">Add Distributor</label>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-masterdata" v-model="distributor" required>
+                    <input type="text" class="form-control form-masterdata" v-model="distributor">
 
                   </div>
                 </div>
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold;">Manager Area</label>
+                    <label class="color-black col-form-label" style="font-weight: bold;">Select Area</label>
                   </div>
                   <div class="col-sm-6">
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
 
                       <button class=" dropdown-toggle dropdown-toggle2" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1283,7 +1283,28 @@ export default {
 
                       </div>
 
-                    </div>
+                    </div> -->
+
+                    
+                <div class="dropdown">
+
+<button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+  :aria-expanded="isDropdownOpen ? 'true' : 'false'" @click="isDropdownOpen = !isDropdownOpen">
+  {{ isAllSelected ? 'All' : area.id }}
+
+
+
+</button>
+<div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton">
+
+  <div class="form-check checkStore" v-for="area in uniqueStoresArea" :key="area">
+    <input class="form-check-input" type="radio" name="area" :value="area" v-model="area.id"
+      @change="filterStoresByArea" />
+    <label class="form-check-label">{{ area }}</label>
+  </div>
+
+</div>
+</div>
 
                   </div>
                 </div>
