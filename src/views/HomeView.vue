@@ -210,7 +210,7 @@ export default {
 
           )
           const visit = response.data;
-          console.log(visit);
+          // console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           this.totalStock = visit.total_stock;
@@ -331,6 +331,7 @@ export default {
 
           )
           const area = response.data;
+          // console.log(area);
           this.storesArea = area.data;
           this.selectedArea = this.storesArea;
           const uniqueAreas = [...new Set(this.storesArea.map(area => area.area))];
@@ -1200,6 +1201,16 @@ export default {
               <div class="col-sm-8">
                 <p>
                   : {{ (storesShow) ? storesShow.area : '' }}
+                </p>
+              </div>
+              <div class="col-sm-4">
+                <p>
+                  <b>Tipe</b>
+                </p>
+              </div>
+              <div class="col-sm-8">
+                <p>
+                  : {{ (storesShow) ? storesShow.tipe : '' }}
                 </p>
               </div>
             </div>
