@@ -814,7 +814,7 @@ export default {
               <div class="col-sm-4">
                 <button
                   class="btn buttonmodal"
-                  data-bs-target="#exampleModalExportSalesman"
+                  data-bs-target="#exampleModalBrand"
                   data-bs-toggle="modal"
                 >
                   Brand
@@ -1648,48 +1648,8 @@ export default {
       </div>
     </div>
 
-    <!-- Modal 5 -->
-    <div class="modal fade" id="exampleModalData">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Master Data</h5>
-          </div>
-          <div class="modal-body">
-            <div class="mt-2 d-grid gap-2" style="align-items: center">
-              <button
-                class="btn button3"
-                data-bs-target="#exampleModalExportSalesman"
-                data-bs-toggle="modal"
-              >
-                Add Brand
-              </button>
-            </div>
-            <div class="mt-2 d-grid gap-2" style="align-items: center">
-              <button
-                class="btn button3"
-                data-bs-target="#exampleModalArea"
-                data-bs-toggle="modal"
-              >
-                Add Area
-              </button>
-            </div>
-            <div class="mt-2 d-grid gap-2" style="align-items: center">
-              <button
-                class="btn button3"
-                data-bs-target="#exampleModalDistributor"
-                data-bs-toggle="modal"
-              >
-                Add Distributor
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer"></div>
-      </div>
-    </div>
-
     <!-- Modal Area -->
+
     <div class="modal fade" id="exampleModalArea" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -1698,23 +1658,7 @@ export default {
           </div>
           <div class="modal-body">
             <div class="modal-body">
-              <form method="POST" @submit.prevent="addMasterData">
-                <div class="row tanggal-modal">
-                  <div class="col-sm-6">
-                    <label
-                      class="color-black col-form-label"
-                      style="font-weight: bold"
-                      >Add Brand</label
-                    >
-                  </div>
-                  <div class="col-sm-6">
-                    <input
-                      type="text"
-                      class="form-control form-masterdata"
-                      v-model="brand"
-                    />
-                  </div>
-                </div>
+              <form method="POST" @submit.prevent="addMasterArea">
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
                     <label
@@ -1731,6 +1675,70 @@ export default {
                     />
                   </div>
                 </div>
+
+                <div class="mt-2 d-grid gap-2" style="align-items: center">
+                  <button type="submit" class="btn button3" title="Add Data">
+                    Add Data
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+
+    <!-- Modal Brand -->
+
+    <div class="modal fade" id="exampleModalBrand" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Master Data</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <form method="POST" @submit.prevent="addMasterBrand">
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
+                      >Add Brand</label
+                    >
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="text"
+                      class="form-control form-masterdata"
+                      v-model="brand"
+                    />
+                  </div>
+                </div>
+
+                <div class="mt-2 d-grid gap-2" style="align-items: center">
+                  <button type="submit" class="btn button3" title="Add Data">
+                    Add Data
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+    <!-- Modal Distributor -->
+    <div class="modal fade" id="exampleModalDistributor" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Master Data</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <form method="POST" @submit.prevent="addMasterDistributor">
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
                     <label
@@ -1803,9 +1811,5 @@ export default {
         <div class="modal-footer"></div>
       </div>
     </div>
-
-    <!-- Modal Brand -->
-
-    <!-- Modal Distributor -->
   </main>
 </template>
