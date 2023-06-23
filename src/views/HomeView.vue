@@ -483,6 +483,48 @@ export default {
           }
         });
     },
+
+    addMasterBrand() {
+      const body = {
+        code: this.brand,
+        name: this.brand,
+      };
+      const config = {
+        headers: {
+          Authorization: `${getDataIsLogin().token_type} ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      axios
+        .post("https://backend.qqltech.com:7021/operation/m_brand", body, config)
+        .then((response) => {
+          console.log("Data sent successfully:", response.data);
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Data sent successfully",
+            iconColor: "#244065",
+            confirmButtonColor: "#244065",
+            allowOutsideClick: false,
+          }).then(() => {
+            this.$router.push("/home");
+            location.reload();
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to send data:", error);
+          if (error.response && error.response.status === 422) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Data already exists",
+              iconColor: "#244065",
+              confirmButtonColor: "#244065",
+              allowOutsideClick: false,
+            });
+          }
+        });
+    },
     async fetchDataManager() {
       try {
         if (getDataIsLogin()) {
