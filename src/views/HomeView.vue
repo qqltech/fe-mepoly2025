@@ -99,7 +99,7 @@ export default {
       totalOmzet: "",
       totalStock: "",
       selectedProducts: ["Tali", "Selang"],
-      selectedStore: "4262",
+      selectedStore: "1",
       isTali: true,
       isSelang: true,
       rptFrom: "",
@@ -124,6 +124,9 @@ export default {
       isDropdownOpen: false,
       areaNameMaster: [],
       areaNames: "",
+      names: [],
+      options: [],
+      selectedOption: null,
     };
   },
   mounted() {
@@ -561,8 +564,9 @@ export default {
       const body = {
         code: this.distributor,
         name: this.distributor,
-        area_id: this.nameArea,
+        area_id: this.name,
       };
+      console.log(body);
       const config = {
         headers: {
           Authorization: `${getDataIsLogin().token_type} ${this.token}`,
@@ -702,10 +706,14 @@ export default {
               },
             }
           );
-          const areaMaster = response.data.data;
           // console.log(areaMaster);
-          const names = areaMaster.map((obj) => obj.name);
-          console.log(names);
+          const areaMaster = response.data.data;
+          this.options = areaMaster.map((obj) => ({
+            id: obj.id,
+            name: obj.name,
+          }));
+          // this.names = names;
+          console.log(this.options);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -896,7 +904,6 @@ export default {
                         class="form-control searchCheck"
                         placeholder="Search Store..."
                         autofocus="autofocus"
-                        @input="searchStores()"
                       />
                     </form>
                     <hr />
@@ -1889,40 +1896,30 @@ export default {
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
-                      >
-                        <!-- {{ storesShow ? storesShow.name : "" }} -->
-                      </button>
+                      ></button>
                       <div
                         class="dropdown-menu scrollable-menu"
                         aria-labelledby="dropdownMenuButton"
                       >
-                        <form class="px-4 py-2">
-                          <input
-                            type="search"
-                            class="form-control searchCheck"
-                            placeholder="Search Area..."
-                            autofocus="autofocus"
-                            @input="searchStores()"
-                          />
-                        </form>
                         <hr />
 
                         <div
                           class="form-check checkStore"
-                          v-for="(stores, index) in storesName"
+                          v-for="option in options"
+                          :key="option.id"
                         >
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="stores"
-                            :id="stores.id"
-                            :value="stores.id"
-                            v-model="selectedStore"
-                            @change="fetchDataVisit()"
+                            :id="option.id"
+                            name="name"
+                            v-model="name"
+                            :value="option.id"
                           />
-                          <label class="form-check-label" :for="stores.id">{{
-                            stores.name
+                          <label class="form-check-label" :for="option.id">{{
+                            option.name
                           }}</label>
+                          <!-- <p>{{ option.id }}</p> -->
                         </div>
                       </div>
                     </div>
