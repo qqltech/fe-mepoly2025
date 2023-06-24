@@ -713,7 +713,7 @@ export default {
             name: obj.name,
           }));
           // this.names = names;
-          console.log(this.options);
+          // console.log(this.options);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
