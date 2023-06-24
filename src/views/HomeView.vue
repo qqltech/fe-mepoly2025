@@ -1901,8 +1901,6 @@ export default {
                         class="dropdown-menu scrollable-menu"
                         aria-labelledby="dropdownMenuButton"
                       >
-                        <hr />
-
                         <div
                           class="form-check checkStore"
                           v-for="option in options"
