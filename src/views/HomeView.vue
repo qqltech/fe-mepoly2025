@@ -91,8 +91,10 @@ export default {
       storesShow: "",
       storesShowArea: "",
       area: [],
+      areaMaster: [],
       uniqueStoresArea: [],
       selectedArea: "All",
+      selectedName: "All",
       totalVisit: "",
       totalOmzet: "",
       totalStock: "",
@@ -120,6 +122,8 @@ export default {
       selectedManager: "",
       isAllSelected: true,
       isDropdownOpen: false,
+      areaNameMaster: [],
+      areaNames: "",
     };
   },
   mounted() {
@@ -127,16 +131,21 @@ export default {
     this.fetchDataVisit();
     this.fetchDataStores();
     this.fetchDataManager();
+    this.fetchMasterArea();
     const date = new Date();
-    this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-01`;
-    this.rptTo = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${(
-      "0" + date.getDate()
-    ).slice(-2)}`;
+    this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(
+      -2
+    )}-01`;
+    this.rptTo = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(
+      -2
+    )}-${("0" + date.getDate()).slice(-2)}`;
   },
 
   methods: {
     handleDataExport() {
-      const url = new URL("https://backend.qqltech.com:7021/public/dashboard/export");
+      const url = new URL(
+        "https://backend.qqltech.com:7021/public/dashboard/export"
+      );
       const params = url.searchParams;
       params.set("from", this.rptFrom);
       params.set("to", this.rptTo);
@@ -225,7 +234,13 @@ export default {
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
-          const backgroundColor = ["#2234DA", "#ED1E1E", "#D92651", "#E8891D", "#244065"];
+          const backgroundColor = [
+            "#2234DA",
+            "#ED1E1E",
+            "#D92651",
+            "#E8891D",
+            "#244065",
+          ];
           const backgroundColorBarLine = [
             "#1F5399",
             "#9E9E9E",
@@ -280,7 +295,8 @@ export default {
                 indexAxis: "y",
                 label: "Detail Stock",
                 backgroundColor: dataStock.label.map(
-                  (_, index) => backgroundColorBarLine[index % backgroundColor.length]
+                  (_, index) =>
+                    backgroundColorBarLine[index % backgroundColor.length]
                 ),
                 data: dataStock.data,
               },
@@ -296,7 +312,8 @@ export default {
                 indexAxis: "y",
                 label: "Detail Omzet",
                 backgroundColor: dataOmset.label.map(
-                  (_, index) => backgroundColorBarLine[index % backgroundColor.length]
+                  (_, index) =>
+                    backgroundColorBarLine[index % backgroundColor.length]
                 ),
                 data: dataOmset.data,
               },
@@ -304,21 +321,26 @@ export default {
           };
           this.chartData4 = resultchartData4;
 
-          const dataOrdertali = this.eachDataChart(visit.chart_detail_order_tali);
+          const dataOrdertali = this.eachDataChart(
+            visit.chart_detail_order_tali
+          );
           const resultchartData5 = {
             labels: dataOrdertali.label,
             datasets: [
               {
                 label: "Detail Order",
                 backgroundColor: dataOrdertali.label.map(
-                  (_, index) => backgroundColorBarLine[index % backgroundColor.length]
+                  (_, index) =>
+                    backgroundColorBarLine[index % backgroundColor.length]
                 ),
                 data: dataOrdertali.data,
               },
             ],
           };
           this.chartData5 = resultchartData5;
-          const dataOrderselang = this.eachDataChart(visit.chart_detail_order_selang);
+          const dataOrderselang = this.eachDataChart(
+            visit.chart_detail_order_selang
+          );
 
           const resultchartData6 = {
             labels: dataOrderselang.label,
@@ -326,7 +348,8 @@ export default {
               {
                 label: "Detail Order",
                 backgroundColor: dataOrderselang.label.map(
-                  (_, index) => backgroundColorBarLine[index % backgroundColor.length]
+                  (_, index) =>
+                    backgroundColorBarLine[index % backgroundColor.length]
                 ),
                 data: dataOrderselang.data,
               },
@@ -359,7 +382,9 @@ export default {
           // console.log(area);
           this.storesArea = area.data;
           this.selectedArea = this.storesArea;
-          const uniqueAreas = [...new Set(this.storesArea.map((area) => area.area))];
+          const uniqueAreas = [
+            ...new Set(this.storesArea.map((area) => area.area)),
+          ];
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           // console.log(this.selectedArea);
           const stores = response.data;
@@ -438,7 +463,9 @@ export default {
       };
     },
     getManagerName(managerId) {
-      const manager = this.managerNames.find((manager) => manager.id === managerId);
+      const manager = this.managerNames.find(
+        (manager) => manager.id === managerId
+      );
       return manager ? manager.name : "";
     },
 
@@ -496,7 +523,11 @@ export default {
         },
       };
       axios
-        .post("https://backend.qqltech.com:7021/operation/m_brand", body, config)
+        .post(
+          "https://backend.qqltech.com:7021/operation/m_brand",
+          body,
+          config
+        )
         .then((response) => {
           console.log("Data sent successfully:", response.data);
           Swal.fire({
@@ -525,6 +556,54 @@ export default {
           }
         });
     },
+
+    addMasterDistributor() {
+      const body = {
+        code: this.distributor,
+        name: this.distributor,
+        area_id: this.nameArea,
+      };
+      const config = {
+        headers: {
+          Authorization: `${getDataIsLogin().token_type} ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      axios
+        .post(
+          "https://backend.qqltech.com:7021/operation/m_supplier",
+          body,
+          config
+        )
+        .then((response) => {
+          console.log("Data sent successfully:", response.data);
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Data sent successfully",
+            iconColor: "#244065",
+            confirmButtonColor: "#244065",
+            allowOutsideClick: false,
+          }).then(() => {
+            this.$router.push("/home");
+            location.reload();
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to send data:", error);
+          if (error.response && error.response.status === 422) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Data already exists",
+              iconColor: "#244065",
+              confirmButtonColor: "#244065",
+              allowOutsideClick: false,
+            });
+          }
+        });
+    },
+
     async fetchDataManager() {
       try {
         if (getDataIsLogin()) {
@@ -609,6 +688,30 @@ export default {
         });
       }
       doc.save("Salesman Check In Reports.pdf");
+    },
+
+    async fetchMasterArea() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token;
+          const response = await axios.get(
+            `https://backend.qqltech.com:7021/operation/m_area`,
+            {
+              headers: {
+                authorization: `${getDataIsLogin().token_type} ${this.token}`,
+              },
+            }
+          );
+          const areaMaster = response.data.data;
+          // console.log(areaMaster);
+          const names = areaMaster.map((obj) => obj.name);
+          console.log(names);
+        }
+      } catch (error) {
+        flashMessage("error", "ERROR", error);
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 
@@ -706,7 +809,9 @@ export default {
                     id="checkBoxBrand1"
                     @change="fetchDataVisit()"
                   />
-                  <label class="form-check-label" for="checkBoxBrand1"> Selang </label>
+                  <label class="form-check-label" for="checkBoxBrand1">
+                    Selang
+                  </label>
                 </div>
                 <div class="form-check">
                   <input
@@ -718,7 +823,9 @@ export default {
                     id="checkBoxBrand2"
                     @change="fetchDataVisit()"
                   />
-                  <label class="form-check-label" for="checkBoxBrand2"> Tali </label>
+                  <label class="form-check-label" for="checkBoxBrand2">
+                    Tali
+                  </label>
                 </div>
               </div>
             </div>
@@ -941,7 +1048,11 @@ export default {
           >
             Export Data
           </button>
-          <button class="button btn1" data-toggle="modal" data-target="#exampleModalShow">
+          <button
+            class="button btn1"
+            data-toggle="modal"
+            data-target="#exampleModalShow"
+          >
             Show Store
           </button>
 
@@ -979,10 +1090,17 @@ export default {
                         <div class="row">
                           <div class="col-sm-2">
                             <div class="stat text-primary">
-                              <img class="img-stat" src="/assets/image/box.png" alt="" />
+                              <img
+                                class="img-stat"
+                                src="/assets/image/box.png"
+                                alt=""
+                              />
                             </div>
                           </div>
-                          <div class="col-sm-10" style="justify-content: center">
+                          <div
+                            class="col-sm-10"
+                            style="justify-content: center"
+                          >
                             <p class="card-title"><b>Total Stock</b></p>
                           </div>
                         </div>
@@ -1009,7 +1127,10 @@ export default {
                               />
                             </div>
                           </div>
-                          <div class="col-sm-10" style="justify-content: center">
+                          <div
+                            class="col-sm-10"
+                            style="justify-content: center"
+                          >
                             <p class="card-title"><b>Total Omzet</b></p>
                           </div>
                         </div>
@@ -1034,7 +1155,10 @@ export default {
                               />
                             </div>
                           </div>
-                          <div class="col-sm-10" style="justify-content: center">
+                          <div
+                            class="col-sm-10"
+                            style="justify-content: center"
+                          >
                             <p class="card-title"><b>Total Visit</b></p>
                           </div>
                         </div>
@@ -1065,7 +1189,11 @@ export default {
                           </div>
                         </div>
                         <div v-else>
-                          <Doughnut v-if="loaded" :data="chartData1" :options="options" />
+                          <Doughnut
+                            v-if="loaded"
+                            :data="chartData1"
+                            :options="options"
+                          />
                         </div>
                       </div>
                     </div>
@@ -1091,7 +1219,11 @@ export default {
                           </div>
                         </div>
                         <div v-else>
-                          <Doughnut v-if="loaded" :data="chartData2" :options="options" />
+                          <Doughnut
+                            v-if="loaded"
+                            :data="chartData2"
+                            :options="options"
+                          />
                         </div>
                       </div>
                     </div>
@@ -1117,7 +1249,11 @@ export default {
                           </div>
                         </div>
                         <div v-else>
-                          <Bar :data="chartData3" v-if="loaded" :options="options" />
+                          <Bar
+                            :data="chartData3"
+                            v-if="loaded"
+                            :options="options"
+                          />
                         </div>
                       </div>
                     </div>
@@ -1143,7 +1279,11 @@ export default {
                           </div>
                         </div>
                         <div v-else>
-                          <Bar :data="chartData4" v-if="loaded" :options="options" />
+                          <Bar
+                            :data="chartData4"
+                            v-if="loaded"
+                            :options="options"
+                          />
                         </div>
                       </div>
                     </div>
@@ -1171,7 +1311,11 @@ export default {
                           </div>
                         </div>
                         <div v-else>
-                          <Line :data="chartData5" v-if="loaded" :options="options" />
+                          <Line
+                            :data="chartData5"
+                            v-if="loaded"
+                            :options="options"
+                          />
                         </div>
                       </div>
                       <div class="col-sm-12 canvas2" v-if="isSelang">
@@ -1187,7 +1331,11 @@ export default {
                           </div>
                         </div>
                         <div v-else>
-                          <Line :data="chartData6" v-if="loaded" :options="options" />
+                          <Line
+                            :data="chartData6"
+                            v-if="loaded"
+                            :options="options"
+                          />
                         </div>
                       </div>
                     </div>
@@ -1217,7 +1365,10 @@ export default {
                           class="col-sm-12 mt-1"
                           v-if="salesman.checkin && salesman.checkin.length > 0"
                         >
-                          <div class="accordion accordion-flush" id="accordion1">
+                          <div
+                            class="accordion accordion-flush"
+                            id="accordion1"
+                          >
                             <div class="accordion-item">
                               <h2 class="accordion-header">
                                 <button
@@ -1236,7 +1387,11 @@ export default {
                                     />
                                   </div>
                                   <div class="col-sm-8">
-                                    <h6 id="txt-salesman" name="salesman" :value="name">
+                                    <h6
+                                      id="txt-salesman"
+                                      name="salesman"
+                                      :value="name"
+                                    >
                                       {{ salesman.name }}
                                     </h6>
                                   </div>
@@ -1254,7 +1409,9 @@ export default {
                                         <small class="salesman-history-txt">
                                           <!-- {{ salesman.checkin[0].store }} -->
                                           <li
-                                            v-for="(item, index) in salesman.checkin"
+                                            v-for="(
+                                              item, index
+                                            ) in salesman.checkin"
                                             :key="index"
                                           >
                                             {{ item.store }}
@@ -1271,7 +1428,9 @@ export default {
                                       <div v-if="salesman.checkin">
                                         <small class="salesman-history-txt">
                                           <li
-                                            v-for="(item, index) in salesman.checkin"
+                                            v-for="(
+                                              item, index
+                                            ) in salesman.checkin"
                                             :key="index"
                                           >
                                             {{ item.date }}
@@ -1288,7 +1447,9 @@ export default {
                                       <div v-if="salesman.checkin">
                                         <small class="salesman-history-txt">
                                           <li
-                                            v-for="(item, index) in salesman.checkin"
+                                            v-for="(
+                                              item, index
+                                            ) in salesman.checkin"
                                             :key="index"
                                           >
                                             {{ item.time }}
@@ -1310,7 +1471,8 @@ export default {
                               v-if="
                                 salesInfo.every(
                                   (salesman) =>
-                                    !salesman.checkin || salesman.checkin.length === 0
+                                    !salesman.checkin ||
+                                    salesman.checkin.length === 0
                                 )
                               "
                             >
@@ -1343,29 +1505,43 @@ export default {
           <div class="modal-body">
             <div class="row">
               <div class="col-sm-6">
-                <label class="color-black col-form-label" style="font-weight: bold"
+                <label
+                  class="color-black col-form-label"
+                  style="font-weight: bold"
                   >Select Date</label
                 >
                 <div class="col-sm-6"></div>
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center"
+                  <label
+                    class="color-black label-modal"
+                    style="align-items: center"
                     >From</label
                   >
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptFrom" />
+                  <input
+                    type="date"
+                    class="form-control export-date"
+                    v-model="rptFrom"
+                  />
                 </div>
               </div>
               <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
-                  <label class="color-black label-modal" style="align-items: center"
+                  <label
+                    class="color-black label-modal"
+                    style="align-items: center"
                     >To</label
                   >
                 </div>
                 <div class="col-sm-6 input-modal">
-                  <input type="date" class="form-control export-date" v-model="rptTo" />
+                  <input
+                    type="date"
+                    class="form-control export-date"
+                    v-model="rptTo"
+                  />
                 </div>
               </div>
               <div class="row tanggal-modal">
@@ -1483,14 +1659,18 @@ export default {
             <div class="modal-body">
               <div class="row">
                 <div class="col-sm-6">
-                  <label class="color-black col-form-label" style="font-weight: bold"
+                  <label
+                    class="color-black col-form-label"
+                    style="font-weight: bold"
                     >Select Date</label
                   >
                   <div class="col-sm-6"></div>
                 </div>
                 <div class="row tanggal-modal">
                   <div class="col-sm-6 label-modal">
-                    <label class="color-black label-modal" style="align-items: center"
+                    <label
+                      class="color-black label-modal"
+                      style="align-items: center"
                       >From</label
                     >
                   </div>
@@ -1504,12 +1684,18 @@ export default {
                 </div>
                 <div class="row tanggal-modal">
                   <div class="col-sm-6 label-modal">
-                    <label class="color-black label-modal" style="align-items: center"
+                    <label
+                      class="color-black label-modal"
+                      style="align-items: center"
                       >To</label
                     >
                   </div>
                   <div class="col-sm-6 input-modal">
-                    <input type="date" class="form-control export-date" v-model="rptTo" />
+                    <input
+                      type="date"
+                      class="form-control export-date"
+                      v-model="rptTo"
+                    />
                   </div>
                 </div>
                 <div class="row tanggal-modal">
@@ -1527,7 +1713,10 @@ export default {
                         aria-label="Default select example"
                         v-model="selectedDataexports"
                       >
-                        <option v-for="(salesman, index) in salesInfo" :key="index">
+                        <option
+                          v-for="(salesman, index) in salesInfo"
+                          :key="index"
+                        >
                           {{ salesman.name }}
                         </option>
                       </select>
@@ -1549,7 +1738,10 @@ export default {
                         aria-label="Default select example"
                         v-model="selectedDataexports"
                       >
-                        <option v-for="(salesman, index) in salesInfo" :key="index">
+                        <option
+                          v-for="(salesman, index) in salesInfo"
+                          :key="index"
+                        >
                           {{ salesman.name }}
                         </option>
                       </select>
@@ -1586,7 +1778,9 @@ export default {
               <form method="POST" @submit.prevent="addMasterArea">
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold"
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
                       >Add Area</label
                     >
                   </div>
@@ -1625,7 +1819,9 @@ export default {
               <form method="POST" @submit.prevent="addMasterBrand">
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold"
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
                       >Add Brand</label
                     >
                   </div>
@@ -1662,7 +1858,9 @@ export default {
               <form method="POST" @submit.prevent="addMasterDistributor">
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold"
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
                       >Add Distributor</label
                     >
                   </div>
@@ -1676,7 +1874,9 @@ export default {
                 </div>
                 <div class="row tanggal-modal">
                   <div class="col-sm-6">
-                    <label class="color-black col-form-label" style="font-weight: bold"
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
                       >Select Area</label
                     >
                   </div>
@@ -1687,29 +1887,42 @@ export default {
                         type="button"
                         id="dropdownMenuButton"
                         data-toggle="dropdown"
-                        :aria-expanded="isDropdownOpen ? 'true' : 'false'"
-                        @click="isDropdownOpen = !isDropdownOpen"
+                        aria-haspopup="true"
+                        aria-expanded="false"
                       >
-                        {{ isAllSelected ? "All" : selectedArea }}
+                        <!-- {{ storesShow ? storesShow.name : "" }} -->
                       </button>
                       <div
                         class="dropdown-menu scrollable-menu"
                         aria-labelledby="dropdownMenuButton"
                       >
+                        <form class="px-4 py-2">
+                          <input
+                            type="search"
+                            class="form-control searchCheck"
+                            placeholder="Search Area..."
+                            autofocus="autofocus"
+                            @input="searchStores()"
+                          />
+                        </form>
+                        <hr />
+
                         <div
                           class="form-check checkStore"
-                          v-for="area in uniqueStoresArea"
-                          :key="area"
+                          v-for="(stores, index) in storesName"
                         >
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="area"
-                            :value="area"
-                            v-model="selectedArea"
-                            @change="filterStoresByArea"
+                            name="stores"
+                            :id="stores.id"
+                            :value="stores.id"
+                            v-model="selectedStore"
+                            @change="fetchDataVisit()"
                           />
-                          <label class="form-check-label">{{ area }}</label>
+                          <label class="form-check-label" :for="stores.id">{{
+                            stores.name
+                          }}</label>
                         </div>
                       </div>
                     </div>
