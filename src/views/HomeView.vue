@@ -124,6 +124,8 @@ export default {
       isDropdownOpen: false,
       areaNameMaster: [],
       areaNames: "",
+      areaMasters: [],
+      areaShow: "",
       names: [],
       options: [],
       selectedOption: null,
@@ -422,6 +424,10 @@ export default {
       this.storesShow = this.storesName.find((data) => data.id == id);
     },
 
+    getfilterArea(id) {
+      this.areaShow = this.areaMasters.find((data) => data.id == id);
+    },
+
     getfilterManager(id) {
       this.managerShow = this.managerNames.find((data) => data.id == id);
     },
@@ -708,6 +714,7 @@ export default {
           );
           // console.log(areaMaster);
           const areaMaster = response.data.data;
+          this.areaMasters = areaMaster;
           this.options = areaMaster.map((obj) => ({
             id: obj.id,
             name: obj.name,
@@ -1896,7 +1903,9 @@ export default {
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
-                      ></button>
+                      >
+                        {{ areaShow ? areaShow.name : "" }}
+                      </button>
                       <div
                         class="dropdown-menu scrollable-menu"
                         aria-labelledby="dropdownMenuButton"
