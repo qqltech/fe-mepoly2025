@@ -179,6 +179,21 @@ export default {
         }
       });
     },
+    searchAreas() {
+      const input = document.querySelector(".searchCheck");
+      const filter = input.value.toUpperCase();
+      const stores = document.querySelectorAll(".checkStore");
+
+      stores.forEach((store) => {
+        const label = store.querySelector("label");
+        const txtValue = label.textContent || label.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          store.style.display = "";
+        } else {
+          store.style.display = "none";
+        }
+      });
+    },
 
     logout() {
       if (confirm("Apakah Anda yakin ingin keluar?")) {
@@ -384,7 +399,7 @@ export default {
             }
           );
           const area = response.data;
-          // console.log(area);
+          console.log(area);
           this.storesArea = area.data;
           this.selectedArea = this.storesArea;
           const uniqueAreas = [
@@ -850,7 +865,7 @@ export default {
             <hr class="garis-sidebar" style="margin-top: 20px" />
             <div class="row mt-2 mb-3">
               <div class="col-sm-6">
-                <p>Filter Area</p>
+                <p>Filter Store Area</p>
               </div>
               <div class="col-sm-6">
                 <div class="dropdown">
