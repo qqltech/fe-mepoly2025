@@ -6,6 +6,7 @@
   padding: 3rem;
   font-family: "Noto Sans", sans-serif;
   font-weight: normal;
+  overflow-x: scroll !important;
 
 }
 

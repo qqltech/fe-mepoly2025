@@ -257,6 +257,7 @@ h6{
 }
 .main {
   background-color: white !important;
+  overflow-y: scroll;
 }
 .navbar {
   box-shadow: none !important;
@@ -571,7 +572,7 @@ p {
 .scrollable-menu {
   height: auto;
   max-height: 200px;
-  overflow-x: hidden;
+  overflow-x: scroll;
 }
 
 .modal-content {
