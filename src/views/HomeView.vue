@@ -396,11 +396,16 @@ export default {
               headers: {
                 authorization: `${getDataIsLogin().token_type} ${this.token}`,
               },
+              params: {
+                paginate: 9999,
+
+              }
             }
           );
           const area = response.data;
           console.log(area);
           this.storesArea = area.data;
+          // console.log(this.storesArea);
           this.selectedArea = this.storesArea;
           const uniqueAreas = [
             ...new Set(this.storesArea.map((area) => area['m_area.name'])),
