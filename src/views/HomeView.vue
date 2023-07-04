@@ -388,12 +388,13 @@ export default {
           this.storesArea = area.data;
           this.selectedArea = this.storesArea;
           const uniqueAreas = [
-            ...new Set(this.storesArea.map((area) => area.area)),
+            ...new Set(this.storesArea.map((area) => area['m_area.name'])),
           ];
           this.uniqueStoresArea = ["All", ...uniqueAreas];
-          console.log(this.selectedArea);
+          // console.log(this.selectedArea);
+          // console.log(this.uniqueStoresArea);
           const stores = response.data;
-          console.log(stores);
+          // console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore);
         }
@@ -411,7 +412,9 @@ export default {
       } else {
         this.isAllSelected = false;
         this.storesName = this.storesArea.filter(
-          (store) => store.area === this.selectedArea
+          (store) => store['m_area.name'] === this.selectedArea
+          // (store) => uniqueAreas
+
         );
       }
       this.selectedStore = {};
@@ -720,7 +723,7 @@ export default {
             name: obj.name,
           }));
           // this.names = names;
-          console.log(this.options);
+          // console.log(this.options);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -911,6 +914,7 @@ export default {
                         class="form-control searchCheck"
                         placeholder="Search Store..."
                         autofocus="autofocus"
+                        @keyup="searchStores" 
                       />
                     </form>
                     <hr />
