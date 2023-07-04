@@ -235,7 +235,7 @@ export default {
                     <div v-else>
                       <EasyDataTable show-index :loading="isLoading" :headers="headers" :items="listAcc"
                         theme-color="#0068D4" show-index-symbol="No." header-text-direction=center
-                        table-class-name="customize-table" :rows-per-page=50>
+                        table-class-name="customize-table" :rows-per-page=10>
 
                         <template #item-action="item">
                           <div>
