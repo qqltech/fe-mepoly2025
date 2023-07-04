@@ -393,7 +393,7 @@ export default {
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           // console.log(this.selectedArea);
           const stores = response.data;
-          // console.log(stores);
+          console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore);
         }
@@ -720,7 +720,7 @@ export default {
             name: obj.name,
           }));
           // this.names = names;
-          // console.log(this.options);
+          console.log(this.options);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -899,7 +899,7 @@ export default {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    {{ storesShow ? storesShow.name : "" }}
+                    {{ storesShow ? storesShow.company : "" }}
                   </button>
                   <div
                     class="dropdown-menu scrollable-menu"
@@ -929,7 +929,7 @@ export default {
                         @change="fetchDataVisit()"
                       />
                       <label class="form-check-label" :for="stores.id">{{
-                        stores.name
+                        stores.company
                       }}</label>
                     </div>
                   </div>
@@ -1662,7 +1662,7 @@ export default {
       </div>
     </div>
 
-    <!-- Modal 4 -->
+    <!-- Modal 3 -->
     <div class="modal fade" id="exampleModalExportSalesman">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
