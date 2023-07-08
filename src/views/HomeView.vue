@@ -1891,7 +1891,7 @@ export default {
                       <option :value="false">No</option>
                     </select>
                   </div>
-                  <p>{{ is_competitor }}</p>
+                  <!-- <p>{{ is_competitor }}</p> -->
                 </div>
                 <div class="mt-2 d-grid gap-2" style="align-items: center">
                   <button type="submit" class="btn button3" title="Add Data">
