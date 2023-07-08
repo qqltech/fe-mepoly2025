@@ -543,11 +543,11 @@ export default {
     },
 
     addMasterBrand() {
-      // const isCompetitor = JSON.parse(this.is_competitor);
+      const isCompetitor = JSON.parse(this.is_competitor);
       const body = {
         code: this.brand,
         name: this.brand,
-        is_competitor: this.is_competitor,
+        is_competitor: isCompetitor,
       };
       const config = {
         headers: {
@@ -1887,8 +1887,8 @@ export default {
                       v-model="is_competitor"
                     >
                       <!-- <option selected disabled>- Select Option -</option> -->
-                      <option :value="true">Yes</option>
-                      <option :value="false">No</option>
+                      <option :value="1">Yes</option>
+                      <option :value="0">No</option>
                     </select>
                   </div>
                   <!-- <p>{{ is_competitor }}</p> -->
