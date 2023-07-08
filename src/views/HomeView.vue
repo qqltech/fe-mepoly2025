@@ -113,6 +113,7 @@ export default {
       checkIn: "",
       brand: "",
       area: "",
+      is_competitor: "",
       distributor: "",
       manager_id: "",
       managerData: [],
@@ -398,8 +399,7 @@ export default {
               },
               params: {
                 paginate: 9999,
-
-              }
+              },
             }
           );
           const area = response.data;
@@ -408,7 +408,7 @@ export default {
           // console.log(this.storesArea);
           this.selectedArea = this.storesArea;
           const uniqueAreas = [
-            ...new Set(this.storesArea.map((area) => area['m_area.name'])),
+            ...new Set(this.storesArea.map((area) => area["m_area.name"])),
           ];
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           // console.log(this.selectedArea);
@@ -432,9 +432,8 @@ export default {
       } else {
         this.isAllSelected = false;
         this.storesName = this.storesArea.filter(
-          (store) => store['m_area.name'] === this.selectedArea
+          (store) => store["m_area.name"] === this.selectedArea
           // (store) => uniqueAreas
-
         );
       }
       this.selectedStore = {};
@@ -544,9 +543,11 @@ export default {
     },
 
     addMasterBrand() {
+      // const isCompetitor = JSON.parse(this.is_competitor);
       const body = {
         code: this.brand,
         name: this.brand,
+        is_competitor: this.is_competitor,
       };
       const config = {
         headers: {
@@ -934,7 +935,7 @@ export default {
                         class="form-control searchCheck"
                         placeholder="Search Store..."
                         autofocus="autofocus"
-                        @keyup="searchStores" 
+                        @keyup="searchStores"
                       />
                     </form>
                     <hr />
@@ -1871,7 +1872,27 @@ export default {
                     />
                   </div>
                 </div>
-
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6">
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
+                      >Competitor?</label
+                    >
+                  </div>
+                  <div class="col-sm-6">
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      v-model="is_competitor"
+                    >
+                      <!-- <option selected disabled>- Select Option -</option> -->
+                      <option :value="true">Yes</option>
+                      <option :value="false">No</option>
+                    </select>
+                  </div>
+                  <p>{{ is_competitor }}</p>
+                </div>
                 <div class="mt-2 d-grid gap-2" style="align-items: center">
                   <button type="submit" class="btn button3" title="Add Data">
                     Add {{ brand }}
