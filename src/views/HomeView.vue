@@ -448,7 +448,7 @@ export default {
 
           const accounts = response.data.data;
           this.accounts = accounts;
-          console.log(accounts);
+          // console.log(accounts);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
