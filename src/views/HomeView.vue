@@ -937,11 +937,14 @@ export default {
                         class="form-check-input"
                         type="checkbox"
                         name="area"
+                        :id="area"
                         :value="area"
                         v-model="selectedArea"
                         @change="filterStoresByArea"
                       />
-                      <label class="form-check-label">{{ area }}</label>
+                      <label class="form-check-label" :for="area">{{
+                        area
+                      }}</label>
                     </div>
                   </div>
                 </div>
