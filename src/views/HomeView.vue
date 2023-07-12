@@ -922,7 +922,7 @@ export default {
                     :aria-expanded="isDropdownOpen ? 'true' : 'false'"
                     @click="isDropdownOpen = !isDropdownOpen"
                   >
-                    Select Area
+                    {{ selectedArea }}
                   </button>
                   <div
                     class="dropdown-menu scrollable-menu"
