@@ -127,7 +127,7 @@ export default {
       areaNameMaster: [],
       areaNames: "",
       areaMasters: [],
-      areaShow: "",
+      areasShow: "",
       names: [],
       options: [],
       selectedOption: null,
@@ -448,6 +448,9 @@ export default {
 
           const accounts = response.data.data;
           this.accounts = accounts;
+          // this.accountsName = this.accounts.data;
+          // console.log(this.accountsName);
+
           // console.log(accounts);
         }
       } catch (error) {
@@ -476,7 +479,7 @@ export default {
     },
 
     getfilterArea(id) {
-      this.areaShow = this.areaMasters.find((data) => data.id == id);
+      this.areasShow = this.areaMasters.find((data) => data.id == id);
     },
 
     getfilterManager(id) {
@@ -816,6 +819,13 @@ export default {
     this.periodeEnd = formattedDate;
     this.periodeStart = formattedDatestart;
   },
+
+  // watch: {
+  //   selectedArea: {
+  //     handler: "updateSelectedAreaLabel",
+  //     deep: true,
+  //   },
+  // },
 };
 </script>
 
@@ -922,7 +932,7 @@ export default {
                     :aria-expanded="isDropdownOpen ? 'true' : 'false'"
                     @click="isDropdownOpen = !isDropdownOpen"
                   >
-                    {{ selectedArea }}
+                    Select Area
                   </button>
                   <div
                     class="dropdown-menu scrollable-menu"
