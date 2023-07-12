@@ -106,6 +106,7 @@ export default {
       rptTo: "",
       selectedDataexports: "",
       selectedTypeexports: "",
+      selectedNameEC: "",
       salesInfo: "",
       exportReport: [],
       fileUrl: null,
@@ -130,6 +131,9 @@ export default {
       names: [],
       options: [],
       selectedOption: null,
+      accounts: [],
+      listAcc: [],
+      selectedRoleEC: "",
     };
   },
   mounted() {
@@ -138,6 +142,7 @@ export default {
     this.fetchDataStores();
     this.fetchDataManager();
     this.fetchMasterArea();
+    this.fetchDataAccount();
     const date = new Date();
     this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(
       -2
@@ -403,7 +408,7 @@ export default {
             }
           );
           const area = response.data;
-          console.log(area);
+          // console.log(area);
           this.storesArea = area.data;
           // console.log(this.storesArea);
           this.selectedArea = this.storesArea;
@@ -425,21 +430,45 @@ export default {
       }
     },
 
+    async fetchDataAccount() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token;
+          const response = await axios.get(
+            `https://backend.qqltech.com:7021/operation/default_users`,
+            {
+              headers: {
+                authorization: `${getDataIsLogin().token_type} ${this.token}`,
+              },
+              params: {
+                paginate: 9999,
+              },
+            }
+          );
+
+          const accounts = response.data.data;
+          this.accounts = accounts;
+          console.log(accounts);
+        }
+      } catch (error) {
+        flashMessage("error", "ERROR", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
     filterStoresByArea() {
-      if (this.selectedArea === "All") {
+      if (this.selectedArea.includes("All")) {
         this.isAllSelected = true;
         this.storesName = this.storesArea;
       } else {
         this.isAllSelected = false;
-        this.storesName = this.storesArea.filter(
-          (store) => store["m_area.name"] === this.selectedArea
-          // (store) => uniqueAreas
+        this.storesName = this.storesArea.filter((store) =>
+          this.selectedArea.includes(store["m_area.name"])
         );
       }
       this.selectedStore = {};
       this.isDropdownOpen = false;
-
-      // console.log(this.storesName);
     },
 
     getfilterCompany(id) {
@@ -758,6 +787,16 @@ export default {
     isAuthenticated() {
       return localStorage.getItem("admin") !== null;
     },
+    filteredAccounts() {
+      return this.accounts.filter((account) => {
+        if (this.selectedRoleEC === "supervisor") {
+          return account.role === "Supervisor";
+        } else if (this.selectedRoleEC === "salesman") {
+          return account.role === "Salesman";
+        }
+        return false;
+      });
+    },
   },
 
   created() {
@@ -883,7 +922,7 @@ export default {
                     :aria-expanded="isDropdownOpen ? 'true' : 'false'"
                     @click="isDropdownOpen = !isDropdownOpen"
                   >
-                    {{ isAllSelected ? "All" : selectedArea }}
+                    Select Area
                   </button>
                   <div
                     class="dropdown-menu scrollable-menu"
@@ -896,7 +935,7 @@ export default {
                     >
                       <input
                         class="form-check-input"
-                        type="radio"
+                        type="checkbox"
                         name="area"
                         :value="area"
                         v-model="selectedArea"
@@ -1073,19 +1112,20 @@ export default {
             height="50px"
             width="auto"
           />
-          <!-- <button
-            class="button btn1"
-            data-toggle="modal"
-            data-target="#exampleModalData"
-          >
-            Master Data
-          </button> -->
+
           <button
             class="button btn1"
             data-toggle="modal"
             data-target="#exampleModalCenterReports"
           >
             Export Data
+          </button>
+          <button
+            class="button btn1"
+            data-toggle="modal"
+            data-target="#exampleModalEC"
+          >
+            Effective Call
           </button>
           <button
             class="button btn1"
@@ -1598,8 +1638,8 @@ export default {
                       aria-label="Default select example"
                       v-model="selectedDataexports"
                     >
-                      <option value="product" selected>Stock</option>
-                      <option value="omzet">Omzet</option>
+                      <option value="product" selected>Stock + Omzet</option>
+                      <option value="omzet">Order</option>
                     </select>
                   </div>
                 </div>
@@ -1949,7 +1989,7 @@ export default {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        {{ areaShow ? areaShow.name : "" }}
+                        Select Area
                       </button>
                       <div
                         class="dropdown-menu scrollable-menu"
@@ -1981,6 +2021,125 @@ export default {
                 <div class="mt-2 d-grid gap-2" style="align-items: center">
                   <button type="submit" class="btn button3" title="Add Data">
                     Add {{ distributor }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+
+    <!-- Modal EC -->
+    <div class="modal fade" id="exampleModalEC" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Export Effective Call</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <form method="POST" @submit.prevent="">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label
+                      class="color-black col-form-label"
+                      style="font-weight: bold"
+                      >Select Date</label
+                    >
+                    <div class="col-sm-6"></div>
+                  </div>
+                  <div class="row tanggal-modal">
+                    <div class="col-sm-6 label-modal">
+                      <label
+                        class="color-black label-modal"
+                        style="align-items: center"
+                        >From</label
+                      >
+                    </div>
+                    <div class="col-sm-6 input-modal">
+                      <input
+                        type="date"
+                        class="form-control export-date"
+                        v-model="rptFrom"
+                      />
+                    </div>
+                  </div>
+                  <div class="row tanggal-modal">
+                    <div class="col-sm-6 label-modal">
+                      <label
+                        class="color-black label-modal"
+                        style="align-items: center"
+                        >To</label
+                      >
+                    </div>
+                    <div class="col-sm-6 input-modal">
+                      <input
+                        type="date"
+                        class="form-control export-date"
+                        v-model="rptTo"
+                      />
+                    </div>
+                  </div>
+                  <div class="row tanggal-modal">
+                    <div class="col-sm-6 label-modal">
+                      <label
+                        class="color-black label-modal"
+                        style="align-items: center; font-weight: bold"
+                        >Select Role</label
+                      >
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="col-sm-12">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                          v-model="selectedRoleEC"
+                        >
+                          <option value="supervisor" selected>
+                            Supervisor
+                          </option>
+                          <option value="salesman">Salesman</option>
+                        </select>
+                      </div>
+                      <!-- <p>{{ selectedRoleEC }}</p> -->
+                    </div>
+                  </div>
+                  <div class="row tanggal-modal">
+                    <div class="col-sm-6 label-modal">
+                      <label
+                        class="color-black label-modal"
+                        style="align-items: center; font-weight: bold"
+                        >Select Name</label
+                      >
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="col-sm-12">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                          v-model="selectedNameEC"
+                        >
+                          <option value="" disabled selected>
+                            Select Name
+                          </option>
+                          <option
+                            v-for="account in filteredAccounts"
+                            :value="account.id"
+                          >
+                            {{ account.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <!-- <p>{{ selectedNameEC }}</p> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-2 d-grid gap-2" style="align-items: center">
+                  <button type="submit" class="btn button3" title="Add Data">
+                    Export Effective Call
                   </button>
                 </div>
               </form>
