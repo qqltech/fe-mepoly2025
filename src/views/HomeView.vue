@@ -137,6 +137,7 @@ export default {
       listAcc: [],
       selectedRoleEC: "",
       storesAreaExport: [],
+      selectedAreaExports: [],
     };
   },
   mounted() {
@@ -1698,12 +1699,14 @@ export default {
                           type="checkbox"
                           :id="areaExports"
                           :value="areaExports"
+                          v-model="selectedAreaExports"
                         />
                         <label class="form-check-label" :for="areaExports">{{
                           areaExports
                         }}</label>
                       </div>
                     </div>
+                    <!-- <p>{{ selectedAreaExports }}</p> -->
                   </div>
                 </div>
               </div>
