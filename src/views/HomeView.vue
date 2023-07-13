@@ -814,6 +814,15 @@ export default {
         return false;
       });
     },
+    dropdownLabel() {
+      if (this.selectedAreaExports.length === 0) {
+        return "Select Area"; // Label default jika tidak ada yang dipilih
+      } else if (this.selectedAreaExports.length === 1) {
+        return this.selectedAreaExports[0]; // Label dengan area yang dipilih jika hanya satu yang dipilih
+      } else {
+        return "Multiple Areas Selected"; // Label jika lebih dari satu yang dipilih
+      }
+    },
   },
 
   created() {
@@ -1683,7 +1692,7 @@ export default {
                       :aria-expanded="isDropdownOpen ? 'true' : 'false'"
                       @click="isDropdownOpen = !isDropdownOpen"
                     >
-                      Select Area
+                      {{ dropdownLabel }}
                     </button>
                     <div
                       class="dropdown-menu scrollable-menu"
@@ -1742,7 +1751,7 @@ export default {
               >
             </div>
           </div>
-          <div class="modal-footer"></div>
+          <!-- <div class="modal-footer"></div> -->
         </div>
       </div>
     </div>
