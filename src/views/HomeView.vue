@@ -1741,7 +1741,7 @@ export default {
                 </div>
               </div>
             </div>
-            <div class="mt-4 d-grid gap-2" style="align-items: center">
+            <div class="mt-4 d-grid gap-2 mb-3" style="align-items: center">
               <a
                 :href="downloadUrl"
                 download=""
