@@ -91,8 +91,10 @@ export default {
       storesShow: "",
       storesShowArea: "",
       area: [],
+      areaExports: [],
       areaMaster: [],
       uniqueStoresArea: [],
+      uniqueAreasExport: [],
       selectedArea: "All",
       selectedName: "All",
       totalVisit: "",
@@ -134,6 +136,7 @@ export default {
       accounts: [],
       listAcc: [],
       selectedRoleEC: "",
+      storesAreaExport: [],
     };
   },
   mounted() {
@@ -143,7 +146,9 @@ export default {
     this.fetchDataManager();
     this.fetchMasterArea();
     this.fetchDataAccount();
+    // this.fetchDataAreaExports();
     const date = new Date();
+
     this.rptFrom = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(
       -2
     )}-01`;
@@ -416,12 +421,20 @@ export default {
             ...new Set(this.storesArea.map((area) => area["m_area.name"])),
           ];
           this.uniqueStoresArea = ["All", ...uniqueAreas];
-          // console.log(this.selectedArea);
-          // console.log(this.uniqueStoresArea);
           const stores = response.data;
           // console.log(stores);
           this.storesName = stores.data;
           this.getfilterCompany(this.selectedStore);
+
+          const storesAreaExport = response.data.data;
+          this.storesAreaExport = storesAreaExport;
+          const uniqueAreasExport = [
+            ...new Set(
+              this.storesAreaExport.map((area) => area["m_area.name"])
+            ),
+          ];
+          this.uniqueAreasExport = uniqueAreasExport;
+          console.log(this.uniqueAreasExport);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -819,13 +832,6 @@ export default {
     this.periodeEnd = formattedDate;
     this.periodeStart = formattedDatestart;
   },
-
-  // watch: {
-  //   selectedArea: {
-  //     handler: "updateSelectedAreaLabel",
-  //     deep: true,
-  //   },
-  // },
 };
 </script>
 
@@ -1654,6 +1660,50 @@ export default {
                       <option value="product" selected>Stock + Omzet</option>
                       <option value="omzet">Order</option>
                     </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row tanggal-modal">
+                <div class="col-sm-6 label-modal">
+                  <label
+                    class="color-black label-modal"
+                    style="align-items: center; font-weight: bold"
+                    >Select Area</label
+                  >
+                </div>
+                <div class="col-sm-6">
+                  <div class="dropdown">
+                    <button
+                      class="dropdown-toggle toggle2"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      :aria-expanded="isDropdownOpen ? 'true' : 'false'"
+                      @click="isDropdownOpen = !isDropdownOpen"
+                    >
+                      Select Area
+                    </button>
+                    <div
+                      class="dropdown-menu scrollable-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <div
+                        class="form-check checkStore"
+                        v-for="areaExports in uniqueAreasExport"
+                        :key="areaExports"
+                      >
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          :id="areaExports"
+                          :value="areaExports"
+                        />
+                        <label class="form-check-label" :for="areaExports">{{
+                          areaExports
+                        }}</label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
