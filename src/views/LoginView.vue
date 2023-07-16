@@ -1,44 +1,50 @@
 <script setup>
-import { flashMessage } from '../config/functions';
-import axios from 'axios';
-
-
+import { flashMessage } from "../config/functions";
+import axios from "axios";
 </script>
 <script>
-
 export default {
   data() {
     return {
       isLoading: false,
-      email: '',
-      password: '',
-    }
+      email: "",
+      password: "",
+    };
   },
   methods: {
     async login() {
       const payload = {
         email: this.email,
-        password: this.password
-      }
+        password: this.password,
+      };
       try {
-        this.isLoading = true
-        const response = await axios.post(`https://backend.qqltech.com:7021/login`, payload)
+        this.isLoading = true;
+        const response = await axios.post(
+          `https://backend.qqltech.com:7021/login`,
+          payload
+        );
         const result = response.data;
-  // console.log(result);
-        localStorage.setItem('admin', JSON.stringify(result));
-        this.$router.push('home');
-
+        // console.log(result);
+        localStorage.setItem("admin", JSON.stringify(result));
+        this.$router.push("home");
+        setTimeout(() => {
+          alert("This page is under maintenance, be patient!");
+        }, 1000);
       } catch (error) {
-        if (error.response && error.response.data && error.response.data.errormsg) {
-          flashMessage('error', 'Error', error.response.data.errormsg);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errormsg
+        ) {
+          flashMessage("error", "Error", error.response.data.errormsg);
         } else {
-          flashMessage('error', 'Error', 'Email atau Password Salah');
+          flashMessage("error", "Error", "Email atau Password Salah");
         }
         this.isLoading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <template>
   <div class="wrapper">
@@ -62,38 +68,74 @@ export default {
         <div class="col-md-6 right p-0">
           <div class="card shadow">
             <div class="card-body">
-              <img class="img-card" src="/assets/image/logo-panjang.png" alt="Logo Mepoly-Industry" />
+              <img
+                class="img-card"
+                src="/assets/image/logo-panjang.png"
+                alt="Logo Mepoly-Industry"
+              />
 
               <form method="POST" @submit.prevent="login">
                 <div class="input-box">
-
-
                   <div class="input-field">
                     <label for="email">Username</label>
-                    <input type="text" class="form-control" name="email" v-model="email" required autocomplete="off" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="email"
+                      v-model="email"
+                      required
+                      autocomplete="off"
+                    />
                   </div>
                   <div class="input-field mt-3">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" v-model="password" class="form-control"
-                      autocomplete="off" required />
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      v-model="password"
+                      class="form-control"
+                      autocomplete="off"
+                      required
+                    />
                     <i id="mybutton" onclick="change()" class="tombol-eye">
-                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                        <path fill-rule="evenodd"
-                          d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-eye-fill"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+                        />
                       </svg>
                     </i>
                   </div>
                   <div class="input-field mt-5 mb-3">
-                    <button type="submit" class="submitBtn" :disabled="isLoading" id="btn_login">Login <div
-                        v-if="isLoading" class="spinner-border spinner-border-login spinner-border-sm" role="status">
+                    <button
+                      type="submit"
+                      class="submitBtn"
+                      :disabled="isLoading"
+                      id="btn_login"
+                    >
+                      Login
+                      <div
+                        v-if="isLoading"
+                        class="spinner-border spinner-border-login spinner-border-sm"
+                        role="status"
+                      >
                         <span class="visually-hidden">Loading...</span>
-                      </div></button>
+                      </div>
+                    </button>
                   </div>
                 </div>
               </form>
-
             </div>
           </div>
         </div>
@@ -112,7 +154,6 @@ export default {
   width: 500px;
   height: 350px;
   transform: rotate(180deg);
-
 }
 
 .left-bottom {
@@ -123,7 +164,6 @@ export default {
   left: 0;
   width: 500px;
   height: 350px;
-
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap");
@@ -221,7 +261,6 @@ img {
   flex-direction: column;
   position: relative;
   padding: 0 10px 0 10px;
-
 }
 
 .form-control {
@@ -270,8 +309,6 @@ span a:hover {
 }
 
 @media only screen and (max-width: 768px) {
-
-
   .left,
   .img-card,
   .left-bottom,
@@ -297,10 +334,6 @@ span a:hover {
     border: none;
     box-shadow: none;
   }
-
-
-
-
 }
 
 .img-card {

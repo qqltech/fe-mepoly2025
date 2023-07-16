@@ -208,7 +208,7 @@ export default {
     },
 
     logout() {
-      if (confirm("Apakah Anda yakin ingin keluar?")) {
+      if (confirm("Are you sure you want to exit?")) {
         localStorage.removeItem("admin");
         this.$router.push("/");
       }
