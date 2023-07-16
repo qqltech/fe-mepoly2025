@@ -28,7 +28,9 @@ export default {
         localStorage.setItem("admin", JSON.stringify(result));
         this.$router.push("home");
         setTimeout(() => {
-          alert("This page is under maintenance, be patient!");
+          alert(
+            "This page is under maintenance, be patient!. Click OK to continue..."
+          );
         }, 1000);
       } catch (error) {
         if (
