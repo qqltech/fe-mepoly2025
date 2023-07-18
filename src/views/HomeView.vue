@@ -392,7 +392,7 @@ export default {
           this.loaded = true;
           setTimeout(() => {
             alert(
-              "This page is under maintenance, Please be patient!. Click OK to continue..."
+              "This page is under maintenance by </Developers>, Please be patient!. Click OK to continue."
             );
           }, 1000);
         }
