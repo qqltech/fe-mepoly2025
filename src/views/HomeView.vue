@@ -167,7 +167,7 @@ export default {
       params.set("from", this.rptFrom);
       params.set("to", this.rptTo);
       params.set("type", this.selectedDataexports);
-      params.set("format", this.selectedTypeexports);
+      // params.set("format", this.selectedTypeexports);
       this.downloadUrl = url.href;
       window.location.href = this.downloadUrl;
       // console.log(this.downloadUrl);
@@ -1154,13 +1154,13 @@ export default {
           >
             Export Data
           </button>
-          <button
+          <!-- <button
             class="button btn1"
             data-toggle="modal"
             data-target="#exampleModalEC"
           >
             Effective Call
-          </button>
+          </button> -->
           <button
             class="button btn1"
             data-toggle="modal"
@@ -1724,7 +1724,7 @@ export default {
                   </div>
                 </div>
               </div>
-              <div class="row tanggal-modal">
+              <!-- <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
                   <label
                     class="color-black label-modal"
@@ -1744,7 +1744,7 @@ export default {
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="mt-4 d-grid gap-2 mb-3" style="align-items: center">
               <a
@@ -1752,7 +1752,7 @@ export default {
                 download=""
                 class="btn button3"
                 @click.prevent="handleDataExport()"
-                >Export {{ selectedTypeexports }}</a
+                >Export Data</a
               >
             </div>
           </div>
