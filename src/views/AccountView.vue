@@ -49,6 +49,8 @@ export default {
       status_active: "",
       status_inactive: "",
       status_disabled: "",
+      // filterTable: "",
+      searchKeyword: "",
     };
   },
   mounted() {
@@ -137,6 +139,15 @@ export default {
         }
       });
     },
+    // filterTable() {
+    //   const searchText = document
+    //     .querySelector(".searchAcc")
+    //     .value.toLowerCase();
+    //   const filteredData = this.listAcc.filter((item) => {
+    //     return item.name.toLowerCase().includes(searchText);
+    //   });
+    //   this.items = filteredData;
+    // },
     async handleDeleteAccount(id) {
       await this.fetchDataAccount();
       this.deleteAccount(id);
@@ -187,6 +198,24 @@ export default {
   computed: {
     isAuthenticated() {
       return localStorage.getItem("admin") !== null;
+    },
+    filteredItems() {
+      if (this.searchKeyword) {
+        const keyword = this.searchKeyword.toLowerCase();
+        return this.listAcc.filter((item) => {
+          for (const key in item) {
+            if (
+              item.hasOwnProperty(key) &&
+              typeof item[key] === "string" &&
+              item[key].toLowerCase().includes(keyword)
+            ) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+      return this.listAcc;
     },
   },
 };
@@ -266,11 +295,21 @@ export default {
                       </div>
                     </div>
                     <div v-else>
+                      <form class="py-2 mb-3 right acc-form-search">
+                        <input
+                          type="search"
+                          class="form-control searchAcc"
+                          placeholder="Search Anything..."
+                          autofocus="autofocus"
+                          @keyup="filterTable"
+                          v-model="searchKeyword"
+                        />
+                      </form>
                       <EasyDataTable
                         show-index
                         :loading="isLoading"
                         :headers="headers"
-                        :items="listAcc"
+                        :items="filteredItems"
                         theme-color="#0068D4"
                         show-index-symbol="No."
                         header-text-direction="center"
