@@ -283,7 +283,7 @@ export default {
               <div class="card-body">
                 <div class="card-body">
                   <p class="card-title"><b>List Account</b></p>
-                  <div class="col-sm-12">
+                  <div class="col-sm-12 mt-2">
                     <div v-if="isLoading">
                       <div class="d-flex align-items-center px-3">
                         <strong class="me-4">Loading...</strong>
