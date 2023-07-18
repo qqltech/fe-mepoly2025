@@ -29,7 +29,7 @@ export default {
         this.$router.push("home");
         setTimeout(() => {
           alert(
-            "This page is under maintenance, be patient!. Click OK to continue..."
+            "This page is under maintenance, Please be patient!. Click OK to continue..."
           );
         }, 1000);
       } catch (error) {
