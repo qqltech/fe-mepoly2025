@@ -435,7 +435,7 @@ export default {
             ),
           ];
           this.uniqueAreasExport = uniqueAreasExport;
-          console.log(this.uniqueAreasExport);
+          // console.log(this.uniqueAreasExport);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
