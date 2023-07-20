@@ -167,7 +167,7 @@ export default {
       params.set("from", this.rptFrom);
       params.set("to", this.rptTo);
       params.set("type", this.selectedDataexports);
-      // params.set("format", this.selectedTypeexports);
+      params.set("format", this.selectedTypeexports);
       this.downloadUrl = url.href;
       window.location.href = this.downloadUrl;
       // console.log(this.downloadUrl);
@@ -1672,8 +1672,8 @@ export default {
                       aria-label="Default select example"
                       v-model="selectedDataexports"
                     >
-                      <option value="product" selected>Stock + Omzet</option>
-                      <option value="omzet">Order</option>
+                      <option value="omzet_new" selected>Stock + Omzet</option>
+                      <option value="order">Order</option>
                     </select>
                   </div>
                 </div>
@@ -1724,7 +1724,7 @@ export default {
                   </div>
                 </div>
               </div>
-              <!-- <div class="row tanggal-modal">
+              <div class="row tanggal-modal">
                 <div class="col-sm-6 label-modal">
                   <label
                     class="color-black label-modal"
@@ -1739,12 +1739,12 @@ export default {
                       aria-label="Default select example"
                       v-model="selectedTypeexports"
                     >
-                      <option value="pdf" selected>PDF</option>
+                      <option value="html" selected>HTML</option>
                       <option value="excel">EXCEL</option>
                     </select>
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
             <div class="mt-4 d-grid gap-2 mb-3" style="align-items: center">
               <a
@@ -2111,122 +2111,5 @@ export default {
     </div>
 
     <!-- Modal EC -->
-    <div class="modal fade" id="exampleModalEC" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Export Effective Call</h5>
-          </div>
-          <div class="modal-body">
-            <div class="modal-body">
-              <form method="POST" @submit.prevent="">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <label
-                      class="color-black col-form-label"
-                      style="font-weight: bold"
-                      >Select Date</label
-                    >
-                    <div class="col-sm-6"></div>
-                  </div>
-                  <div class="row tanggal-modal">
-                    <div class="col-sm-6 label-modal">
-                      <label
-                        class="color-black label-modal"
-                        style="align-items: center"
-                        >From</label
-                      >
-                    </div>
-                    <div class="col-sm-6 input-modal">
-                      <input
-                        type="date"
-                        class="form-control export-date"
-                        v-model="rptFrom"
-                      />
-                    </div>
-                  </div>
-                  <div class="row tanggal-modal">
-                    <div class="col-sm-6 label-modal">
-                      <label
-                        class="color-black label-modal"
-                        style="align-items: center"
-                        >To</label
-                      >
-                    </div>
-                    <div class="col-sm-6 input-modal">
-                      <input
-                        type="date"
-                        class="form-control export-date"
-                        v-model="rptTo"
-                      />
-                    </div>
-                  </div>
-                  <div class="row tanggal-modal">
-                    <div class="col-sm-6 label-modal">
-                      <label
-                        class="color-black label-modal"
-                        style="align-items: center; font-weight: bold"
-                        >Select Role</label
-                      >
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="col-sm-12">
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="selectedRoleEC"
-                        >
-                          <option value="supervisor" selected>
-                            Supervisor
-                          </option>
-                          <option value="salesman">Salesman</option>
-                        </select>
-                      </div>
-                      <!-- <p>{{ selectedRoleEC }}</p> -->
-                    </div>
-                  </div>
-                  <div class="row tanggal-modal">
-                    <div class="col-sm-6 label-modal">
-                      <label
-                        class="color-black label-modal"
-                        style="align-items: center; font-weight: bold"
-                        >Select Name</label
-                      >
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="col-sm-12">
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="selectedNameEC"
-                        >
-                          <option value="" disabled selected>
-                            Select Name
-                          </option>
-                          <option
-                            v-for="account in filteredAccounts"
-                            :value="account.id"
-                          >
-                            {{ account.name }}
-                          </option>
-                        </select>
-                      </div>
-                      <!-- <p>{{ selectedNameEC }}</p> -->
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mt-2 d-grid gap-2" style="align-items: center">
-                  <button type="submit" class="btn button3" title="Add Data">
-                    Export Effective Call
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer"></div>
-      </div>
-    </div>
   </main>
 </template>
