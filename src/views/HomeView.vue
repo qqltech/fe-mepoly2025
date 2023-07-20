@@ -132,6 +132,7 @@ export default {
       areasShow: "",
       names: [],
       options: [],
+      optionsExports: "",
       selectedOption: null,
       accounts: [],
       listAcc: [],
@@ -168,6 +169,7 @@ export default {
       params.set("to", this.rptTo);
       params.set("type", this.selectedDataexports);
       params.set("format", this.selectedTypeexports);
+      params.set("area_ids", this.selectedAreaExports.join(","));
       this.downloadUrl = url.href;
       window.location.href = this.downloadUrl;
       // console.log(this.downloadUrl);
@@ -435,9 +437,7 @@ export default {
           const storesAreaExport = response.data.data;
           this.storesAreaExport = storesAreaExport;
           const uniqueAreasExport = [
-            ...new Set(
-              this.storesAreaExport.map((area) => area["m_area.name"])
-            ),
+            ...new Set(this.storesAreaExport.map((area) => area["m_area.id"])),
           ];
           this.uniqueAreasExport = uniqueAreasExport;
           // console.log(this.uniqueAreasExport);
@@ -787,15 +787,21 @@ export default {
               },
             }
           );
-          // console.log(areaMaster);
           const areaMaster = response.data.data;
+          console.log(areaMaster);
           this.areaMasters = areaMaster;
           this.options = areaMaster.map((obj) => ({
             id: obj.id,
             name: obj.name,
           }));
           // this.names = names;
-          // console.log(this.options);
+
+          this.optionsExports = areaMaster.map((obj) => ({
+            id: obj.id,
+            name: obj.name,
+          }));
+
+          console.log(this.optionsExports);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -819,13 +825,33 @@ export default {
         return false;
       });
     },
+    // dropdownLabel() {
+    //   if (this.selectedAreaExports.length === 0) {
+    //     return "Select Area";
+    //   } else if (this.selectedAreaExports.length === 1) {
+    //     return this.selectedAreaExports[0];
+    //   } else {
+    //     return "Multiple Areas Selected";
+    //   }
+    // },
+
     dropdownLabel() {
       if (this.selectedAreaExports.length === 0) {
-        return "Select Area"; // Label default jika tidak ada yang dipilih
+        return "Select Area";
       } else if (this.selectedAreaExports.length === 1) {
-        return this.selectedAreaExports[0]; // Label dengan area yang dipilih jika hanya satu yang dipilih
+        const selectedAreaId = this.selectedAreaExports[0];
+        const selectedArea = this.optionsExports.find(
+          (area) => area.id === selectedAreaId
+        );
+        return selectedArea ? selectedArea.name : "Unknown Area";
       } else {
-        return "Multiple Areas Selected"; // Label jika lebih dari satu yang dipilih
+        const selectedAreas = this.selectedAreaExports.map((selectedAreaId) => {
+          const selectedArea = this.optionsExports.find(
+            (area) => area.id === selectedAreaId
+          );
+          return selectedArea ? selectedArea.name : "Unknown Area";
+        });
+        return "Multiple Areas Selected";
       }
     },
   },
@@ -1705,18 +1731,18 @@ export default {
                     >
                       <div
                         class="form-check checkStore"
-                        v-for="areaExports in uniqueAreasExport"
-                        :key="areaExports"
+                        v-for="areaExports in optionsExports"
+                        :key="areaExports.id"
                       >
                         <input
                           class="form-check-input"
                           type="checkbox"
-                          :id="areaExports"
-                          :value="areaExports"
+                          :id="areaExports.id"
+                          :value="areaExports.id"
                           v-model="selectedAreaExports"
                         />
-                        <label class="form-check-label" :for="areaExports">{{
-                          areaExports
+                        <label class="form-check-label" :for="areaExports.id">{{
+                          areaExports.name
                         }}</label>
                       </div>
                     </div>
