@@ -414,11 +414,11 @@ export default {
           this.chartData6 = resultchartData6;
 
           this.loaded = true;
-          setTimeout(() => {
-            alert(
-              "This page is under maintenance by </Developers>, Please be patient!. Click OK to continue."
-            );
-          }, 1000);
+          // setTimeout(() => {
+          //   alert(
+          //     "This page is under maintenance by </Developers>, Please be patient!. Click OK to continue."
+          //   );
+          // }, 1000);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
