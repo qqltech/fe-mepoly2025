@@ -119,8 +119,8 @@ export default {
       is_competitor: "",
       distributor: "",
       manager_id: "",
-      managerData: [],
-      managerNames: [],
+      salesmanData: [],
+      salesmanNames: [],
       managerShow: "",
       manager: [],
       selectedManager: "",
@@ -133,19 +133,24 @@ export default {
       names: [],
       options: [],
       optionsExports: "",
+      optionsSales: "",
       selectedOption: null,
       accounts: [],
       listAcc: [],
       selectedRoleEC: "",
       storesAreaExport: [],
       selectedAreaExports: [],
+      selectedTypeSales: "",
+      selectedFormatSales: "",
+      selectedSales: [],
+      selectedAreaSales: [],
     };
   },
   mounted() {
     this.isLoading = true;
     this.fetchDataVisit();
     this.fetchDataStores();
-    this.fetchDataManager();
+    this.fetchDataSalesman();
     this.fetchMasterArea();
     this.fetchDataAccount();
     // this.fetchDataAreaExports();
@@ -170,6 +175,22 @@ export default {
       params.set("type", this.selectedDataexports);
       params.set("format", this.selectedTypeexports);
       params.set("area_ids", this.selectedAreaExports.join(","));
+      this.downloadUrl = url.href;
+      window.location.href = this.downloadUrl;
+      // console.log(this.downloadUrl);
+    },
+    handleDataSalesman() {
+      const url = new URL(
+        "https://backend.qqltech.com:7021/public/dashboard/export"
+      );
+      const params = url.searchParams;
+      params.set("from", this.rptFrom);
+      params.set("to", this.rptTo);
+      params.set("type", this.selectedTypeSales);
+      params.set("format", this.selectedFormatSales);
+      params.set("sales_ids", this.selectedSales.join(","));
+      params.set("area_ids", this.selectedAreaSales.join(","));
+
       this.downloadUrl = url.href;
       window.location.href = this.downloadUrl;
       // console.log(this.downloadUrl);
@@ -265,6 +286,7 @@ export default {
           // console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
+          // console.log(this.salesInfo);
           this.totalStock = visit.total_stock;
           this.totalOmzet = visit.total_omzet;
           this.totalVisit = visit.total_checkin;
@@ -470,7 +492,7 @@ export default {
           // this.accountsName = this.accounts.data;
           // console.log(this.accountsName);
 
-          // console.log(accounts);
+          console.log(accounts);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -647,7 +669,7 @@ export default {
         name: this.distributor,
         area_id: this.name,
       };
-      console.log(body);
+      // console.log(body);
       const config = {
         headers: {
           Authorization: `${getDataIsLogin().token_type} ${this.token}`,
@@ -689,7 +711,7 @@ export default {
         });
     },
 
-    async fetchDataManager() {
+    async fetchDataSalesman() {
       try {
         if (getDataIsLogin()) {
           this.token = getDataIsLogin().token;
@@ -700,13 +722,13 @@ export default {
                 authorization: `${getDataIsLogin().token_type} ${this.token}`,
               },
               params: {
-                where: "role = 'Manager'",
+                where: "role = 'Salesman'",
               },
             }
           );
-          const managerData = response.data;
-          this.managerNames = managerData.data;
-          // console.log(this.managerNames);
+          const salesmanData = response.data;
+          this.salesmanNames = salesmanData.data;
+          console.log(this.salesmanNames);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -715,65 +737,65 @@ export default {
       }
     },
 
-    exportCheckinSalesmanPDF() {
-      const doc = new jsPDF();
-      const data = this.salesInfo;
+    // exportCheckinSalesmanPDF() {
+    //   const doc = new jsPDF();
+    //   const data = this.salesInfo;
 
-      if (this.periodeStart === this.periodeEnd) {
-        doc.text(
-          `Salesman Check In Reports PT. Mepoly Industry\n                    Period ${format_date(
-            this.periodeStart
-          )}\n`,
-          35,
-          15
-        );
-      } else {
-        doc.text(
-          `      Salesman Check In Reports PT. Mepoly Industry\n    Period ${format_date(
-            this.periodeStart
-          )} to ${format_date(this.periodeEnd)}`,
-          35,
-          15
-        );
-      }
-      const header = [["Salesman Name", "Date", "Time", "Store"]];
-      let rows = [];
+    //   if (this.periodeStart === this.periodeEnd) {
+    //     doc.text(
+    //       `Salesman Check In Reports PT. Mepoly Industry\n                    Period ${format_date(
+    //         this.periodeStart
+    //       )}\n`,
+    //       35,
+    //       15
+    //     );
+    //   } else {
+    //     doc.text(
+    //       `      Salesman Check In Reports PT. Mepoly Industry\n    Period ${format_date(
+    //         this.periodeStart
+    //       )} to ${format_date(this.periodeEnd)}`,
+    //       35,
+    //       15
+    //     );
+    //   }
+    //   const header = [["Salesman Name", "Date", "Time", "Store"]];
+    //   let rows = [];
 
-      data.forEach((item) => {
-        if (item.checkin && item.checkin.length > 0) {
-          let row = [];
+    //   data.forEach((item) => {
+    //     if (item.checkin && item.checkin.length > 0) {
+    //       let row = [];
 
-          row.push(item.name);
-          if (item.checkin && item.checkin.length > 0) {
-            const firstCheckin = item.checkin[0];
-            row.push(firstCheckin.date || "");
-            row.push(firstCheckin.time || "");
-            row.push(firstCheckin.store || "");
-          } else {
-            row.push("");
-            row.push("");
-            row.push("");
-          }
+    //       row.push(item.name);
+    //       if (item.checkin && item.checkin.length > 0) {
+    //         const firstCheckin = item.checkin[0];
+    //         row.push(firstCheckin.date || "");
+    //         row.push(firstCheckin.time || "");
+    //         row.push(firstCheckin.store || "");
+    //       } else {
+    //         row.push("");
+    //         row.push("");
+    //         row.push("");
+    //       }
 
-          rows.push(row);
-        }
-      });
-      if (rows.length === 0) {
-        rows = [["Tidak ada Salesman Check-in"]];
-        doc.autoTable({
-          head: header,
-          body: rows,
-          startY: 37,
-        });
-      } else {
-        doc.autoTable({
-          head: header,
-          body: rows,
-          startY: 27,
-        });
-      }
-      doc.save("Salesman Check In Reports.pdf");
-    },
+    //       rows.push(row);
+    //     }
+    //   });
+    //   if (rows.length === 0) {
+    //     rows = [["Tidak ada Salesman Check-in"]];
+    //     doc.autoTable({
+    //       head: header,
+    //       body: rows,
+    //       startY: 37,
+    //     });
+    //   } else {
+    //     doc.autoTable({
+    //       head: header,
+    //       body: rows,
+    //       startY: 27,
+    //     });
+    //   }
+    //   doc.save("Salesman Check In Reports.pdf");
+    // },
 
     async fetchMasterArea() {
       try {
@@ -788,7 +810,7 @@ export default {
             }
           );
           const areaMaster = response.data.data;
-          console.log(areaMaster);
+          // console.log(areaMaster);
           this.areaMasters = areaMaster;
           this.options = areaMaster.map((obj) => ({
             id: obj.id,
@@ -801,7 +823,12 @@ export default {
             name: obj.name,
           }));
 
-          console.log(this.optionsExports);
+          this.optionsSales = areaMaster.map((obj) => ({
+            id: obj.id,
+            name: obj.name,
+          }));
+
+          // console.log(this.optionsExports);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -852,6 +879,44 @@ export default {
           return selectedArea ? selectedArea.name : "Unknown Area";
         });
         return "Multiple Areas Selected";
+      }
+    },
+    dropdownLabels() {
+      if (this.selectedAreaSales.length === 0) {
+        return "Select Area";
+      } else if (this.selectedAreaSales.length === 1) {
+        const selectedAreaId = this.selectedAreaSales[0];
+        const selectedArea = this.optionsSales.find(
+          (area) => area.id === selectedAreaId
+        );
+        return selectedArea ? selectedArea.name : "Unknown Area";
+      } else {
+        const selectedAreas = this.selectedAreaSales.map((selectedAreaId) => {
+          const selectedArea = this.optionsSales.find(
+            (area) => area.id === selectedAreaId
+          );
+          return selectedArea ? selectedArea.name : "Unknown Area";
+        });
+        return "Multiple Areas Selected";
+      }
+    },
+    dropdownLabelss() {
+      if (this.selectedSales.length === 0) {
+        return "Select Sales";
+      } else if (this.selectedSales.length === 1) {
+        const selectedSalesId = this.selectedSales[0];
+        const selectedSales = this.salesmanNames.find(
+          (sales) => sales.id === selectedSalesId
+        );
+        return selectedSales ? selectedSales.name : "Unknown Sales";
+      } else {
+        const selectedSaless = this.selectedSales.map((selectedSalesId) => {
+          const selectedSales = this.salesmanNames.find(
+            (sales) => sales.id === selectedSalesId
+          );
+          return selectedSales ? selectedSales.name : "Unknown Sales";
+        });
+        return "Multiple Salesman Selected";
       }
     },
   },
@@ -1180,13 +1245,13 @@ export default {
           >
             Export Data
           </button>
-          <!-- <button
+          <button
             class="button btn1"
             data-toggle="modal"
-            data-target="#exampleModalEC"
+            data-target="#exampleModalSalesman"
           >
-            Effective Call
-          </button> -->
+            Salesman Data
+          </button>
           <button
             class="button btn1"
             data-toggle="modal"
@@ -1656,7 +1721,7 @@ export default {
                   <label
                     class="color-black label-modal"
                     style="align-items: center"
-                    >From</label
+                    >From<label style="color: red">*</label></label
                   >
                 </div>
                 <div class="col-sm-6 input-modal">
@@ -1664,6 +1729,7 @@ export default {
                     type="date"
                     class="form-control export-date"
                     v-model="rptFrom"
+                    required
                   />
                 </div>
               </div>
@@ -1672,7 +1738,7 @@ export default {
                   <label
                     class="color-black label-modal"
                     style="align-items: center"
-                    >To</label
+                    >To<label style="color: red">*</label></label
                   >
                 </div>
                 <div class="col-sm-6 input-modal">
@@ -1680,6 +1746,7 @@ export default {
                     type="date"
                     class="form-control export-date"
                     v-model="rptTo"
+                    required
                   />
                 </div>
               </div>
@@ -1688,7 +1755,7 @@ export default {
                   <label
                     class="color-black label-modal"
                     style="align-items: center; font-weight: bold"
-                    >Select Data</label
+                    >Select Data<label style="color: red">*</label></label
                   >
                 </div>
                 <div class="col-sm-6">
@@ -1697,6 +1764,7 @@ export default {
                       class="form-select"
                       aria-label="Default select example"
                       v-model="selectedDataexports"
+                      required
                     >
                       <option value="omzet_new" selected>Stock + Omzet</option>
                       <option value="order">Order</option>
@@ -1710,7 +1778,7 @@ export default {
                   <label
                     class="color-black label-modal"
                     style="align-items: center; font-weight: bold"
-                    >Select Area</label
+                    >Select Area<label style="color: red">*</label></label
                   >
                 </div>
                 <div class="col-sm-6">
@@ -1740,6 +1808,7 @@ export default {
                           :id="areaExports.id"
                           :value="areaExports.id"
                           v-model="selectedAreaExports"
+                          required
                         />
                         <label class="form-check-label" :for="areaExports.id">{{
                           areaExports.name
@@ -1755,7 +1824,7 @@ export default {
                   <label
                     class="color-black label-modal"
                     style="align-items: center; font-weight: bold"
-                    >Select File Type</label
+                    >Select File Type<label style="color: red">*</label></label
                   >
                 </div>
                 <div class="col-sm-6">
@@ -1764,6 +1833,7 @@ export default {
                       class="form-select"
                       aria-label="Default select example"
                       v-model="selectedTypeexports"
+                      required
                     >
                       <option value="html" selected>HTML</option>
                       <option value="excel">EXCEL</option>
@@ -1833,7 +1903,7 @@ export default {
     </div>
 
     <!-- Modal 3 -->
-    <div class="modal fade" id="exampleModalExportSalesman">
+    <div class="modal fade" id="exampleModalSalesman">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -1855,7 +1925,7 @@ export default {
                     <label
                       class="color-black label-modal"
                       style="align-items: center"
-                      >From</label
+                      >From<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6 input-modal">
@@ -1871,7 +1941,7 @@ export default {
                     <label
                       class="color-black label-modal"
                       style="align-items: center"
-                      >To</label
+                      >To<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6 input-modal">
@@ -1887,7 +1957,7 @@ export default {
                     <label
                       class="color-black label-modal"
                       style="align-items: center; font-weight: bold"
-                      >Area</label
+                      >Select Data<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -1895,14 +1965,13 @@ export default {
                       <select
                         class="form-select"
                         aria-label="Default select example"
-                        v-model="selectedDataexports"
+                        v-model="selectedTypeSales"
+                        required
                       >
-                        <option
-                          v-for="(salesman, index) in salesInfo"
-                          :key="index"
-                        >
-                          {{ salesman.name }}
+                        <option value="checkin" selected>
+                          Salesman Check In
                         </option>
+                        <!-- <option value="order">Order</option> -->
                       </select>
                     </div>
                   </div>
@@ -1912,7 +1981,105 @@ export default {
                     <label
                       class="color-black label-modal"
                       style="align-items: center; font-weight: bold"
-                      >Salesman</label
+                      >Area<label style="color: red">*</label></label
+                    >
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="dropdown">
+                      <button
+                        class="dropdown-toggle toggle2"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        :aria-expanded="isDropdownOpen ? 'true' : 'false'"
+                        @click="isDropdownOpen = !isDropdownOpen"
+                      >
+                        {{ dropdownLabels }}
+                      </button>
+                      <div
+                        class="dropdown-menu scrollable-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <div
+                          class="form-check checkStore"
+                          v-for="areaSales in optionsSales"
+                          :key="areaSales.id"
+                        >
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            :id="areaSales.id"
+                            :value="areaSales.id"
+                            v-model="selectedAreaSales"
+                            required
+                          />
+                          <label class="form-check-label" :for="areaSales.id">{{
+                            areaSales.name
+                          }}</label>
+                        </div>
+                      </div>
+                      <!-- <p>{{ selectedAreaSales }}</p> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label
+                      class="color-black label-modal"
+                      style="align-items: center; font-weight: bold"
+                      >Salesman Name<label style="color: red">*</label></label
+                    >
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <div class="dropdown">
+                        <button
+                          class="dropdown-toggle toggle2"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          :aria-expanded="isDropdownOpen ? 'true' : 'false'"
+                          @click="isDropdownOpen = !isDropdownOpen"
+                        >
+                          {{ dropdownLabelss }}
+                        </button>
+                        <div
+                          class="dropdown-menu scrollable-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
+                          <div
+                            class="form-check checkStore"
+                            v-for="salesNames in salesmanNames"
+                            :key="salesNames.id"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              :id="salesNames.id"
+                              :value="salesNames.id"
+                              v-model="selectedSales"
+                              required
+                            />
+                            <label
+                              class="form-check-label"
+                              :for="salesNames.id"
+                              >{{ salesNames.name }}</label
+                            >
+                          </div>
+                        </div>
+                        <!-- <p>{{ selectedSales }}</p> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label
+                      class="color-black label-modal"
+                      style="align-items: center; font-weight: bold"
+                      >Select File Format<label style="color: red"
+                        >*</label
+                      ></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -1920,14 +2087,11 @@ export default {
                       <select
                         class="form-select"
                         aria-label="Default select example"
-                        v-model="selectedDataexports"
+                        v-model="selectedFormatSales"
+                        required
                       >
-                        <option
-                          v-for="(salesman, index) in salesInfo"
-                          :key="index"
-                        >
-                          {{ salesman.name }}
-                        </option>
+                        <option value="pdf">PDF</option>
+                        <option value="excel">EXCEL</option>
                       </select>
                     </div>
                   </div>
@@ -1937,14 +2101,13 @@ export default {
                 <button
                   download=""
                   class="btn button3"
-                  @click="exportCheckinSalesmanPDF()"
+                  @click="handleDataSalesman()"
                 >
                   Export
                 </button>
               </div>
             </div>
           </div>
-          <div class="modal-footer"></div>
         </div>
       </div>
     </div>
@@ -1965,7 +2128,7 @@ export default {
                     <label
                       class="color-black col-form-label"
                       style="font-weight: bold"
-                      >Add Area</label
+                      >Add Area<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -1973,6 +2136,7 @@ export default {
                       type="text"
                       class="form-control form-masterdata"
                       v-model="area"
+                      required
                     />
                   </div>
                 </div>
@@ -2006,7 +2170,7 @@ export default {
                     <label
                       class="color-black col-form-label"
                       style="font-weight: bold"
-                      >Add Brand</label
+                      >Add Brand<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -2014,6 +2178,7 @@ export default {
                       type="text"
                       class="form-control form-masterdata"
                       v-model="brand"
+                      required
                     />
                   </div>
                 </div>
@@ -2022,7 +2187,7 @@ export default {
                     <label
                       class="color-black col-form-label"
                       style="font-weight: bold"
-                      >Competitor?</label
+                      >Competitor?<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -2030,6 +2195,7 @@ export default {
                       class="form-select"
                       aria-label="Default select example"
                       v-model="is_competitor"
+                      required
                     >
                       <!-- <option selected disabled>- Select Option -</option> -->
                       <option :value="1">Yes</option>
@@ -2065,7 +2231,7 @@ export default {
                     <label
                       class="color-black col-form-label"
                       style="font-weight: bold"
-                      >Add Distributor</label
+                      >Add Distributor<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -2073,6 +2239,7 @@ export default {
                       type="text"
                       class="form-control form-masterdata"
                       v-model="distributor"
+                      required
                     />
                   </div>
                 </div>
@@ -2081,7 +2248,7 @@ export default {
                     <label
                       class="color-black col-form-label"
                       style="font-weight: bold"
-                      >Select Area</label
+                      >Select Area<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
@@ -2112,6 +2279,7 @@ export default {
                             name="name"
                             v-model="name"
                             :value="option.id"
+                            required
                           />
                           <label class="form-check-label" :for="option.id">{{
                             option.name
