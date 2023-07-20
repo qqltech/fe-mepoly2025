@@ -492,7 +492,7 @@ export default {
           // this.accountsName = this.accounts.data;
           // console.log(this.accountsName);
 
-          console.log(accounts);
+          // console.log(accounts);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
@@ -728,7 +728,7 @@ export default {
           );
           const salesmanData = response.data;
           this.salesmanNames = salesmanData.data;
-          console.log(this.salesmanNames);
+          // console.log(this.salesmanNames);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
