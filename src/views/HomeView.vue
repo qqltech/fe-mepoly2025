@@ -1553,12 +1553,12 @@ export default {
                   <div class="card-body">
                     <div class="card-body">
                       <p class="card-title"><b>Salesman Info</b></p>
-                      <button
+                      <!-- <button
                         class="button btn1 btn-salesman-exports"
                         @click="exportCheckinSalesmanPDF()"
                       >
                         Export
-                      </button>
+                      </button> -->
 
                       <div
                         class="row"
