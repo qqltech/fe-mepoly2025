@@ -1976,7 +1976,7 @@ export default {
                     </div>
                   </div>
                 </div>
-                <div class="row tanggal-modal">
+                <!-- <div class="row tanggal-modal">
                   <div class="col-sm-6 label-modal">
                     <label
                       class="color-black label-modal"
@@ -2018,10 +2018,9 @@ export default {
                           }}</label>
                         </div>
                       </div>
-                      <!-- <p>{{ selectedAreaSales }}</p> -->
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="row tanggal-modal">
                   <div class="col-sm-6 label-modal">
                     <label
