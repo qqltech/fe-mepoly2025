@@ -450,6 +450,10 @@ export default {
           const uniqueAreas = [
             ...new Set(this.storesArea.map((area) => area["m_area.name"])),
           ];
+          uniqueAreas.sort((a, b) =>
+            a.localeCompare(b, "en", { sensitivity: "base" })
+          );
+
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           const stores = response.data;
           // console.log(stores);
