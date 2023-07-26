@@ -459,7 +459,7 @@ export default {
           // console.log(stores);
 
           this.storesName = stores.data.sort((a, b) =>
-            a.name.localeCompare(b.name, "en", { sensitivity: "base" })
+            a.company.localeCompare(b.company, "en", { sensitivity: "base" })
           );
 
           this.getfilterCompany(this.selectedStore);
