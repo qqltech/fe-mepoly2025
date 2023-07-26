@@ -456,7 +456,7 @@ export default {
 
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           const stores = response.data;
-          // console.log(stores);
+          console.log(stores);
 
           this.storesName = stores.data.sort((a, b) =>
             a.company.localeCompare(b.company, "en", { sensitivity: "base" })
@@ -1903,7 +1903,7 @@ export default {
                 </p>
               </div>
               <div class="col-sm-8">
-                <p>: {{ storesShow ? storesShow.area : "" }}</p>
+                <p>: {{ storesShow ? storesShow["m_area.name"] : "" }}</p>
               </div>
               <div class="col-sm-4">
                 <p>
