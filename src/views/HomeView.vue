@@ -283,7 +283,7 @@ export default {
             }
           );
           const visit = response.data;
-          console.log(visit);
+          // console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           // console.log(this.salesInfo);
@@ -824,7 +824,7 @@ export default {
             }
           );
           const areaMaster = response.data.data;
-          console.log(areaMaster);
+          // console.log(areaMaster);
           areaMaster.sort((a, b) =>
             a.name.localeCompare(b.name, "en", { sensitivity: "base" })
           );
