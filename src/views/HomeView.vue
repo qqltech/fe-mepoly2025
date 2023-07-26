@@ -814,6 +814,9 @@ export default {
           );
           const areaMaster = response.data.data;
           console.log(areaMaster);
+          areaMaster.sort((a, b) =>
+            a.name.localeCompare(b.name, "en", { sensitivity: "base" })
+          );
           this.areaMasters = areaMaster;
           this.options = areaMaster.map((obj) => ({
             id: obj.id,
