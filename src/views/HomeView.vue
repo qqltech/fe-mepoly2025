@@ -457,7 +457,11 @@ export default {
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           const stores = response.data;
           // console.log(stores);
-          this.storesName = stores.data;
+
+          this.storesName = stores.data.sort((a, b) =>
+            a.name.localeCompare(b.name, "en", { sensitivity: "base" })
+          );
+
           this.getfilterCompany(this.selectedStore);
 
           const storesAreaExport = response.data.data;
@@ -732,6 +736,9 @@ export default {
           );
           const salesmanData = response.data;
           this.salesmanNames = salesmanData.data;
+          this.salesmanNames.sort((a, b) =>
+            a.name.localeCompare(b.name, "en", { sensitivity: "base" })
+          );
           // console.log(this.salesmanNames);
         }
       } catch (error) {
