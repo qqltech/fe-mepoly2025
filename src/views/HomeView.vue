@@ -456,7 +456,7 @@ export default {
 
           this.uniqueStoresArea = ["All", ...uniqueAreas];
           const stores = response.data;
-          console.log(stores);
+          // console.log(stores);
 
           this.storesName = stores.data.sort((a, b) =>
             a.company.localeCompare(b.company, "en", { sensitivity: "base" })
