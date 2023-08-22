@@ -1997,6 +1997,29 @@ export default {
                     <label
                       class="color-black label-modal"
                       style="align-items: center; font-weight: bold"
+                      >Select Role<label style="color: red">*</label></label
+                    >
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                        v-model="selectedRoleCheckin"
+                        required
+                      >
+                        <option value="All" selected>All</option>
+                        <option value="Supervisor">Supervisor</option>
+                        <option value="Salesman">Salesman</option>
+                      </select>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="row tanggal-modal">
+                  <div class="col-sm-6 label-modal">
+                    <label
+                      class="color-black label-modal"
+                      style="align-items: center; font-weight: bold"
                       >Area<label style="color: red">*</label></label
                     >
                   </div>
