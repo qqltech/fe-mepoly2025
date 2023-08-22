@@ -443,7 +443,7 @@ export default {
             }
           );
           const area = response.data;
-          // console.log(area);
+          console.log(area);
           this.storesArea = area.data;
           // console.log(this.storesArea);
           this.selectedArea = this.storesArea;
@@ -731,6 +731,7 @@ export default {
               },
               params: {
                 where: "role = 'Salesman'",
+                paginate: 9999,
               },
             }
           );
@@ -739,7 +740,7 @@ export default {
           this.salesmanNames.sort((a, b) =>
             a.name.localeCompare(b.name, "en", { sensitivity: "base" })
           );
-          // console.log(this.salesmanNames);
+          console.log(salesmanData);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
