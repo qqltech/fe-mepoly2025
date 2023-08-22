@@ -920,21 +920,21 @@ export default {
     },
     dropdownLabelss() {
       if (this.selectedSales.length === 0) {
-        return "Select Sales";
+        return "Select Name";
       } else if (this.selectedSales.length === 1) {
         const selectedSalesId = this.selectedSales[0];
         const selectedSales = this.salesmanNames.find(
           (sales) => sales.id === selectedSalesId
         );
-        return selectedSales ? selectedSales.name : "Unknown Sales";
+        return selectedSales ? selectedSales.name : "Unknown";
       } else {
         const selectedSaless = this.selectedSales.map((selectedSalesId) => {
           const selectedSales = this.salesmanNames.find(
             (sales) => sales.id === selectedSalesId
           );
-          return selectedSales ? selectedSales.name : "Unknown Sales";
+          return selectedSales ? selectedSales.name : "Unknown";
         });
-        return "Multiple Salesman Selected";
+        return "Multiple People Selected";
       }
     },
   },
@@ -1268,7 +1268,7 @@ export default {
             data-toggle="modal"
             data-target="#exampleModalSalesman"
           >
-            Salesman Data
+            Check In Data
           </button>
           <button
             class="button btn1"
@@ -1925,7 +1925,7 @@ export default {
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Export CheckIn Salesman</h5>
+            <h5 class="modal-title">Export Check In Data</h5>
           </div>
           <div class="modal-body">
             <div class="modal-body">
@@ -1986,9 +1986,7 @@ export default {
                         v-model="selectedTypeSales"
                         required
                       >
-                        <option value="checkin" selected>
-                          Salesman Check In
-                        </option>
+                        <option value="checkin" selected>Data Check In</option>
                         <!-- <option value="order">Order</option> -->
                       </select>
                     </div>
@@ -2044,7 +2042,7 @@ export default {
                     <label
                       class="color-black label-modal"
                       style="align-items: center; font-weight: bold"
-                      >Salesman Name<label style="color: red">*</label></label
+                      >Name<label style="color: red">*</label></label
                     >
                   </div>
                   <div class="col-sm-6">
