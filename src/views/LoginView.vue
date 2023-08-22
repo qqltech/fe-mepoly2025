@@ -27,11 +27,11 @@ export default {
         // console.log(result);
         localStorage.setItem("admin", JSON.stringify(result));
         this.$router.push("home");
-        // setTimeout(() => {
-        //   alert(
-        //     "This page is under maintenance, Please be patient!. Click OK to continue..."
-        //   );
-        // }, 1000);
+        setTimeout(() => {
+          alert(
+            "This page is under maintenance, Please be patient!. Click OK to continue..."
+          );
+        }, 1000);
       } catch (error) {
         if (
           error.response &&

@@ -730,7 +730,7 @@ export default {
                 authorization: `${getDataIsLogin().token_type} ${this.token}`,
               },
               params: {
-                where: "role = 'Salesman'",
+                where: "role = 'Salesman' OR role = 'Supervisor'",
                 paginate: 9999,
               },
             }
