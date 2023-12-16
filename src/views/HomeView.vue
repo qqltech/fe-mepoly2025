@@ -283,7 +283,7 @@ export default {
             }
           );
           const visit = response.data;
-          console.log(visit);
+          // console.log(visit);
           this.salesLastVisited = visit.sales_last_visited;
           this.salesInfo = visit.sales_checkin;
           // console.log(this.salesInfo);
@@ -443,7 +443,7 @@ export default {
             }
           );
           const area = response.data;
-          console.log(area);
+          // console.log(area);
           this.storesArea = area.data;
           // console.log(this.storesArea);
           this.selectedArea = this.storesArea;
@@ -740,7 +740,7 @@ export default {
           this.salesmanNames.sort((a, b) =>
             a.name.localeCompare(b.name, "en", { sensitivity: "base" })
           );
-          console.log(salesmanData);
+          // console.log(salesmanData);
         }
       } catch (error) {
         flashMessage("error", "ERROR", error);
