@@ -336,6 +336,7 @@
                   minlength="9"
                   maxlength="13"
                   pattern="[0-9]+"
+                  @input="onPhoneInput"
                 />
               </div>
               <div class="mb-3">
@@ -606,6 +607,11 @@ export default {
     onFilterChange() {
       this.currentPage = 1;
       this.fetchCustomers();
+    },
+    onPhoneInput(e) {
+      // Hanya izinkan angka
+      const val = e.target.value.replace(/[^0-9]/g, "");
+      this.customerForm.phone = val;
     },
   },
 };
