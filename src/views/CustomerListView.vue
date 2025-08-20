@@ -299,6 +299,7 @@
                   id="customerName"
                   v-model="customerForm.name"
                   required
+                  placeholder="Masukkan nama customer"
                 />
               </div>
               <div class="mb-3">
@@ -309,6 +310,7 @@
                   id="company"
                   v-model="customerForm.company"
                   required
+                  placeholder="Masukkan nama perusahaan"
                 />
               </div>
               <div class="mb-3">
@@ -319,6 +321,7 @@
                   id="email"
                   v-model="customerForm.email"
                   required
+                  placeholder="Masukkan email customer"
                 />
               </div>
               <div class="mb-3">
@@ -329,12 +332,13 @@
                   id="phone"
                   v-model="customerForm.phone"
                   required
+                  placeholder="Masukkan nomor telepon"
                 />
               </div>
               <div class="mb-3">
                 <label for="area" class="form-label">Area</label>
                 <select class="form-select" v-model="customerForm.area_id" required>
-                  <option value="">Select Area</option>
+                  <option value="">Pilih Area</option>
                   <option v-for="area in areas" :key="area.id" :value="area.id">
                     {{ area.name }}
                   </option>
@@ -348,6 +352,7 @@
                   id="address"
                   v-model="customerForm.address"
                   required
+                  placeholder="Masukkan alamat customer"
                 />
                 </div>
                 <div class="mb-3">
@@ -358,6 +363,7 @@
                   id="tipe"
                   v-model="customerForm.tipe"
                   required
+                  placeholder="Masukkan tipe customer"
                 />
                 </div>
               <div class="modal-footer">
@@ -509,6 +515,7 @@ export default {
         phone: customer.phone,
         area_id: customer.area_id,
         address: customer.address,
+        tipe: customer.tipe || ""
       };
     },
     async saveCustomer() {
