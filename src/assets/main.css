@@ -19,7 +19,7 @@
 @media (min-width: 1024px) {
   body {
 
-    place-items: center;
+    /* place-items: center; */
     align-items: center;
     justify-content: center;
   }

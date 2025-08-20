@@ -74,16 +74,6 @@
                 </select>
               </div>
             </div>
-            <div class="row mt-2 mb-2">
-              <div class="col-sm-12">
-                <label><b>Filter by Status</b></label>
-                <select class="form-select" v-model="selectedStatus" @change="onFilterChange">
-                  <option value="">All Status</option>
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
-            </div>
           </div>
           <hr class="garis-sidebar" style="margin-top: 20px" />
           <div class="d-grid gap-2 mt-2">
@@ -103,7 +93,7 @@
     <!-- Main Page -->
     <div class="wrapper" style="width: 100%; padding: 0; margin: 0;">
       <div class="main" style="width: 100%; padding: 0; margin: 0;">
-        <div class="navbar navbar-expand" style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem;">
+        <div class="navbar navbar-expand" style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; margin: 0;">
           <div style="display: flex; align-items: center;">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -187,14 +177,6 @@
                         </option>
                       </select>
                     </div>
-                    <div class="col-md-4">
-                      <label><b>Filter by Status</b></label>
-                      <select class="form-select" v-model="selectedStatus" @change="onFilterChange">
-                        <option value="">All Status</option>
-                        <option value="ACTIVE">Active</option>
-                        <option value="INACTIVE">Inactive</option>
-                      </select>
-                    </div>
                   </div>
 
                   <div class="row mt-3">
@@ -209,7 +191,7 @@
                               <th>Email</th>
                               <th>Phone</th>
                               <th>Area</th>
-                              <th>Status</th>
+                              <th>Address</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
@@ -221,11 +203,7 @@
                               <td>{{ customer.email }}</td>
                               <td>{{ customer.phone }}</td>
                               <td>{{ customer["m_area.name"] || customer.area_name }}</td>
-                              <td>
-                                <span :class="getStatusClass(customer.status)">
-                                  {{ customer.status }}
-                                </span>
-                              </td>
+                              <td>{{ formatAddress(customer["address"] || customer.address) }}</td>
                               <td>
                                 <button
                                   class="btn btn-sm btn-primary me-1"
@@ -362,13 +340,26 @@
                   </option>
                 </select>
               </div>
-              <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <select class="form-select" v-model="customerForm.status" required>
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
+                <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  v-model="customerForm.address"
+                  required
+                />
+                </div>
+                <div class="mb-3">
+                <label for="tipe" class="form-label">Tipe</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tipe"
+                  v-model="customerForm.tipe"
+                  required
+                />
+                </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Cancel
@@ -397,7 +388,6 @@ export default {
       areas: [],
       searchQuery: "",
       selectedArea: "",
-      selectedStatus: "",
       currentPage: 1,
       itemsPerPage: 20,
       totalCustomers: 0,
@@ -409,7 +399,9 @@ export default {
         email: "",
         phone: "",
         area_id: "",
-        status: "ACTIVE",
+        address: "",
+        tipe: ""
+
       },
       isEditMode: false,
       nama: "",
@@ -462,8 +454,7 @@ export default {
                 page: this.currentPage,
                 paginate: this.itemsPerPage,
                 search: this.searchQuery,
-                area: this.selectedArea,
-                status: this.selectedStatus,
+                where: this.selectedArea ? `area='${this.selectedArea}'` : undefined,
               },
             }
           );
@@ -500,8 +491,13 @@ export default {
         flashMessage("error", "ERROR", error);
       }
     },
-    getStatusClass(status) {
-      return status === "ACTIVE" ? "badge bg-success" : "badge bg-danger";
+    // getStatusClass(status) {
+    //   return status === "ACTIVE" ? "badge bg-success" : "badge bg-danger";
+    // },
+    formatAddress(address) {
+      if (!address) return "";
+      const maxLength = 40;
+      return address.length > maxLength ? address.substring(0, maxLength) + "..." : address;
     },
     editCustomer(customer) {
       this.isEditMode = true;
@@ -512,7 +508,7 @@ export default {
         email: customer.email,
         phone: customer.phone,
         area_id: customer.area_id,
-        status: customer.status,
+        address: customer.address,
       };
     },
     async saveCustomer() {
@@ -571,7 +567,7 @@ export default {
         email: "",
         phone: "",
         area_id: "",
-        status: "ACTIVE",
+        address: "",
       };
       this.isEditMode = false;
     },
