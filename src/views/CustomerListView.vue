@@ -549,23 +549,28 @@ export default {
       }
     },
     async deleteCustomer(id) {
-      if (confirm("Are you sure you want to delete this customer?")) {
-        try {
-          const token = getDataIsLogin().token;
-          const response = await axios.delete(
-            `https://backend.qqltech.com:7021/operation/m_customer/${id}`,
-            {
-              headers: {
-                authorization: `${getDataIsLogin().token_type} ${token}`,
-              },
-            }
-          );
-
-          if (response.data.success) {
-            flashMessage("success", "Success!", "Customer deleted successfully!");
-            this.fetchCustomers();
+      try {
+        const token = getDataIsLogin().token;
+        const response = await axios.delete(
+          `https://backend.qqltech.com:7021/operation/m_customer/${id}`,
+          {
+            headers: {
+              authorization: `${getDataIsLogin().token_type} ${token}`,
+            },
           }
-        } catch (error) {
+        );
+        if (response.data.success) {
+          flashMessage("success", "Success!", "Customer deleted successfully!");
+          this.fetchCustomers();
+        }
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.status === 422 &&
+          error.response.data?.message?.includes("tidak dapat dihapus")
+        ) {
+          flashMessage("error", "Customer sudah memiliki data transaksi, anda tidak dapat menghapusnya");
+        } else {
           flashMessage("error", "ERROR", error);
         }
       }
