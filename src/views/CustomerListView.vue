@@ -335,6 +335,7 @@
                   placeholder="Masukkan nomor telepon"
                   minlength="9"
                   maxlength="13"
+                  pattern="[0-9]+"
                 />
               </div>
               <div class="mb-3">
