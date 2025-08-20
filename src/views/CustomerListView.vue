@@ -333,6 +333,8 @@
                   v-model="customerForm.phone"
                   required
                   placeholder="Masukkan nomor telepon"
+                  minlength="9"
+                  maxlength="13"
                 />
               </div>
               <div class="mb-3">
