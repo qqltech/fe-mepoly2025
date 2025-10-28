@@ -7,7 +7,7 @@ var tooltipTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="tooltip"]')
 );
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl);
+  return new window.bootstrap.Tooltip(tooltipTriggerEl);
 });
 </script>
 <script>
@@ -58,14 +58,19 @@ export default {
         username: "",
         phone: "",
         role: "",
-        status: ""
+        status: "",
+        area_ids: []
       },
+      areas: [],
       isEditMode: false,
+      selectedAreas: [],
+      areaSearch: "",
     };
   },
   mounted() {
     this.isLoading = true;
     this.fetchDataAccount();
+    this.fetchAreas();
   },
   methods: {
     async fetchDataAccount() {
@@ -96,6 +101,28 @@ export default {
         flashMessage("error", "ERROR", error);
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    async fetchAreas() {
+      try {
+        if (getDataIsLogin()) {
+          this.token = getDataIsLogin().token;
+          const response = await axios.get(
+            `https://backend.qqltech.com:7021/operation/m_area`,
+            {
+              headers: {
+                authorization: `${getDataIsLogin().token_type} ${this.token}`,
+              },
+              params: {
+                paginate: 9999,
+              },
+            }
+          );
+          this.areas = response.data.data;
+        }
+      } catch (error) {
+        flashMessage("error", "ERROR", error);
       }
     },
 
@@ -178,8 +205,10 @@ export default {
         username: account.username,
         phone: account.phone,
         role: account.role,
-        status: account.status
+        status: account.status,
+        area_ids: account.area_ids
       };
+      this.selectedAreas = [...account.area_ids];
     },
     async saveAccount() {
       try {
@@ -213,9 +242,29 @@ export default {
         username: "",
         phone: "",
         role: "",
-        status: ""
+        status: "",
+        area_ids: []
       };
       this.isEditMode = false;
+      this.selectedAreas = [];
+      this.areaSearch = "";
+    },
+
+    saveAreaSelection() {
+      this.accountForm.area_ids = [...this.selectedAreas];
+      
+      const areaModalEl = document.getElementById('areaModal');
+      const areaModal = window.bootstrap.Modal.getInstance(areaModalEl);
+
+      const accountModalEl = document.getElementById('accountModal');
+      const accountModal = window.bootstrap.Modal.getInstance(accountModalEl);
+
+      // When the area modal is hidden, show the account modal again.
+      areaModalEl.addEventListener('hidden.bs.modal', () => {
+        accountModal.show();
+      }, { once: true }); // Use `once` to avoid adding multiple listeners
+
+      areaModal.hide();
     },
   },
   computed: {
@@ -239,6 +288,15 @@ export default {
         });
       }
       return this.listAcc;
+    },
+    filteredAreas() {
+      if (this.areaSearch) {
+        const search = this.areaSearch.toLowerCase();
+        return this.areas.filter((area) =>
+          area.name.toLowerCase().includes(search)
+        );
+      }
+      return this.areas;
     },
   },
 };
@@ -466,6 +524,22 @@ export default {
                   <option value="INACTIVE">INACTIVE</option>
                 </select>
               </div>
+              <div class="mb-3">
+                <label for="accountAreas" class="form-label">Areas</label>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#areaModal"
+                >
+                  Select Areas ({{ selectedAreas.length }} selected)
+                </button>
+                <div class="mt-2">
+                  <small class="text-muted">
+                    Selected: {{ selectedAreas.map(id => areas.find(a => a.id === id)?.name).join(', ') }}
+                  </small>
+                </div>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Cancel
@@ -473,6 +547,69 @@ export default {
                 <button type="submit" class="btn btn-primary">Update Account</button>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Area Selection Modal -->
+    <div
+      class="modal fade"
+      id="areaModal"
+      tabindex="-1"
+      aria-labelledby="areaModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="areaModalLabel">Select Areas</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search areas..."
+                v-model="areaSearch"
+              />
+            </div>
+            <div class="area-list" style="max-height: 400px; overflow-y: auto;">
+              <div
+                v-for="area in filteredAreas"
+                :key="area.id"
+                class="form-check"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :id="'area-' + area.id"
+                  :value="area.id"
+                  v-model="selectedAreas"
+                />
+                <label class="form-check-label" :for="'area-' + area.id">
+                  {{ area.name }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="saveAreaSelection"
+            >
+              Save Selection
+            </button>
           </div>
         </div>
       </div>
