@@ -511,16 +511,13 @@ export default {
     },
     editCustomer(customer) {
       this.isEditMode = true;
-      const areaName = customer["m_area.name"] || customer.area_name;
-      const area = this.areas.find(a => a.name === areaName);
-      const areaId = area ? area.id : '';
       this.customerForm = {
         id: customer.id,
         name: customer.name,
         company: customer.company,
         email: customer.email,
         phone: customer.phone,
-        area_id: areaId,
+        area_id: customer.area_id,
         address: customer.address,
         tipe: customer.tipe || ""
       };
@@ -592,7 +589,6 @@ export default {
         phone: "",
         area_id: "",
         address: "",
-        tipe: ""
       };
       this.isEditMode = false;
     },

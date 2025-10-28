@@ -51,6 +51,16 @@ export default {
       status_disabled: "",
       // filterTable: "",
       searchKeyword: "",
+      accountForm: {
+        id: null,
+        name: "",
+        email: "",
+        username: "",
+        phone: "",
+        role: "",
+        status: ""
+      },
+      isEditMode: false,
     };
   },
   mounted() {
@@ -159,40 +169,53 @@ export default {
       }
     },
 
-    async editData(id) {
+    editAccount(account) {
+      this.isEditMode = true;
+      this.accountForm = {
+        id: account.id,
+        name: account.name,
+        email: account.email,
+        username: account.username,
+        phone: account.phone,
+        role: account.role,
+        status: account.status
+      };
+    },
+    async saveAccount() {
       try {
-        const dataIsLogin = await getDataIsLogin();
-        if (getDataIsLogin()) {
-          this.token = dataIsLogin.token;
-          const response = await axios.put(
-            `https://backend.qqltech.com:7021/operation/default_users/${id}`,
-            null,
-            {
-              headers: {
-                Authorization: `${getDataIsLogin().token_type} ${this.token}`,
-                "Cache-Control": "no-cache",
-              },
-              params: {
-                status: this.value.toString(),
-              },
-            }
-          );
-          // console.log(response);
-
-          if (response.data.success) {
-            flashMessage("success", "Success!", "Data Saved!");
-            this.isLoading = false;
-            window.location.reload();
-          } else {
-            flashMessage("error", "Error", result.message);
-            this.isLoading = false;
+        const token = getDataIsLogin().token;
+        const response = await axios.put(
+          `https://backend.qqltech.com:7021/operation/default_users/${this.accountForm.id}`,
+          this.accountForm,
+          {
+            headers: {
+              authorization: `${getDataIsLogin().token_type} ${token}`,
+              "Content-Type": "application/json",
+            },
           }
+        );
+
+        if (response.data.success) {
+          flashMessage("success", "Success!", "Account updated successfully!");
+          this.resetForm();
+          this.fetchDataAccount();
+          document.querySelector('[data-bs-dismiss="modal"]').click();
         }
       } catch (error) {
-        flashMessage("error", "Error", error);
-      } finally {
-        this.isLoading = false;
+        flashMessage("error", "ERROR", error);
       }
+    },
+    resetForm() {
+      this.accountForm = {
+        id: null,
+        name: "",
+        email: "",
+        username: "",
+        phone: "",
+        role: "",
+        status: ""
+      };
+      this.isEditMode = false;
     },
   },
   computed: {
@@ -319,92 +342,21 @@ export default {
                         <template #item-action="item">
                           <div>
                             <div class="button-container">
-                              <div class="dropdown">
-                                <button
-                                  class="button6"
-                                  type="button"
-                                  id="dropdownMenuButton"
-                                  data-toggle="dropdown"
-                                  aria-haspopup="true"
-                                  aria-expanded="false"
-                                >
-                                  <!-- {{ (value) ? value : 'Change Status' }} -->
-                                  <i class="bi bi-pencil"></i>
-                                </button>
-                                <div
-                                  class="dropdown-menu scrollable-menu"
-                                  aria-labelledby="dropdownMenuButton"
-                                >
-                                  <div class="form-check checkStore">
-                                    <input
-                                      class="form-check-input"
-                                      type="radio"
-                                      name="status"
-                                      :id="status_disabled"
-                                      disabled
-                                    />
-                                    <label
-                                      class="form-check-label"
-                                      :for="status_disabled"
-                                      >Select Status</label
-                                    >
-                                  </div>
-                                  <div class="form-check checkStore">
-                                    <input
-                                      class="form-check-input"
-                                      type="radio"
-                                      name="status"
-                                      :id="status_active"
-                                      value="ACTIVE"
-                                      v-model="value"
-                                      @change="editData(item.id)"
-                                    />
-                                    <label
-                                      class="form-check-label"
-                                      :for="status_active"
-                                      >ACTIVE</label
-                                    >
-                                  </div>
-                                  <div class="form-check checkStore">
-                                    <input
-                                      class="form-check-input"
-                                      type="radio"
-                                      name="status"
-                                      :id="status_inactive"
-                                      value="INACTIVE"
-                                      v-model="value"
-                                      @change="editData(item.id)"
-                                    />
-                                    <label
-                                      class="form-check-label"
-                                      :for="status_inactive"
-                                      >INACTIVE</label
-                                    >
-                                  </div>
-                                </div>
-                              </div>
-                              <br />
                               <button
-                                class="button5"
-                                style="margin-left: 5px"
-                                id="btn-detail"
-                                @click="deleteAccount(item.id)"
+                                class="btn btn-sm btn-primary me-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#accountModal"
+                                @click="editAccount(item)"
+                                title="Edit"
                               >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-trash"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"
-                                  />
-                                  <path
-                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"
-                                  />
-                                </svg>
+                                <i class="bi bi-pencil"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-danger"
+                                @click="deleteAccount(item.id)"
+                                title="Delete"
+                              >
+                                <i class="bi bi-trash"></i>
                               </button>
                             </div>
                           </div>
@@ -426,6 +378,101 @@ export default {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Account Modal -->
+    <div
+      class="modal fade"
+      id="accountModal"
+      tabindex="-1"
+      aria-labelledby="accountModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="accountModalLabel">Edit Account</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="saveAccount">
+              <div class="mb-3">
+                <label for="accountName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="accountName"
+                  v-model="accountForm.name"
+                  required
+                  placeholder="Enter account name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="accountEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="accountEmail"
+                  v-model="accountForm.email"
+                  required
+                  placeholder="Enter email"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="accountUsername" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="accountUsername"
+                  v-model="accountForm.username"
+                  required
+                  placeholder="Enter username"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="accountPhone" class="form-label">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="accountPhone"
+                  v-model="accountForm.phone"
+                  required
+                  placeholder="Enter phone number"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="accountRole" class="form-label">Role</label>
+                <select class="form-select" v-model="accountForm.role" required>
+                  <option value="">Select Role</option>
+                  <option value="Salesman">Salesman</option>
+                  <option value="Supervisor">Supervisor</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Manager">Manager</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="accountStatus" class="form-label">Status</label>
+                <select class="form-select" v-model="accountForm.status" required>
+                  <option value="">Select Status</option>
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="INACTIVE">INACTIVE</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary">Update Account</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
